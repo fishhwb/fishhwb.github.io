@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FISHHWB</title>
+<meta name="description" content="FISHHWB - TikTok authorisation callback. Returns the authorisation code to the operator's own copy of CubeZ.">
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --bg:#060a10; --panel:#101c28; --border:rgba(94,234,212,0.18);
+    --glow:#5EEAD4; --text:#E7F1F0; --text-dim:#8FA3A8;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;}
+  .container{max-width:760px;margin:0 auto;padding:0 24px;}
+  header{border-bottom:1px solid var(--border);padding:20px 0;}
+  header .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .wordmark{font-weight:700;letter-spacing:0.04em;font-size:1.1rem;}
+  .wordmark span{color:var(--glow);}
+  nav a{color:var(--text-dim);text-decoration:none;margin-left:20px;font-size:0.92rem;}
+  nav a:hover{color:var(--glow);}
+  main{padding:56px 0 80px;}
+  .eyebrow{font-family:monospace;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--glow);margin-bottom:10px;}
+  h1{font-size:1.7rem;margin:0 0 18px;}
+  p{color:var(--text-dim);}
+  code{background:var(--panel);border:1px solid var(--border);padding:2px 6px;border-radius:4px;font-size:0.9em;color:var(--text);}
+  a{color:var(--glow);}
+  pre{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;user-select:all;color:var(--text);}
+  footer{border-top:1px solid var(--border);padding:24px 0;color:var(--text-dim);font-size:0.85rem;}
+  footer .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  footer a{color:var(--text-dim);margin-left:16px;}
+  footer a:hover{color:var(--glow);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="wordmark">FISH<span>HWB</span></div>
+    <nav>
+      <a href="../../">FISHHWB</a>
+      <a href="../../privacy-policy/">Privacy</a>
+      <a href="../../terms-of-service/">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="eyebrow">TikTok authorisation</div>
+    <h1 id="heading">Connecting your TikTok account</h1>
+
+    <p id="blurb">TikTok sends you here after you approve CubeZ. The one-time
+    authorisation code below goes back into CubeZ on your own machine, which
+    exchanges it for an access token. The code is never sent anywhere by this
+    page &mdash; it only ever exists in your browser's address bar and on your
+    own computer.</p>
+
+    <pre id="code">Reading the authorisation code&hellip;</pre>
+
+    <p id="next">Copy that code and paste it back into CubeZ where it is
+    waiting for it.</p>
+
+    <p>Nothing else happens on this page. It has no analytics, no cookies and
+    no server: it is a static page on GitHub Pages that reads the query string
+    your browser already has. See the <a href="../../privacy-policy/">Privacy Policy</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div>FISHHWB</div>
+    <div>
+      <a href="../../terms-of-service/">Terms of Service</a>
+      <a href="../../privacy-policy/">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // TikTok redirects here with ?code=...&state=... on success, or
+  // ?error=...&error_description=... if the operator declined.
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get('code');
+  var error = params.get('error');
+  var box = document.getElementById('code');
+
+  if (code) {
+    // The code arrives URL-encoded; CubeZ wants the raw value.
+    box.textContent = decodeURIComponent(code);
+  } else if (error) {
+    document.getElementById('heading').textContent = 'TikTok did not authorise CubeZ';
+    document.getElementById('blurb').textContent =
+      'No account was connected, and CubeZ received nothing. You can close this tab and try again.';
+    document.getElementById('next').textContent = '';
+    box.textContent = error + ': ' + (params.get('error_description') || 'no further detail given');
+  } else {
+    document.getElementById('heading').textContent = 'Nothing to authorise';
+    document.getElementById('blurb').textContent =
+      'This page is the callback CubeZ uses for TikTok sign-in. Opened on its own, ' +
+      'it has no code to show. Start the connection from CubeZ instead.';
+    document.getElementById('next').textContent = '';
+    box.textContent = 'No authorisation code in this URL.';
+  }
+</script>
+
+</body>
+</html>
