@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FISHHWB</title>
+<meta name="description" content="FISHHWB - the developer identity Ded Zed publishes CubeZ under. CubeZ is a local-first toolkit that edits, captions and publishes short-form video for one creator's own channels.">
+<style>
+  :root{
+    --bg:#060a10; --panel:#101c28; --border:rgba(94,234,212,0.18);
+    --glow:#5EEAD4; --text:#E7F1F0; --text-dim:#8FA3A8;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;}
+  .container{max-width:760px;margin:0 auto;padding:0 24px;}
+  header{border-bottom:1px solid var(--border);padding:20px 0;}
+  header .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .wordmark{font-weight:700;letter-spacing:0.04em;font-size:1.1rem;}
+  .wordmark span{color:var(--glow);}
+  nav a{color:var(--text-dim);text-decoration:none;margin-left:20px;font-size:0.92rem;}
+  nav a:hover, nav a.active{color:var(--glow);}
+  main{padding:56px 0 80px;}
+  .eyebrow{font-family:monospace;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--glow);margin-bottom:10px;}
+  h1{font-size:2rem;margin:0 0 18px;}
+  h2{font-size:1.2rem;margin:2em 0 0.6em;color:var(--text);}
+  p{color:var(--text-dim);}
+  code{background:var(--panel);border:1px solid var(--border);padding:2px 6px;border-radius:4px;font-size:0.9em;color:var(--text);}
+  ul, ol{color:var(--text-dim);}
+  a{color:var(--glow);}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:1.4em 0;}
+  footer{border-top:1px solid var(--border);padding:24px 0;color:var(--text-dim);font-size:0.85rem;}
+  footer .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  footer a{color:var(--text-dim);margin-left:16px;}
+  footer a:hover{color:var(--glow);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="wordmark">FISH<span>HWB</span></div>
+    <nav>
+      <a href="./" class="active">FISHHWB</a>
+      <a href="privacy-policy/">Privacy</a>
+      <a href="terms-of-service/">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="eyebrow">Developer identity</div>
+    <h1>FISHHWB</h1>
+    <p>FISHHWB is the creator identity Ded Zed publishes under. This page exists specifically to document the TikTok integration built into <strong>CubeZ</strong>, Ded Zed's own local-first video tool, which is registered with TikTok under the developer name FISHHWB.</p>
+
+    <h2>What CubeZ does</h2>
+    <p>CubeZ cuts long recordings into short vertical clips, adds captions and a watermark, and writes a title, description and hashtags for each one. Everything happens on the operator's own computer; there is no CubeZ cloud, and no footage is uploaded anywhere except to the platforms the operator has connected.</p>
+    <p>When a new short-form video is published to the operator's YouTube channel, CubeZ posts it onward to the operator's other accounts &mdash; as an upload to TikTok, Facebook and Instagram, and as a link on Discord, Bluesky and Mastodon.</p>
+    <p><strong>It only ever posts to accounts the operator owns and has personally authorised.</strong> There is one operator, one set of accounts, and no other users. CubeZ does not publish on behalf of anyone else, does not accept content from third parties, and has no sign-up, no user accounts and no shared service of any kind.</p>
+
+    <h2>What the TikTok integration is used for</h2>
+    <p>CubeZ uses TikTok's Content Posting API for exactly one thing: uploading the operator's own newly published short-form video to the operator's own TikTok account, with a caption built from the video's own title. The upload is a direct file upload of a video the operator created and has already published themselves.</p>
+    <p>CubeZ uses Login Kit once, so the operator can authorise their own account. It reads nothing but the basic profile needed to confirm which account is connected. It does not read other users' content, does not browse or scrape TikTok, and does not post comments, messages or reactions.</p>
+
+    <h2>The two scopes FISHHWB asks for, and where each one is used</h2>
+    <ul>
+      <li><code>user.info.basic</code> &mdash; called after sign-in, so CubeZ can display which TikTok account was just connected, and again by its credential check, which asks the same question to confirm the stored token still works. It reads the open id and display name of the operator's own account and nothing else.</li>
+      <li><code>video.publish</code> &mdash; called when the operator's new short-form video is ready. CubeZ uploads that video file to the operator's own account through the Content Posting API's <code>FILE_UPLOAD</code> flow, with a caption built from the video's own title.</li>
+    </ul>
+    <p>The app's TikTok registration also lists <code>video.upload</code>, the draft-posting scope. TikTok's Content Posting API includes it by default and the developer portal offers no way to remove it. CubeZ does not use it: its sign-in request asks only for <code>user.info.basic</code> and <code>video.publish</code>, and it never calls the draft inbox endpoint. Beyond the two calls above, CubeZ makes no TikTok API call of any kind.</p>
+
+    <h2>How the account is connected</h2>
+    <div class="card">
+      <ol>
+        <li>The operator starts TikTok sign-in from their own copy of CubeZ, which opens TikTok's authorisation page.</li>
+        <li>They approve the request on TikTok's own consent screen.</li>
+        <li>TikTok returns them to <a href="auth/tiktok/">this site's callback page</a>, which displays the one-time authorisation code and sends it nowhere.</li>
+        <li>They paste the code back into CubeZ, which exchanges it with TikTok for an access token, reads the account's display name with <code>user.info.basic</code> to confirm the right account is connected, and saves the tokens to a file on their own machine.</li>
+      </ol>
+    </div>
+
+    <h2>Data and credentials</h2>
+    <p>Access tokens are stored by the operator, on the operator's own infrastructure, and are used only to post to the accounts those tokens belong to. Nothing is sold, shared or sent to any third party. The full detail is in the <a href="privacy-policy/">Privacy Policy</a>, and the terms of use are in the <a href="terms-of-service/">Terms of Service</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div>FISHHWB</div>
+    <div>
+      <a href="terms-of-service/">Terms of Service</a>
+      <a href="privacy-policy/">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
