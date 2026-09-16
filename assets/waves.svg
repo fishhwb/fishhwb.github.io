@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 500" preserveAspectRatio="none">
+<path d="M0 330C170 260 300 260 470 320s320 90 500 20 360-120 630-30v190H0Z" fill="#06283d" opacity=".78"/>
+<path d="M0 390c180-75 330-65 510 5s330 80 520 0 350-115 570-25v130H0Z" fill="#031a2b"/>
+<path d="M0 360c170-55 310-35 470 30 190 77 330 70 520-4 190-74 365-100 610-10" fill="none" stroke="#1fb6c9" stroke-opacity=".18" stroke-width="3"/>
+</svg>
