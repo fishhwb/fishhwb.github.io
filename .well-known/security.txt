@@ -1,0 +1,3 @@
+Contact: https://github.com/fishhwb/fishhwb.github.io/issues
+Preferred-Languages: en-GB, en
+Canonical: https://fishhwb.github.io/.well-known/security.txt

@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://fishhwb.github.io/sitemap.xml
