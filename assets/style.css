@@ -31,10 +31,17 @@ p{margin:0 0 14px}
 
 /* intro */
 .intro{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center;padding:72px 0 64px}
-.intro h1{font:900 clamp(3.2rem,9vw,7.4rem)/.88 var(--head);font-variation-settings:"wdth" 72;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 28px}
+.intro h1{font:900 clamp(2.8rem,7.5vw,6rem)/.9 var(--head);font-variation-settings:"wdth" 72;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 28px}
 .intro h1 mark{background:none;color:var(--pink)}
 .intro p{font-size:1.2rem;max-width:36rem;color:var(--ink-2)}
 .intro p b{color:var(--ink)}
+.intro .lead{font-size:clamp(1.3rem,2.4vw,1.7rem);line-height:1.35;color:var(--ink);font-weight:600;max-width:32rem}
+.facts{display:grid;grid-template-columns:1fr 1fr;margin:30px 0 0;max-width:36rem;border-top:2px solid var(--ink)}
+.facts div{padding:12px 0;border-bottom:2px solid var(--ink)}
+.facts div:nth-child(odd){padding-right:16px}
+.facts dt{font:400 .75rem/1 var(--mono);color:var(--ink-3);margin-bottom:6px}
+.facts dd{margin:0;font-weight:800}
+.facts a{text-decoration-color:var(--pink);text-decoration-thickness:2px;text-underline-offset:3px}
 .status{display:inline-flex;align-items:center;gap:10px;font:500 .8rem/1 var(--mono);border:2px solid var(--ink);padding:8px 12px;margin-bottom:28px;background:var(--card)}
 .status i{width:9px;height:9px;border-radius:50%;background:var(--pink)}
 .sticker{position:relative;justify-self:center;width:min(360px,100%)}
