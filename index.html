@@ -30,7 +30,7 @@
       <a href="#stream">stream</a>
       <a href="#videos">videos</a>
       <a href="#music">music</a>
-      <a href="#3d">3d</a>
+      <a href="#models">3d</a>
       <a href="#code">code</a>
       <a href="#discord">discord</a>
     </nav>
@@ -38,6 +38,7 @@
 </header>
 
 <main id="main">
+ <div class="surface" data-depth="0">
   <div class="wrap intro">
     <div>
       <div class="status"><i></i>streams on twitch as dedzedoffishal</div>
@@ -56,14 +57,15 @@
 
   <div class="wrap does">
     <a href="#stream"><span>/content</span><h2>Streams &amp; videos</h2><p>Gaming, clips and whatever else happens on stream.</p></a>
-    <a href="#3d"><span>/3d</span><h2>3D modeling</h2><p>Characters, props and renders, built from scratch.</p></a>
+    <a href="#models"><span>/3d</span><h2>3D modeling</h2><p>Characters, props and renders, built from scratch.</p></a>
     <a href="#code"><span>/code</span><h2>Code</h2><p>Desktop apps and tools, starting with CubeZ.</p></a>
   </div>
+ </div>
 
-  <section id="stream">
+  <section id="stream" data-depth="20">
     <div class="wrap">
       <div class="sec-head">
-        <span class="num">01</span>
+        <span class="num">01 · 20 m</span>
         <h2>Live</h2>
         <a class="more" href="https://www.twitch.tv/dedzedoffishal" target="_blank" rel="noopener">twitch.tv/dedzedoffishal ↗</a>
       </div>
@@ -79,10 +81,12 @@
     </div>
   </section>
 
-  <section id="videos" class="alt">
+  <div class="zone zone-1" data-depth="120" aria-hidden="true"><span><b>200 m · twilight zone</b>sunlight gives out around here</span></div>
+
+  <section id="videos" class="deep" data-depth="280">
     <div class="wrap">
       <div class="sec-head">
-        <span class="num">02</span>
+        <span class="num">02 · 280 m</span>
         <h2>Videos</h2>
         <a class="more" href="https://www.youtube.com/channel/UCtcFAWZJeiEp_DOKy8U_YYg?sub_confirmation=1" target="_blank" rel="noopener">subscribe on youtube ↗</a>
       </div>
@@ -93,10 +97,10 @@
     </div>
   </section>
 
-  <section id="music">
+  <section id="music" class="deep" data-depth="550">
     <div class="wrap">
       <div class="sec-head">
-        <span class="num">03</span>
+        <span class="num">03 · 550 m</span>
         <h2>Music</h2>
         <p>Two projects, both on Spotify.</p>
       </div>
@@ -113,10 +117,12 @@
     </div>
   </section>
 
-  <section id="3d" class="alt">
+  <div class="zone zone-2" data-depth="800" aria-hidden="true"><span><b>1,000 m · midnight zone</b>no light at all from here down</span></div>
+
+  <section id="models" class="deep snow" data-depth="1200">
     <div class="wrap">
       <div class="sec-head">
-        <span class="num">04</span>
+        <span class="num">04 · 1,200 m</span>
         <h2>3D work</h2>
         <p>Models, characters and renders.</p>
       </div>
@@ -134,10 +140,10 @@
     </div>
   </section>
 
-  <section id="code">
+  <section id="code" class="deep snow" data-depth="2200">
     <div class="wrap">
       <div class="sec-head">
-        <span class="num">05</span>
+        <span class="num">05 · 2,200 m</span>
         <h2>Code</h2>
         <a class="more" href="https://github.com/fishhwb" target="_blank" rel="noopener">github.com/fishhwb ↗</a>
       </div>
@@ -158,10 +164,12 @@
     </div>
   </section>
 
-  <section id="discord" class="alt">
+  <div class="zone zone-3" data-depth="3800" aria-hidden="true"><span><b>4,000 m · the abyss</b>near freezing, 400 times the pressure</span></div>
+
+  <section id="discord" class="deep snow" data-depth="4200">
     <div class="wrap">
       <div class="sec-head">
-        <span class="num">06</span>
+        <span class="num">06 · 4,200 m</span>
         <h2>Discord</h2>
         <p>Where the crew hangs out.</p>
       </div>
@@ -179,11 +187,61 @@
   </section>
 </main>
 
-<footer>
+<footer class="deep floor">
+  <div class="wrap bottom">
+    <img src="assets/fishhwb-mascot.png" alt="" width="64" height="64" loading="lazy">
+    <b>You hit the sea floor.</b>4,500 m down. Thanks for diving. <a class="more" href="#main">back to the surface ↑</a>
+  </div>
   <div class="wrap foot">
     <div>All images and media © FishHWB · ℗ FishHWB</div>
     <div><a href="privacy-policy/">privacy</a><a href="terms-of-service/">terms</a><a href="developer/">developer</a></div>
   </div>
 </footer>
+
+<div class="gauge" aria-hidden="true">
+  <div class="read"><b id="depth">0 m</b><span id="zone">sunlight zone</span></div>
+  <div class="track"><div class="dot" id="dot"></div></div>
+</div>
+
+<script>
+// depth gauge: each [data-depth] element pins a depth to its top edge,
+// and the reading is interpolated between them as you scroll.
+(function(){
+  var MAX = 4500;
+  var gauge = document.querySelector('.gauge'), head = document.querySelector('.site-head');
+  var out = document.getElementById('depth'), zone = document.getElementById('zone'), dot = document.getElementById('dot');
+  var marks = [].slice.call(document.querySelectorAll('[data-depth]'));
+  var pins = [];
+
+  function measure(){
+    pins = marks.map(function(el){ return [el.getBoundingClientRect().top + scrollY, +el.dataset.depth]; });
+    pins.push([document.documentElement.scrollHeight, MAX]);
+  }
+  function depthAt(y){
+    for (var i = 1; i < pins.length; i++) {
+      if (y < pins[i][0]) {
+        var a = pins[i-1], b = pins[i];
+        return a[1] + (b[1] - a[1]) * Math.max(0, (y - a[0]) / (b[0] - a[0]));
+      }
+    }
+    return MAX;
+  }
+  function update(){
+    var atBottom = scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
+    var d = atBottom ? MAX : Math.round(depthAt(scrollY + innerHeight * .4));
+    out.textContent = d.toLocaleString('en') + ' m';
+    zone.textContent = d < 200 ? 'sunlight zone' : d < 1000 ? 'twilight zone' : d < 4000 ? 'midnight zone' : 'the abyss';
+    dot.style.top = (d / MAX * 100) + '%';
+    var deep = d >= 200;
+    gauge.classList.toggle('deep', deep);
+    head.classList.toggle('deep', deep);
+  }
+  var ticking = false;
+  addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(function(){ ticking = false; update(); }); } }, {passive:true});
+  addEventListener('resize', function(){ measure(); update(); });
+  addEventListener('load', function(){ measure(); update(); });
+  measure(); update();
+})();
+</script>
 </body>
 </html>
