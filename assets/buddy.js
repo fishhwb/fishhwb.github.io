@@ -342,6 +342,19 @@ function scheduleNews(s){
 addEventListener('schedule', (e) => setTimeout(() => scheduleNews(e.detail), 6000));
 if (window.fishSchedule) setTimeout(() => scheduleNews(window.fishSchedule), 6000);
 
+/* ---------- new dev log posts ---------- */
+
+function devlogNews(post){
+  if (!post || live || (current && current.kind !== 'joke')) return;
+  const id = post.date + ' ' + post.title;
+  // only shout about recent posts, and only once
+  if (store.get('fishhwb-seen-log') === id || Date.now() - new Date(post.date + 'T12:00:00') > 14 * 864e5) return;
+  say({ kind: 'devlog', text: 'New dev log: ' + post.title, label: 'read it', href: '#devlog',
+    seen: () => store.set('fishhwb-seen-log', id) });
+}
+addEventListener('devlog', (e) => setTimeout(() => devlogNews(e.detail), 9000));
+if (window.fishDevlog) setTimeout(() => devlogNews(window.fishDevlog), 9000);
+
 /* ---------- the odd bad joke ---------- */
 
 const jokes = [

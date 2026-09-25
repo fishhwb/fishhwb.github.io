@@ -126,6 +126,67 @@
     dispatchEvent(new Event('resize'));
   });
 
+  /* ---------- dev log + patreon ---------- */
+
+  var log = document.getElementById('devlog');
+  if (log) fetch('assets/devlog.json', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(data){
+    if (/^https:\/\/(www\.)?patreon\.com\//.test(data.patreon || '')) {
+      var pl = log.querySelector('.patreon-link');
+      pl.href = data.patreon;
+      pl.hidden = false;
+      log.querySelector('.patreon-soon').hidden = true;
+    }
+    var posts = (data.posts || []).filter(function(p){ return p && p.title; })
+      .sort(function(a, b){ return String(b.date).localeCompare(String(a.date)); });
+    if (!posts.length) return;
+
+    var list = log.querySelector('.posts'), more = log.querySelector('.posts-more'), tags = log.querySelector('.log-tags');
+    var fmt = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+    var filter = '', showAll = false;
+
+    function draw(){
+      list.textContent = '';
+      var shown = posts.filter(function(p){ return !filter || p.tag === filter; });
+      shown.slice(0, showAll ? shown.length : 5).forEach(function(p){
+        var li = document.createElement('li'); li.className = 'post';
+        var meta = document.createElement('div'); meta.className = 'post-meta';
+        var d = new Date(p.date + 'T12:00:00');
+        var time = document.createElement('time'); time.dateTime = p.date; time.textContent = isNaN(d) ? p.date : fmt.format(d);
+        meta.appendChild(time);
+        if (p.tag) { var t = document.createElement('span'); t.className = 'tag'; t.textContent = p.tag; meta.appendChild(t); }
+        var h = document.createElement('h3'); h.textContent = p.title;
+        var body = document.createElement('p'); body.textContent = p.text || '';
+        li.append(meta, h, body);
+        if (/^https?:\/\//.test(p.link || '')) {
+          var a = document.createElement('a'); a.className = 'more'; a.href = p.link; a.target = '_blank'; a.rel = 'noopener';
+          a.textContent = /patreon\.com/.test(p.link) ? 'read the full post on patreon ↗' : 'read more ↗';
+          li.appendChild(a);
+        }
+        list.appendChild(li);
+      });
+      more.hidden = showAll || shown.length <= 5;
+      dispatchEvent(new Event('resize'));
+    }
+
+    var names = posts.map(function(p){ return p.tag; }).filter(function(t, i, all){ return t && all.indexOf(t) === i; });
+    if (names.length > 1) ['all'].concat(names).forEach(function(name){
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = name;
+      b.setAttribute('aria-pressed', String(name === 'all'));
+      b.addEventListener('click', function(){
+        filter = name === 'all' ? '' : name;
+        [].forEach.call(tags.children, function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+        draw();
+      });
+      tags.appendChild(b);
+    });
+    more.addEventListener('click', function(){ showAll = true; draw(); });
+    draw();
+
+    window.fishDevlog = posts[0];
+    dispatchEvent(new CustomEvent('devlog', { detail: posts[0] }));
+  }).catch(function(){});
+
   /* ---------- guestbook (giscus, backed by GitHub Discussions) ---------- */
 
   var book = document.getElementById('guestbook');
