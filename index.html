@@ -4,11 +4,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FISH HWB — Ded Zed</title>
-<meta name="description" content="FISH HWB is Ded Zed: streams, music, videos, 3D models and code. Home of Our Fish Overlord and CubeZ.">
+<title>FISH HWB | Ded Zed</title>
+<meta name="description" content="FISH HWB is Ded Zed, a Welsh creator doing virtually stupid stuff around the internet: streams, music, videos, 3D models and code. Home of Our Fish Overlord and CubeZ.">
 <meta name="keywords" content="FISH HWB, Ded Zed, Our Fish Overlord, Moaning Melody, CubeZ, 3D modeling">
 <meta name="theme-color" content="#f3efe6">
-<meta property="og:title" content="FISH HWB — Ded Zed">
+<meta property="og:title" content="FISH HWB | Ded Zed">
 <meta property="og:description" content="Streams, music, videos, 3D models and code.">
 <meta property="og:image" content="https://fishhwb.github.io/assets/fishhwb-mascot.png">
 <meta property="og:url" content="https://fishhwb.github.io/">
@@ -20,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -40,19 +41,22 @@
 
 <main id="main">
  <div class="surface" data-depth="0">
-  <div class="wrap intro">
+  <div class="wrap intro" id="about">
     <div>
-      <div class="status"><i></i>streams on twitch as dedzedoffishal</div>
-      <h1>I make streams, music, <mark>3D&nbsp;stuff</mark> &amp; code.</h1>
-      <p>I'm <b>Ded Zed</b>, also known as <b>Our Fish Overlord</b>. FISH HWB is where everything I make ends up: live streams, tracks, videos, models, and apps like <b>CubeZ</b>.</p>
-      <div class="btns">
-        <a class="button" href="#stream">Watch the stream</a>
-        <a class="button alt" href="#music">Listen</a>
-      </div>
+      <div class="status"><i></i>about me</div>
+      <h1>Shwmae, I'm <span class="wave">Ded&nbsp;Zed</span>.</h1>
+      <p class="lead">I'm Welsh, and I do virtually stupid stuff around the internet.</p>
+      <p>That means streaming, making music, building things in 3D and writing code that mostly works. Online I also go by <b>Our Fish Overlord</b>, and FISH HWB is where all of it ends up.</p>
+      <dl class="facts">
+        <div><dt>from</dt><dd>Wales</dd></div>
+        <div><dt>also known as</dt><dd>Our Fish Overlord</dd></div>
+        <div><dt>streams as</dt><dd><a href="https://www.twitch.tv/dedzedoffishal" target="_blank" rel="noopener">dedzedoffishal</a></dd></div>
+        <div><dt>building</dt><dd><a href="#code">CubeZ</a></dd></div>
+      </dl>
     </div>
     <figure class="sticker">
       <img src="assets/fishhwb-mascot.png" alt="The FISH HWB mascot: a round, big-eyed creature with rainbow hair" width="1024" height="1024">
-      <figcaption>fig. 1 — the overlord</figcaption>
+      <figcaption>fig. 1: me, basically</figcaption>
     </figure>
   </div>
 
@@ -157,7 +161,6 @@
         </article>
         <ul class="list">
           <li><a href="developer/"><span><b>Developer info</b><small>callback routes, integration notes</small></span><span class="go">→</span></a></li>
-          <li><a href="auth/tiktok/"><span><b>TikTok callback</b><small>/auth/tiktok/</small></span><span class="go">→</span></a></li>
           <li><a href="privacy-policy/"><span><b>Privacy policy</b><small>what CubeZ does with your data</small></span><span class="go">→</span></a></li>
           <li><a href="terms-of-service/"><span><b>Terms of service</b><small>the rules for using my apps</small></span><span class="go">→</span></a></li>
         </ul>
@@ -198,6 +201,19 @@
     <div><a href="privacy-policy/">privacy</a><a href="terms-of-service/">terms</a><a href="developer/">developer</a></div>
   </div>
 </footer>
+
+<aside class="buddy" aria-live="polite">
+  <div class="bubble" hidden>
+    <p class="bubble-msg"></p>
+    <a class="bubble-link" href="#"></a>
+    <button class="bubble-x" type="button" aria-label="Dismiss">×</button>
+  </div>
+  <button class="buddy-head" type="button" aria-label="Cube'z. Click for the latest video or stream">
+    <canvas width="240" height="240"></canvas>
+    <img src="assets/fishhwb-mascot.png" alt="" width="96" height="96">
+  </button>
+</aside>
+<script type="module" src="assets/buddy.js"></script>
 
 <div class="gauge" aria-hidden="true">
   <div class="read"><b id="depth">0 m</b><span id="zone">sunlight zone</span></div>
