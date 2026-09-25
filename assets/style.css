@@ -212,12 +212,25 @@ section>.wrap{position:relative;z-index:1}
 .critters{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 .critter{position:absolute;left:0;width:var(--size);animation:swim linear infinite}
 .critter.back{animation-name:swimback}
-.critter svg{display:block;width:100%;height:auto;animation:wiggle 1.1s ease-in-out infinite alternate}
+.critter svg{display:block;width:100%;height:auto;overflow:visible;animation:wiggle 1.6s ease-in-out infinite alternate}
+.critter .tail,.angler .tail{transform-box:fill-box;transform-origin:100% 50%;animation:tail .45s ease-in-out infinite alternate}
+.critter .fin,.angler .fin{transform-box:fill-box;transform-origin:100% 0;animation:fin .7s ease-in-out infinite alternate}
+.critter.lantern .tail{animation-duration:.35s}
+.angler .tail{animation-duration:.9s}
+.critter .bell{transform-box:fill-box;transform-origin:50% 0;animation:pulse 2.4s ease-in-out infinite}
+.critter .tentacles{transform-box:fill-box;transform-origin:50% 0;animation:sway 3.2s ease-in-out infinite alternate}
+.critter.jelly{filter:drop-shadow(0 0 10px rgba(255,120,200,.35))}
+.critter .lights{filter:drop-shadow(0 0 3px #7ff6ff) drop-shadow(0 0 6px rgba(127,246,255,.6));animation:twinkle 3s ease-in-out infinite}
+.critter.clown,.critter.tang{filter:drop-shadow(3px 4px 0 rgba(22,20,19,.18))}
+@keyframes tail{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+@keyframes fin{from{transform:rotate(-10deg)}to{transform:rotate(18deg)}}
+@keyframes pulse{0%,100%{transform:scale(1,1)}40%{transform:scale(1.07,.9)}}
+@keyframes sway{from{transform:skewX(-6deg)}to{transform:skewX(6deg)}}
+@keyframes twinkle{50%{opacity:.6}}
 .critter.jelly svg{animation:bob 4s ease-in-out infinite alternate}
-.critter.glowy svg{filter:drop-shadow(0 0 5px rgba(95,240,255,.7))}
 @keyframes swim{from{transform:translateX(-140px)}to{transform:translateX(calc(100vw + 140px))}}
 @keyframes swimback{from{transform:translateX(calc(100vw + 140px)) scaleX(-1)}to{transform:translateX(-140px) scaleX(-1)}}
-@keyframes wiggle{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+@keyframes wiggle{from{transform:rotate(-3deg) translateY(-2px)}to{transform:rotate(3deg) translateY(2px)}}
 @keyframes bob{from{transform:translateY(-14px) scaleY(1.05)}to{transform:translateY(14px) scaleY(.94)}}
 .swarm{position:fixed;inset:0;z-index:35;pointer-events:none;overflow:hidden}
 .swarm .critter{animation-iteration-count:1;animation-fill-mode:both;transform:translateX(-140px)}

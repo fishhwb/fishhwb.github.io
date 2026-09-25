@@ -191,14 +191,24 @@
     <div class="dark"></div>
     <p class="label"><b>4,000 m · the abyss</b>near freezing, 400 times the pressure. have a look around.</p>
     <svg class="angler" viewBox="0 0 180 110" width="180" height="110" aria-hidden="true">
-      <path d="M96 30C110 18 132 10 150 14" fill="none" stroke="#3b4b5c" stroke-width="2.5" stroke-linecap="round"/>
-      <circle class="lure" cx="150" cy="14" r="6" fill="#ffe27a"/>
-      <path d="M30 64c0-26 26-40 56-38 30 2 44 20 44 38 0 22-18 36-48 36S30 90 30 64z" fill="#0c141d" stroke="#2b3a49" stroke-width="2"/>
-      <path d="M32 62 8 44v40z" fill="#0c141d" stroke="#2b3a49" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M86 26c-6-8-16-12-26-10M70 98c-4 6-12 8-18 6" fill="none" stroke="#2b3a49" stroke-width="2"/>
-      <path d="M96 70h34c-2 10-10 18-22 20" fill="#05080c" stroke="#2b3a49" stroke-width="2"/>
-      <path d="M100 70l4 7 4-7 4 7 4-7 4 7 4-7M104 88l3-6 3 6 3-7 3 6" fill="none" stroke="#dfe6ee" stroke-width="1.6" stroke-linejoin="round"/>
-      <circle cx="104" cy="50" r="7" fill="#dfe6ee"/><circle cx="106" cy="50" r="3.5" fill="#05080c"/>
+      <defs>
+        <radialGradient id="angler-body" cx=".6" cy=".35" r=".8"><stop offset="0" stop-color="#2a3a4e"/><stop offset=".6" stop-color="#141d2a"/><stop offset="1" stop-color="#070b12"/></radialGradient>
+        <radialGradient id="angler-halo"><stop offset="0" stop-color="#fff6c0" stop-opacity=".9"/><stop offset=".4" stop-color="#ffe27a" stop-opacity=".45"/><stop offset="1" stop-color="#ffe27a" stop-opacity="0"/></radialGradient>
+      </defs>
+      <path d="M92 28C100 10 128 2 150 14" fill="none" stroke="#4a5d72" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="150" cy="14" r="16" fill="url(#angler-halo)"/>
+      <g class="tail"><path d="M44 62L12 40c6 14 6 30 0 46z" fill="#101824" stroke="#3a4b5e" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M16 48l24 13M15 63h26M16 78l24-14" fill="none" stroke="#3a4b5e" stroke-width="1.2"/></g>
+      <path d="M62 30l-6-16 12 12 2-16 8 16 6-12 2 14" fill="#101824" stroke="#3a4b5e" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M40 64c0-26 20-40 48-40 24 0 42 14 44 32 2 22-14 40-42 40S40 88 40 64z" fill="url(#angler-body)" stroke="#3a4b5e" stroke-width="2"/>
+      <path d="M50 52c6-12 18-20 34-22" fill="none" stroke="#5d7690" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+      <g fill="#3a4b5e" opacity=".6"><circle cx="62" cy="70" r="1.6"/><circle cx="70" cy="80" r="1.3"/><circle cx="56" cy="80" r="1.1"/><circle cx="78" cy="62" r="1.2"/></g>
+      <path d="M100 58c12-3 26-4 34 0-2 18-12 28-30 26 6-6 6-18-4-26z" fill="#020305" stroke="#3a4b5e" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M104 59l3 9 3-9 4 11 3-11 4 12 3-12 4 10 3-10" fill="#e8eef5" stroke="#b9c6d4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M108 83l3-8 3 8 4-10 3 10 4-9 2 7" fill="#e8eef5" stroke="#b9c6d4" stroke-width=".8" stroke-linejoin="round"/>
+      <path class="fin" d="M80 72c-8 10-16 14-22 12 6-8 14-12 22-12z" fill="#141d2a" stroke="#3a4b5e" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="104" cy="44" r="6" fill="#0a0f16" stroke="#9fb3c4" stroke-width="1.5"/><circle cx="105" cy="44" r="3" fill="#cfe7ff" opacity=".85"/><circle cx="106.4" cy="42.6" r="1.2" fill="#fff"/>
+      <circle class="lure" cx="150" cy="14" r="6" fill="#fff3b0" stroke="#ffe27a" stroke-width="1.5"/>
     </svg>
   </div>
 
