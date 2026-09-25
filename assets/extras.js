@@ -138,7 +138,7 @@
     }
     var posts = (data.posts || []).filter(function(p){ return p && p.title; })
       .sort(function(a, b){ return String(b.date).localeCompare(String(a.date)); });
-    if (!posts.length) return;
+    if (!posts.length) { log.querySelector('.posts-empty').hidden = false; return; }
 
     var list = log.querySelector('.posts'), more = log.querySelector('.posts-more'), tags = log.querySelector('.log-tags');
     var fmt = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
@@ -154,12 +154,13 @@
         var time = document.createElement('time'); time.dateTime = p.date; time.textContent = isNaN(d) ? p.date : fmt.format(d);
         meta.appendChild(time);
         if (p.tag) { var t = document.createElement('span'); t.className = 'tag'; t.textContent = p.tag; meta.appendChild(t); }
+        if (p.locked) { var l = document.createElement('span'); l.className = 'tag locked'; l.textContent = 'patrons only'; meta.appendChild(l); }
         var h = document.createElement('h3'); h.textContent = p.title;
         var body = document.createElement('p'); body.textContent = p.text || '';
         li.append(meta, h, body);
         if (/^https?:\/\//.test(p.link || '')) {
           var a = document.createElement('a'); a.className = 'more'; a.href = p.link; a.target = '_blank'; a.rel = 'noopener';
-          a.textContent = /patreon\.com/.test(p.link) ? 'read the full post on patreon ↗' : 'read more ↗';
+          a.textContent = !/patreon\.com/.test(p.link) ? 'read more ↗' : p.locked ? 'unlock it on patreon ↗' : 'read it on patreon ↗';
           li.appendChild(a);
         }
         list.appendChild(li);

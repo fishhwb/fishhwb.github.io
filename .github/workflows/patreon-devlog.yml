@@ -1,0 +1,41 @@
+# DedZedoffishal was here, if you are looking here you missed the ID-10-T error
+# Copies the latest Patreon posts into assets/devlog.json so they show up in
+# the Dev log section of the site.
+name: Sync dev log from Patreon
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: patreon-devlog
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch posts from Patreon
+        run: node .github/scripts/patreon-devlog.mjs
+
+      - name: Commit if anything changed
+        run: |
+          if git diff --quiet -- assets/devlog.json; then
+            echo "Nothing new."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add assets/devlog.json
+          git commit -m "Update dev log from Patreon"
+          git push

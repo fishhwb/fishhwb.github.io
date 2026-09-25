@@ -1,13 +1,5 @@
 {
-  "_how": "Newest posts go at the top. date is YYYY-MM-DD, tag is one short word (cubez, site, 3d, music...), link is optional (e.g. the full Patreon post). Put your Patreon page in patreon.",
-  "patreon": "",
-  "posts": [
-    {
-      "date": "2026-09-25",
-      "tag": "site",
-      "title": "New website",
-      "text": "Moved off Weebly and rebuilt the whole site from scratch. It's a dive now: scroll down and it gets deeper, darker and weirder. Cube'z lives in the corner and will tell you when I'm live or post something new.",
-      "link": ""
-    }
-  ]
+  "_note": "Filled in automatically from Patreon every hour by .github/workflows/patreon-devlog.yml. Edits here get overwritten.",
+  "patreon": "https://www.patreon.com/cw/DedZed",
+  "posts": []
 }
