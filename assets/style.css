@@ -32,7 +32,15 @@ p{margin:0 0 14px}
 /* intro */
 .intro{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center;padding:72px 0 64px}
 .intro h1{font:900 clamp(2.8rem,7.5vw,6rem)/.9 var(--head);font-variation-settings:"wdth" 72;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 28px}
-.intro h1 mark{background:none;color:var(--pink)}
+/* DED ZED: blue water sloshing inside the letters */
+.wave{color:#0d4fb8;-webkit-text-stroke:2px #0a3a8a;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100' preserveAspectRatio='none'%3E%3Cpath d='M0 38 Q25 22 50 38 T100 38 T150 38 T200 38 V100 H0Z' fill='%231a6fe0'/%3E%3C/svg%3E") 0 0/200px 100% repeat-x,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100' preserveAspectRatio='none'%3E%3Cpath d='M0 30 Q25 44 50 30 T100 30 T150 30 T200 30 V100 H0Z' fill='%2362b6ff'/%3E%3C/svg%3E") 0 0/260px 100% repeat-x,
+    #cfe9ff;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:slosh 3.2s linear infinite}
+@keyframes slosh{to{background-position:200px 0,-260px 0,0 0}}
 .intro p{font-size:1.2rem;max-width:36rem;color:var(--ink-2)}
 .intro p b{color:var(--ink)}
 .intro .lead{font-size:clamp(1.3rem,2.4vw,1.7rem);line-height:1.35;color:var(--ink);font-weight:600;max-width:32rem}
@@ -203,6 +211,24 @@ pre{background:var(--ink);color:var(--paper);padding:16px 18px;overflow:auto;whi
 .gauge .track{position:relative;width:2px;height:220px;background:currentColor;opacity:.35}
 .gauge .dot{position:absolute;left:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--pink);border:2px solid currentColor}
 .gauge .read{order:-1;text-align:right;min-width:8.5em}
+@media (min-width:1481px){.gauge{top:40%}}
 .gauge .read b{display:block;font:900 1.25rem/1 var(--head);font-variation-settings:"wdth" 75}
-@media (max-width:1480px){.gauge{top:auto;bottom:14px;right:14px;transform:none;padding:8px 10px;background:var(--paper);border:2px solid currentColor}.gauge.deep{background:#06152a}.gauge .track{display:none}.gauge .read{min-width:0}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:1480px){.gauge{top:auto;bottom:14px;right:auto;left:14px;transform:none;padding:8px 10px;background:var(--paper);border:2px solid currentColor}.gauge.deep{background:#06152a}.gauge .track{display:none}.gauge .read{min-width:0;text-align:left}}
+/* Cube'z, the head in the corner */
+.buddy{position:fixed;right:16px;bottom:16px;z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:none}
+.buddy>*{pointer-events:auto}
+.buddy-head{position:relative;width:120px;height:120px;padding:0;border:0;background:none;cursor:pointer;border-radius:50%}
+.buddy-head canvas{width:100%;height:100%;display:none;filter:drop-shadow(3px 4px 0 rgba(22,20,19,.35))}
+.buddy-head img{width:78%;margin:11%;transform:rotate(-6deg)}
+.buddy.ready:not(.flat) canvas{display:block}
+.buddy.ready:not(.flat) img{display:none}
+.buddy.live .buddy-head:after{content:"LIVE";position:absolute;top:6px;left:0;font:700 .65rem/1 var(--mono);letter-spacing:.08em;background:var(--pink);color:#fff;padding:4px 6px}
+.bubble{position:relative;max-width:260px;background:#f3efe6;color:#161413;border:2px solid #161413;box-shadow:4px 4px 0 var(--pink);padding:12px 34px 12px 14px;font:400 .82rem/1.45 var(--mono);margin-right:30px}
+.bubble:after{content:"";position:absolute;right:26px;bottom:-9px;width:14px;height:14px;background:#f3efe6;border-right:2px solid #161413;border-bottom:2px solid #161413;transform:rotate(45deg)}
+.bubble[hidden]{display:none}
+.bubble p{margin:0 0 8px}
+.bubble-link{font-weight:500;color:#161413;text-decoration-color:var(--pink);text-decoration-thickness:2px;text-underline-offset:3px}
+.bubble-link:after{content:" →"}
+.bubble-x{position:absolute;top:4px;right:6px;border:0;background:none;font:400 1.2rem/1 var(--mono);color:#161413;cursor:pointer;padding:4px}
+@media (max-width:680px){.buddy{right:10px;bottom:10px}.buddy-head{width:88px;height:88px}.bubble{max-width:230px;margin-right:20px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.wave{animation:none}}
