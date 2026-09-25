@@ -140,8 +140,10 @@ let current = null;
 function say(note){
   current = note;
   msg.textContent = note.text;
-  link.textContent = note.label;
-  link.href = note.href;
+  link.hidden = !note.href;
+  msg.style.marginBottom = note.href ? '' : '0';
+  link.textContent = note.label || '';
+  link.href = note.href || '#';
   if (note.external) { link.target = '_blank'; link.rel = 'noopener'; }
   else { link.removeAttribute('target'); link.removeAttribute('rel'); }
   bubble.hidden = false;
@@ -196,7 +198,7 @@ async function checkVideo(){
     const m = (await text(VIDEO_URL)).match(/^(.*) - (https:\/\/youtu\.be\/([\w-]+))$/);
     if (!m) return;
     latest = { title: m[1], url: m[2], id: m[3] };
-    if (store.get('fishhwb-seen-video') === latest.id || live || !bubble.hidden) return;
+    if (store.get('fishhwb-seen-video') === latest.id || live || (current && current.kind !== 'joke')) return;
     const id = latest.id;
     say({ kind: 'video', text: 'New video: ' + latest.title, label: 'watch on youtube', href: latest.url, external: true,
       seen: () => store.set('fishhwb-seen-video', id) });
@@ -207,6 +209,49 @@ function every(fn, ms){
   fn();
   setInterval(() => { if (!document.hidden) fn(); }, ms);
 }
+
+/* ---------- the odd bad joke ---------- */
+
+const jokes = [
+  "Why do programmers prefer dark mode? Because light attracts bugs.",
+  "There are 10 types of people. Those who understand binary and those who don't.",
+  "I'd tell you a UDP joke but you might not get it.",
+  "It works on my machine. Ship the machine.",
+  "A SQL query walks into a bar, walks up to two tables and asks: can I join you?",
+  "99 little bugs in the code. Take one down, patch it around. 127 little bugs in the code.",
+  "Why was the JavaScript dev sad? He didn't Node how to Express himself.",
+  "I'm not lazy, I'm in energy saving mode.",
+  "!false. It's funny because it's true.",
+  "Git commit -m \"fixed it\". Narrator: he did not fix it.",
+  "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+  "My code doesn't have bugs. It has surprise features.",
+  "Why did the fish get bad marks? Because it was below sea level.",
+  "What do you call a fish with no eyes? A fsh.",
+  "I told my computer I needed a break. It gave me a KitKat and a blue screen.",
+  "Semicolons; the reason I have trust issues",
+  "Real programmers count from 0.",
+  "CSS is easy. It's like riding a bike, except the bike is on fire and so is everything else.",
+  "Why did the developer go broke? He used up all his cache.",
+  "Knock knock. Race condition. Who's there?",
+  "Have you tried turning it off and on again? I have. Twice. I'm still a cube.",
+  "I'm a head with no body. Still more put together than your node_modules.",
+];
+let jokeTimer;
+let lastJoke = -1;
+
+function joke(){
+  if (!document.hidden && bubble.hidden) {
+    let i;
+    do { i = Math.floor(Math.random() * jokes.length); } while (i === lastJoke);
+    lastJoke = i;
+    say({ kind: 'joke', text: jokes[i] });
+    clearTimeout(jokeTimer);
+    jokeTimer = setTimeout(() => { if (current && current.kind === 'joke' && !bubble.matches(':hover')) hush(); }, 9000);
+  }
+  // every minute and a half to three minutes, give or take
+  setTimeout(joke, 90000 + Math.random() * 90000);
+}
+setTimeout(joke, 40000 + Math.random() * 30000);
 
 // give the page a moment before the head starts talking
 setTimeout(() => {
