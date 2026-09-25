@@ -1,1 +1,221 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FISH HWB - out on the water</title><meta name="description" content="FISH HWB - music, streams, clips and software from Ded Zed and the Fish Overlord crew."><meta name="theme-color" content="#062e44"><link rel="icon" href="assets/favicon.ico"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="manifest" href="site.webmanifest"><link rel="stylesheet" href="assets/style.css"></head><body><header class="site-head"><div class="wrap nav"><a class="brand" href="./"><img src="assets/fishhwb-mascot.png" alt="FISH HWB mascot"><span>FISH HWB</span></a><nav class="links"><a href="#stream">Stream</a><a href="#music">Music</a><a href="#clips">Clips</a><a href="developer/">Developer</a></nav></div></header><main><section class="wrap hero"><div><div class="eyebrow">From the deep • FISH HWB</div><h1>FISH HWB</h1><p>Streams, music, videos and software from FISH HWB.</p><div class="actions"><a class="button" href="#stream">Watch the stream</a><a class="button alt" href="#music">Hear the music</a></div></div><div class="mascot"><img src="assets/fishhwb-mascot.png" alt="FISH HWB mascot"></div></section><section id="stream" class="tide"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Live</div><h2>Out on the water</h2></div><p>Watch the stream here when the channel is live.</p></div><div class="player twitch"><iframe src="https://player.twitch.tv/?channel=dedzedoffishal&parent=fishhwb.github.io" title="FISH HWB Twitch stream" allowfullscreen></iframe></div></div></section><section id="music"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Latest fishy content</div><h2>Music from the tank</h2></div><p>Music from FISH HWB on Spotify.</p></div><div class="music-grid"><div class="player music"><iframe src="https://open.spotify.com/embed/artist/3G5lgBc7shS09fLh4ovfL4?utm_source=generator" title="Ded Zed on Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div><div class="player music"><iframe src="https://open.spotify.com/embed/artist/61lcq8xxIfd0iLITBnjdtI?utm_source=generator" title="Our Fish Overlord on Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div></div></div></section><section id="clips" class="tide"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Video</div><h2>Latest YouTube clip</h2></div><p>Watch the latest videos on YouTube.</p></div><div class="youtube"><div class="youtube-copy"><h3>Watch on YouTube</h3><p>Gaming, clips and other FISH HWB videos.</p><a class="button" href="https://www.youtube.com/" target="_blank" rel="noopener">Open YouTube</a></div><div class="reel"><a href="https://www.youtube.com/" target="_blank" rel="noopener">Watch on YouTube →</a></div></div></div></section><section><div class="wrap about"><div><div class="eyebrow">About FISH HWB</div><h2>About FISH HWB</h2></div><div><p>FISH HWB is home to Ded Zed, Fish Overlord and the projects around them. The site brings the stream, music, videos and software links together in one place.</p><p>Everything on this site links to the real FISH HWB projects and channels.</p></div></div></section><section class="developer"><div class="wrap"><div class="section-head"><div><div class="eyebrow">For developers</div><h2>For developers</h2></div><p>The public site is static. OAuth callback pages and project information have their own paths.</p></div><div class="dev-grid"><a class="dev-card" href="developer/"><h3>Developer home →</h3><p>Integration notes, callback routes and the rules for keeping secrets off GitHub Pages.</p></a><a class="dev-card" href="auth/tiktok/"><h3>TikTok callback →</h3><p>A static return page for the CubeZ TikTok authorisation flow.</p></a></div></div></section></main><footer><div class="wrap foot"><div>© FISH HWB</div><div><a href="privacy-policy/">Privacy</a><a href="terms-of-service/">Terms</a><a href="developer/">Developer</a></div></div></footer></body></html>
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FISH HWB</title>
+<meta name="description" content="FISH HWB - streams, music, clips and software from Ded Zed, Our Fish Overlord and the crew.">
+<meta name="keywords" content="FISH HWB, Our Fish Overlord, Ded Zed, Moaning Melody, CubeZ">
+<meta name="theme-color" content="#0a0818">
+<meta property="og:title" content="FISH HWB">
+<meta property="og:description" content="Streams, music, clips and software from the deep.">
+<meta property="og:image" content="https://fishhwb.github.io/assets/fishhwb-mascot.png">
+<meta property="og:url" content="https://fishhwb.github.io/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.classList.remove('no-js')</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="bubbles" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href="./"><img src="assets/fishhwb-mascot.png" alt="" width="40" height="40"><span>FISH HWB</span></a>
+    <nav class="links" aria-label="Main">
+      <a href="#music">Music</a>
+      <a href="#clips">Clips</a>
+      <a href="#crew">Crew</a>
+      <a href="developer/">Developer</a>
+      <a class="live-pill" href="#stream"><i></i>Stream</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow">From the deep</div>
+      <h1>FISH<span class="grad">HWB</span></h1>
+      <p class="lede">Home of <strong>Ded Zed</strong> and <strong>Our Fish Overlord</strong>. Live streams, music from the tank, clips, and the odd bit of software.</p>
+      <div class="actions">
+        <a class="button" href="#stream"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Watch the stream</a>
+        <a class="button alt" href="#music">Hear the music</a>
+      </div>
+      <div class="socials" aria-label="FISH HWB elsewhere">
+        <a href="https://www.twitch.tv/dedzedoffishal" target="_blank" rel="noopener" aria-label="Twitch" style="--c:#a970ff"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.3 3 3 6.4v13.4h4.6V22h2.6l2.2-2.2h3.6L21 15V3H4.3Zm15 11.1-2.8 2.8h-4.6l-2.4 2.4v-2.4H5.6V4.7h13.7v9.4Zm-2.9-5.8v4.9h-1.6V8.3h1.6Zm-4.5 0v4.9h-1.7V8.3H12Z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCtcFAWZJeiEp_DOKy8U_YYg" target="_blank" rel="noopener" aria-label="YouTube" style="--c:#ff3b3b"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg></a>
+        <a href="https://open.spotify.com/artist/3G5lgBc7shS09fLh4ovfL4" target="_blank" rel="noopener" aria-label="Spotify" style="--c:#1ed760"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.3a.7.7 0 0 1-1 .3c-2.8-1.7-6.4-2.1-10.6-1.2a.7.7 0 1 1-.3-1.4c4.6-1 8.5-.6 11.6 1.3.4.2.5.6.3 1Zm1.5-3.3a.9.9 0 0 1-1.3.3c-3.2-2-8-2.5-11.8-1.4a.9.9 0 0 1-.5-1.7c4.3-1.3 9.6-.7 13.3 1.6.4.3.6.8.3 1.2Zm.1-3.4C15.3 8.3 8.9 8.1 5.2 9.2a1.1 1.1 0 1 1-.6-2.1c4.3-1.3 11.3-1 15.7 1.6a1.1 1.1 0 0 1-1.2 1.9Z"/></svg></a>
+        <a href="#crew" aria-label="Discord" style="--c:#5865f2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.5 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.7.1 18.2A19.9 19.9 0 0 0 6.1 21l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.8-3.6-13.8ZM8 15.4c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.6 8 10.6s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      </div>
+      <a class="scroll-cue" href="#stream"><b></b>Dive in</a>
+    </div>
+    <div class="mascot"><img id="mascot" src="assets/fishhwb-mascot.png" alt="The FISH HWB mascot: a round, big-eyed creature with rainbow hair" width="1024" height="1024"></div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Streams</span><em>✦</em><span>Music</span><em>✦</em><span>Clips</span><em>✦</em><span>Software</span><em>✦</em><span>Our Fish Overlord</span><em>✦</em><span>Ded Zed</span><em>✦</em><span>Moaning Melody</span><em>✦</em><span>CubeZ</span><em>✦</em>
+      <span>Streams</span><em>✦</em><span>Music</span><em>✦</em><span>Clips</span><em>✦</em><span>Software</span><em>✦</em><span>Our Fish Overlord</span><em>✦</em><span>Ded Zed</span><em>✦</em><span>Moaning Melody</span><em>✦</em><span>CubeZ</span><em>✦</em>
+    </div>
+  </div>
+
+  <section id="stream">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">Live on Twitch</div><h2>Out on the <span class="grad">water</span></h2></div>
+        <p>Catch the stream here when the channel is live. Say hi in chat, the fish don't bite. Much.</p>
+      </div>
+      <div class="stream-grid reveal">
+        <div class="glow"><div class="card player">
+          <span class="tag"><i></i>dedzedoffishal</span>
+          <iframe src="https://player.twitch.tv/?channel=dedzedoffishal&parent=fishhwb.github.io&parent=localhost&muted=true" title="FISH HWB Twitch stream" allowfullscreen></iframe>
+        </div></div>
+        <div class="card chat">
+          <iframe src="https://www.twitch.tv/embed/dedzedoffishal/chat?darkpopout&parent=fishhwb.github.io&parent=localhost" title="FISH HWB Twitch chat" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="music">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">Latest fishy content</div><h2>Music from the <span class="grad">tank</span></h2></div>
+        <p>Two artists, one tank. Stream them on Spotify.</p>
+      </div>
+      <div class="music-grid">
+        <div class="card artist reveal">
+          <div class="artist-top"><div><h3>Ded Zed</h3><small>Artist on Spotify</small></div><a class="chip" href="https://open.spotify.com/artist/3G5lgBc7shS09fLh4ovfL4" target="_blank" rel="noopener">Follow ↗</a></div>
+          <iframe src="https://open.spotify.com/embed/artist/3G5lgBc7shS09fLh4ovfL4?utm_source=generator&theme=0" title="Ded Zed on Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
+        <div class="card artist reveal">
+          <div class="artist-top"><div><h3>Our Fish Overlord</h3><small>Artist on Spotify</small></div><a class="chip" href="https://open.spotify.com/artist/61lcq8xxIfd0iLITBnjdtI" target="_blank" rel="noopener">Follow ↗</a></div>
+          <iframe src="https://open.spotify.com/embed/artist/61lcq8xxIfd0iLITBnjdtI?utm_source=generator&theme=0" title="Our Fish Overlord on Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="clips">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">YouTube</div><h2>Latest <span class="grad">clips</span></h2></div>
+        <p>Fresh uploads straight from the channel, newest first.</p>
+      </div>
+      <div class="video-wrap reveal">
+        <div class="glow"><div class="card player">
+          <iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUtcFAWZJeiEp_DOKy8U_YYg" title="Latest FISH HWB videos on YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div></div>
+        <div class="card video-side">
+          <div>
+            <h3>Gaming, clips and chaos</h3>
+            <p>The player always starts on the newest upload. Use the playlist button in the corner to browse older videos.</p>
+          </div>
+          <a class="button" href="https://www.youtube.com/channel/UCtcFAWZJeiEp_DOKy8U_YYg?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="crew">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">The crew</div><h2>Join the <span class="grad">school</span></h2></div>
+        <p>Hang out with the rest of the fish on Discord.</p>
+      </div>
+      <div class="crew">
+        <div class="card about reveal">
+          <img src="assets/fishhwb-mascot.png" alt="" width="150" height="150" loading="lazy">
+          <div>
+            <h3>About FISH HWB</h3>
+            <p>FISH HWB is home to Ded Zed, Our Fish Overlord and the projects around them: the stream, the music, the videos and apps like CubeZ, all in one place.</p>
+            <div class="founder"><b>Ded "Our Fish Overlord" Zed</b><span>Founder</span></div>
+          </div>
+        </div>
+        <div class="card discord reveal">
+          <iframe src="https://discord.com/widget?id=1186424320428363887&theme=dark" title="FISH HWB Discord server" loading="lazy" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="developer">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><div class="eyebrow">For developers</div><h2>Under the <span class="grad">surface</span></h2></div>
+        <p>This site also hosts public pages for FISH HWB software. Secrets never live here.</p>
+      </div>
+      <div class="dev-grid">
+        <a class="card dev-card reveal" href="developer/" style="--c:var(--cyan)">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 18-6-6 6-6M16 6l6 6-6 6"/></svg></div>
+          <h3>Developer home <span class="arr">→</span></h3>
+          <p>Integration notes, callback routes and the rules for keeping secrets off GitHub Pages.</p>
+        </a>
+        <a class="card dev-card reveal" href="auth/tiktok/" style="--c:var(--pink)">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></div>
+          <h3>TikTok callback <span class="arr">→</span></h3>
+          <p>The static return page for the CubeZ TikTok authorisation flow.</p>
+        </a>
+        <a class="card dev-card reveal" href="privacy-policy/" style="--c:var(--green)">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
+          <h3>Privacy &amp; terms <span class="arr">→</span></h3>
+          <p>How FISH HWB apps like CubeZ handle your data, and the terms for using them.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand"><img src="assets/fishhwb-mascot.png" alt="" width="32" height="32" loading="lazy"><div>All images and media © FishHWB · ℗ FishHWB</div></div>
+    <div><a href="privacy-policy/">Privacy</a><a href="terms-of-service/">Terms</a><a href="developer/">Developer</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // reveal sections as they scroll into view
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  } else {
+    items.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  if (calm) return;
+
+  // bubbles drifting up from the deep
+  var tank = document.querySelector('.bubbles');
+  for (var i = 0; i < 18; i++) {
+    var b = document.createElement('span'), s = 6 + Math.random() * 22;
+    b.style.width = b.style.height = s + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    b.style.animationDuration = 14 + Math.random() * 22 + 's';
+    b.style.animationDelay = -Math.random() * 30 + 's';
+    b.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
+    tank.appendChild(b);
+  }
+
+  // mascot leans toward the cursor
+  var m = document.getElementById('mascot');
+  addEventListener('pointermove', function(e){
+    var x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+    m.style.transform = 'translate(' + x * 18 + 'px,' + y * 18 + 'px) rotate(' + x * 8 + 'deg)';
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
