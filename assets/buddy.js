@@ -26,6 +26,8 @@ const store = {
 /* ---------- the head ---------- */
 
 let mesh, morph = {}, react = () => {};
+// sulk: 1 when he's turned his back on you. cold: 1 in the abyss.
+let sulk = 0, cold = 0;
 const canvas = head.querySelector('canvas');
 
 try {
@@ -78,7 +80,7 @@ try {
   const set = (name, v) => { if (name in morph) target[name] = v; };
   const pulse = (name, ms) => { set(name, 1); setTimeout(() => set(name, 0), ms); };
 
-  let hop = 0, mouseX = 0, mouseY = 0, scrollKick = 0, lastY = scrollY;
+  let hop = 0, turn = 0, mouseX = 0, mouseY = 0, scrollKick = 0, lastY = scrollY;
   addEventListener('pointermove', (e) => {
     mouseX = e.clientX / innerWidth - 0.5;
     mouseY = e.clientY / innerHeight - 0.5;
@@ -113,9 +115,11 @@ try {
     const still = calm ? 0 : 1;
     scrollKick *= 0.92;
     hop *= 0.94;
-    pivot.rotation.y = (Math.sin(t * 0.7) * 0.25 + mouseX * 0.6) * still;
+    turn += (sulk * Math.PI - turn) * 0.08;
+    const shiver = cold * still * Math.sin(t * 55) * 0.035;
+    pivot.rotation.y = (Math.sin(t * 0.7) * 0.25 + mouseX * 0.6) * still * (1 - sulk) + turn;
     pivot.rotation.x = (mouseY * 0.3 + scrollKick * 0.35) * still;
-    pivot.rotation.z = Math.sin(t * 0.9) * 0.05 * still;
+    pivot.rotation.z = Math.sin(t * 0.9) * 0.05 * still + shiver;
     pivot.position.y = (Math.sin(t * 1.6) * 0.008 + Math.sin(hop * Math.PI) * 0.05) * still;
     if (mesh) {
       for (const [name, i] of Object.entries(morph)) {
@@ -163,7 +167,28 @@ link.addEventListener('click', () => setTimeout(hush, 50));
 
 let latest = null, live = false;
 
+let pokes = 0, pokeTimer, dragged = false;
+
 head.addEventListener('click', () => {
+  if (dragged) { dragged = false; return; }
+  if (root.classList.contains('gone')) return;
+  // poke him too much and he gets the hump
+  pokes++;
+  clearTimeout(pokeTimer);
+  pokeTimer = setTimeout(() => { pokes = 0; }, 5000);
+  if (pokes === 10) {
+    sulk = 1;
+    setTimeout(() => { sulk = 0; }, 4000);
+    return say({ kind: 'grump', text: 'Stop poking me. I will bite. I have no teeth, but I will.' });
+  }
+  if (pokes === 20) {
+    pokes = 0;
+    say({ kind: 'grump', text: "Right. I'm going for a swim." });
+    setTimeout(() => { hush(); root.classList.add('gone'); }, 1800);
+    setTimeout(() => { root.classList.remove('gone'); say({ kind: 'grump', text: "I'm back. Don't do that again." }); }, 15000);
+    return;
+  }
+  if (pokes > 10) return;
   if (!bubble.hidden) return hush();
   if (live) return say(liveNote());
   if (latest) return say({ kind: 'idle', text: 'Nothing new right now. Latest upload: ' + latest.title, label: 'watch it', href: latest.url, external: true });
@@ -209,6 +234,113 @@ function every(fn, ms){
   fn();
   setInterval(() => { if (!document.hidden) fn(); }, ms);
 }
+
+/* ---------- dragging him about ---------- */
+
+(function(){
+  let sx, sy, ox, oy, down = false;
+  const place = (x, y) => {
+    const w = root.offsetWidth, h = root.offsetHeight;
+    x = Math.max(4, Math.min(innerWidth - w - 4, x));
+    y = Math.max(4, Math.min(innerHeight - h - 4, y));
+    Object.assign(root.style, { left: x + 'px', top: y + 'px', right: 'auto', bottom: 'auto' });
+    // keep the speech bubble on screen
+    root.classList.toggle('below', y < 200);
+    root.classList.toggle('lefty', x < 240);
+  };
+  head.addEventListener('pointerdown', (e) => {
+    const r = root.getBoundingClientRect();
+    down = true; dragged = false;
+    sx = e.clientX; sy = e.clientY; ox = r.left; oy = r.top;
+    head.setPointerCapture(e.pointerId);
+  });
+  head.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (!dragged && Math.hypot(dx, dy) < 6) return;
+    dragged = true;
+    root.classList.add('dragging');
+    place(ox + dx, oy + dy);
+  });
+  const up = () => {
+    if (!down) return;
+    down = false;
+    root.classList.remove('dragging');
+    if (dragged) {
+      const r = root.getBoundingClientRect();
+      store.sset('fishhwb-buddy', JSON.stringify({ x: r.left, y: r.top }));
+    }
+  };
+  head.addEventListener('pointerup', up);
+  head.addEventListener('pointercancel', up);
+  try {
+    const saved = JSON.parse(store.sget('fishhwb-buddy'));
+    if (saved) place(saved.x, saved.y);
+  } catch {}
+  addEventListener('resize', () => {
+    if (root.style.left) { const r = root.getBoundingClientRect(); place(r.left, r.top); }
+  });
+})();
+
+/* ---------- talking about the dive ---------- */
+
+const zoneLines = {
+  'twilight zone': ['Getting a bit dim down here.', "Sunlight's gone. I'm not scared. You're scared."],
+  'midnight zone': ["Can't see a thing. Good job I'm a cube, I don't need eyes. I do have eyes.", 'Midnight zone. Everything down here is ugly. Apart from me.'],
+  'the abyss': ["It's freezing down here. Why did we come down here.", "400 times the pressure. I've had worse Mondays."],
+  'sea floor': ['Sea floor. Heard someone buried something round here...', 'Bottom. Now you have to swim all the way back up.'],
+  'sunlight zone': ['Air! Lovely.', 'Back at the surface. Missed you, sun.'],
+};
+let zone = 'sunlight zone', zoneTimer, beenDeep = false;
+const spoken = new Set(JSON.parse(store.sget('fishhwb-zones') || '[]'));
+
+addEventListener('depth', (e) => {
+  const d = e.detail.depth;
+  cold = d >= 4000 ? 1 : 0;
+  const z = e.detail.bottom ? 'sea floor' : e.detail.zone;
+  if (z === zone) return;
+  zone = z;
+  if (z !== 'sunlight zone') beenDeep = true;
+  clearTimeout(zoneTimer);
+  // only pipe up if they stay in the zone for a second, once per zone per visit
+  zoneTimer = setTimeout(() => {
+    if (spoken.has(z) || (z === 'sunlight zone' && !beenDeep)) return;
+    if (current && current.kind !== 'joke' && current.kind !== 'zone') return;
+    spoken.add(z);
+    store.sset('fishhwb-zones', JSON.stringify([...spoken]));
+    const lines = zoneLines[z];
+    quick(lines[Math.floor(Math.random() * lines.length)], 'zone');
+  }, 1200);
+});
+
+// a line that clears itself
+let quickTimer;
+function quick(text, kind = 'quip', ms = 7000){
+  say({ kind, text });
+  clearTimeout(quickTimer);
+  quickTimer = setTimeout(() => { if (current && current.kind === kind && !bubble.matches(':hover')) hush(); }, ms);
+}
+window.cubez = { say: (text) => quick(text, 'quip', 8000) };
+
+/* ---------- stream times ---------- */
+
+function scheduleNews(s){
+  if (!s || live) return;
+  const now = Date.now();
+  const when = new Intl.DateTimeFormat(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit' });
+  if (s.next && s.next.start > now && s.next.start - now < 30 * 60e3 && !store.sget('fishhwb-soon')) {
+    const mins = Math.max(1, Math.round((s.next.start - now) / 60e3));
+    store.sset('fishhwb-soon', '1');
+    return say({ kind: 'soon', text: 'Stream starts in ' + mins + ' minute' + (mins === 1 ? '' : 's') + '. Grab a drink.', label: 'go to the stream', href: '#stream' });
+  }
+  if (s.last && now - s.last.end < 2 * 3600e3 && !store.sget('fishhwb-missed')) {
+    store.sset('fishhwb-missed', '1');
+    const next = s.next ? ' Next one: ' + when.format(s.next.start) + ', your time.' : '';
+    say({ kind: 'missed', text: 'You just missed the stream.' + next, label: 'catch the vods', href: '#videos' });
+  }
+}
+addEventListener('schedule', (e) => setTimeout(() => scheduleNews(e.detail), 6000));
+if (window.fishSchedule) setTimeout(() => scheduleNews(window.fishSchedule), 6000);
 
 /* ---------- the odd bad joke ---------- */
 

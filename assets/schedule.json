@@ -1,0 +1,5 @@
+{
+  "_how": "Add one entry per weekly stream. day is Mon to Sun, start is 24-hour UK time, hours is roughly how long. Leave slots empty to hide the schedule. Example: {\"day\": \"Fri\", \"start\": \"20:00\", \"hours\": 3, \"what\": \"games\"}",
+  "timezone": "Europe/London",
+  "slots": []
+}

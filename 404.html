@@ -1,3 +1,109 @@
 <!doctype html>
 <!-- DedZedoffishal was here, if you are looking here you missed the ID-10-T error -->
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FISH HWB - Lost at sea</title><meta name="theme-color" content="#f3efe6"><link rel="icon" href="assets/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap"><link rel="stylesheet" href="assets/style.css"></head><body><main class="callback"><div class="wrap"><div class="callback-card"><div class="eyebrow">404 • lost at sea</div><h1>Page not found</h1><p class="small">The page you requested does not exist.</p><a class="button" href="./">Back home</a></div></div></main></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lost at sea | FISH HWB</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#06152a">
+<link rel="icon" href="/assets/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<style>
+  html,body{height:100%}
+  body.lost{margin:0;overflow:hidden;color:#eef4f5;background:linear-gradient(#0a2440,#02060e)}
+  .lost main{position:relative;z-index:2;min-height:100%;display:grid;place-items:center;padding:24px;text-align:center}
+  .lost .eyebrow{color:#ff2b91}
+  .lost h1{font:900 clamp(4rem,16vw,11rem)/.85 var(--head);font-variation-settings:"wdth" 70;text-transform:uppercase;margin:0 0 18px}
+  .lost p{max-width:30rem;margin:0 auto 26px;color:rgba(238,244,245,.8);font-size:1.1rem}
+  .lost .button{background:#eef4f5;color:#06152a;border-color:#eef4f5;box-shadow:4px 4px 0 #1a6fe0}
+  .lost .button:hover{box-shadow:6px 6px 0 #1a6fe0}
+  #drift{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+  .lost .bubbles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .lost .bubbles i{position:absolute;bottom:-30px;border-radius:50%;border:1.5px solid rgba(180,230,255,.35);animation:rise linear infinite}
+  @keyframes rise{to{transform:translateY(-110vh)}}
+  @media (prefers-reduced-motion:reduce){.lost .bubbles{display:none}}
+</style>
+</head>
+<body class="lost">
+<canvas id="drift" aria-hidden="true"></canvas>
+<div class="bubbles" aria-hidden="true"></div>
+<main>
+  <div>
+    <div class="eyebrow">404 · lost at sea</div>
+    <h1>Sunk.</h1>
+    <p>This page sank, or it never existed in the first place. Cube'z has been looking for it for ages. He's not great at looking.</p>
+    <a class="button" href="/">Swim back up</a>
+  </div>
+</main>
+<script>
+  (function(){
+    var box = document.querySelector('.bubbles');
+    for (var i = 0; i < 16; i++) {
+      var b = document.createElement('i'), s = 6 + Math.random() * 20;
+      b.style.width = b.style.height = s + 'px';
+      b.style.left = Math.random() * 100 + '%';
+      b.style.animationDuration = 9 + Math.random() * 14 + 's';
+      b.style.animationDelay = -Math.random() * 20 + 's';
+      box.appendChild(b);
+    }
+  })();
+</script>
+<script type="module">
+  // Cube'z, tumbling slowly across the screen, well and truly lost
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  const canvas = document.getElementById('drift');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 50);
+  camera.position.set(0, 0, 4);
+  scene.add(new THREE.HemisphereLight(0xcfe6ff, 0x0a1a2a, 2));
+  const key = new THREE.DirectionalLight(0xffffff, 1.2);
+  key.position.set(1, 2, 3);
+  scene.add(key);
+  const pivot = new THREE.Group();
+  scene.add(pivot);
+  const size = () => {
+    renderer.setSize(innerWidth, innerHeight, false);
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+  };
+  size();
+  addEventListener('resize', size);
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  new GLTFLoader().load('/assets/cubez-head.glb', (gltf) => {
+    let mesh;
+    gltf.scene.traverse((o) => { if (o.morphTargetDictionary && !mesh) mesh = o; });
+    const box = mesh ? new THREE.Box3().setFromBufferAttribute(mesh.geometry.attributes.position) : new THREE.Box3().setFromObject(gltf.scene);
+    const dim = box.getSize(new THREE.Vector3());
+    gltf.scene.position.sub(box.getCenter(new THREE.Vector3()));
+    const holder = new THREE.Group();
+    holder.add(gltf.scene);
+    holder.scale.setScalar(0.42 / Math.max(dim.x, dim.y, dim.z));
+    pivot.add(holder);
+    if (mesh) mesh.frustumCulled = false;
+    const closed = mesh && mesh.morphTargetDictionary['Eyes Closed'];
+    const clock = new THREE.Clock();
+    (function loop(){
+      requestAnimationFrame(loop);
+      const t = clock.getElapsedTime();
+      const w = camera.aspect * 1.6;
+      // drift in a slow loop around the text, tumbling as he goes
+      pivot.position.set(Math.sin(t * 0.13) * w, Math.sin(t * 0.21) * 1.2, -1);
+      if (!calm) {
+        holder.rotation.x = t * 0.35;
+        holder.rotation.y = t * 0.5;
+        holder.rotation.z = Math.sin(t * 0.3) * 0.6;
+      }
+      if (closed !== undefined) mesh.morphTargetInfluences[closed] = (t % 4) < 0.15 ? 1 : 0;
+      renderer.render(scene, camera);
+    })();
+  });
+</script>
+</body>
+</html>

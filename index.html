@@ -9,10 +9,15 @@
 <meta name="keywords" content="FISH HWB, Ded Zed, Our Fish Overlord, Moaning Melody, CubeZ, 3D modeling">
 <meta name="theme-color" content="#f3efe6">
 <meta property="og:title" content="FISH HWB | Ded Zed">
-<meta property="og:description" content="Streams, music, videos, 3D models and code.">
-<meta property="og:image" content="https://fishhwb.github.io/assets/fishhwb-mascot.png">
+<meta property="og:description" content="Welsh. Doing virtually stupid stuff around the internet: streams, music, 3D and code.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FISH HWB">
+<meta property="og:image" content="https://fishhwb.github.io/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Shwmae, I'm Ded Zed. Welsh. Doing virtually stupid stuff around the internet.">
 <meta property="og:url" content="https://fishhwb.github.io/">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.ico">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
@@ -36,6 +41,7 @@
       <a href="#code">code</a>
       <a href="#discord">discord</a>
     </nav>
+    <button class="sound" type="button" aria-pressed="false" title="Ocean sound">♪<span> sound</span></button>
   </div>
 </header>
 
@@ -82,6 +88,11 @@
         </div>
       </div>
       <div class="caption"><span>If it's offline, follow on Twitch to get pinged when I go live.</span><span>chat's open either way</span></div>
+      <div class="schedule" hidden>
+        <h3>When I'm on</h3>
+        <ol class="slots"></ol>
+        <p class="tz"></p>
+      </div>
     </div>
   </section>
 
@@ -156,7 +167,7 @@
           <h3>CubeZ</h3>
           <div class="tags"><span>desktop app</span><span>tiktok api</span><span>oauth</span></div>
           <p>A desktop app I'm building. It connects to TikTok through a proper OAuth flow, and this site hosts its public callback page, privacy policy and terms.</p>
-          <div class="btns"><a class="button alt" href="developer/">Developer notes</a></div>
+          <div class="btns"><a class="button cubez-dl" href="#" hidden>Download</a><a class="button alt" href="developer/">Developer notes</a></div>
         </article>
         <ul class="list">
           <li><a href="developer/"><span><b>Developer info</b><small>callback routes, integration notes</small></span><span class="go">→</span></a></li>
@@ -164,10 +175,32 @@
           <li><a href="terms-of-service/"><span><b>Terms of service</b><small>the rules for using my apps</small></span><span class="go">→</span></a></li>
         </ul>
       </div>
+      <div class="repos" hidden>
+        <h3 class="sub">Also on GitHub</h3>
+        <div class="repo-grid"></div>
+      </div>
     </div>
   </section>
 
-  <div class="zone zone-3" data-depth="3800" aria-hidden="true"><span><b>4,000 m · the abyss</b>near freezing, 400 times the pressure</span></div>
+  <div class="abyss" data-depth="3800" aria-hidden="true">
+    <div class="glow"></div>
+    <svg class="found bones" viewBox="0 0 120 50" style="left:12%;top:68%"><path d="M10 25h92M28 12v26M42 10v30M56 9v32M70 10v30M84 13v24" stroke="#c9d2dc" stroke-width="3" stroke-linecap="round"/><path d="M102 25l14-12v24z" fill="none" stroke="#c9d2dc" stroke-width="3" stroke-linejoin="round"/><circle cx="10" cy="25" r="8" fill="none" stroke="#c9d2dc" stroke-width="3"/></svg>
+    <div class="found bottle" style="left:70%;top:22%"><svg viewBox="0 0 90 40"><path d="M6 12h52c10 0 14 4 18 6h8v4h-8c-4 2-8 6-18 6H6z" fill="rgba(120,200,160,.35)" stroke="#8fd3b4" stroke-width="2"/><rect x="84" y="16" width="5" height="8" fill="#a07a4a"/><path d="M14 17h30v8H14z" fill="#e8dcc0"/></svg><span>DedZedoffishal was here</span></div>
+    <div class="found bottle" style="left:40%;top:80%"><span>you're not supposed to be able to see this</span></div>
+    <div class="found coin-lost" style="left:88%;top:62%"></div>
+    <div class="dark"></div>
+    <p class="label"><b>4,000 m · the abyss</b>near freezing, 400 times the pressure. have a look around.</p>
+    <svg class="angler" viewBox="0 0 180 110" width="180" height="110" aria-hidden="true">
+      <path d="M96 30C110 18 132 10 150 14" fill="none" stroke="#3b4b5c" stroke-width="2.5" stroke-linecap="round"/>
+      <circle class="lure" cx="150" cy="14" r="6" fill="#ffe27a"/>
+      <path d="M30 64c0-26 26-40 56-38 30 2 44 20 44 38 0 22-18 36-48 36S30 90 30 64z" fill="#0c141d" stroke="#2b3a49" stroke-width="2"/>
+      <path d="M32 62 8 44v40z" fill="#0c141d" stroke="#2b3a49" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M86 26c-6-8-16-12-26-10M70 98c-4 6-12 8-18 6" fill="none" stroke="#2b3a49" stroke-width="2"/>
+      <path d="M96 70h34c-2 10-10 18-22 20" fill="#05080c" stroke="#2b3a49" stroke-width="2"/>
+      <path d="M100 70l4 7 4-7 4 7 4-7 4 7 4-7M104 88l3-6 3 6 3-7 3 6" fill="none" stroke="#dfe6ee" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="104" cy="50" r="7" fill="#dfe6ee"/><circle cx="106" cy="50" r="3.5" fill="#05080c"/>
+    </svg>
+  </div>
 
   <section id="discord" class="deep snow" data-depth="4200">
     <div class="wrap">
@@ -190,7 +223,27 @@
   </section>
 </main>
 
+<section id="guestbook" class="deep snow" data-depth="4350" hidden data-repo="fishhwb/fishhwb.github.io" data-repo-id="" data-category="Guestbook" data-category-id="">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">07 · 4,350 m</span>
+        <h2>Guestbook</h2>
+        <p>Sign it. Say hi. Leave a fish.</p>
+      </div>
+      <div class="book"></div>
+    </div>
+  </section>
+
 <footer class="deep floor">
+  <button class="chest" type="button" aria-label="Something buried in the sand">
+    <svg viewBox="0 0 90 70" aria-hidden="true">
+      <g class="lid"><path d="M8 30c0-16 74-16 74 0v4H8z" fill="#8a5a2b" stroke="#161413" stroke-width="2.5"/><path d="M8 32h74" stroke="#e0b64a" stroke-width="3"/></g>
+      <rect x="8" y="34" width="74" height="30" fill="#6e4520" stroke="#161413" stroke-width="2.5"/>
+      <path d="M8 44h74M45 34v30" stroke="#e0b64a" stroke-width="3"/>
+      <rect x="40" y="38" width="10" height="10" fill="#e0b64a" stroke="#161413" stroke-width="2"/>
+    </svg>
+  </button>
+  <div class="seabed" aria-hidden="true"></div>
   <div class="wrap bottom">
     <img src="assets/fishhwb-mascot.png" alt="" width="64" height="64" loading="lazy">
     <b>You hit the sea floor.</b>4,500 m down. Thanks for diving. <a class="more" href="#main">back to the surface ↑</a>
@@ -213,6 +266,8 @@
   </button>
 </aside>
 <script type="module" src="assets/buddy.js"></script>
+<script src="assets/sea.js" defer></script>
+<script src="assets/extras.js" defer></script>
 
 <div class="gauge" aria-hidden="true">
   <div class="read"><b id="depth">0 m</b><span id="zone">sunlight zone</span></div>
@@ -230,7 +285,8 @@
   var pins = [];
 
   function measure(){
-    pins = marks.map(function(el){ return [el.getBoundingClientRect().top + scrollY, +el.dataset.depth]; });
+    pins = marks.filter(function(el){ return el.offsetParent !== null; })
+      .map(function(el){ return [el.getBoundingClientRect().top + scrollY, +el.dataset.depth]; });
     pins.push([document.documentElement.scrollHeight, MAX]);
   }
   function depthAt(y){
@@ -248,6 +304,8 @@
     out.textContent = d.toLocaleString('en') + ' m';
     zone.textContent = d < 200 ? 'sunlight zone' : d < 1000 ? 'twilight zone' : d < 4000 ? 'midnight zone' : 'the abyss';
     dot.style.top = (d / MAX * 100) + '%';
+    window.fishDepth = d;
+    dispatchEvent(new CustomEvent('depth', { detail: { depth: d, zone: zone.textContent, bottom: atBottom } }));
     var deep = d >= 200;
     gauge.classList.toggle('deep', deep);
     head.classList.toggle('deep', deep);
@@ -256,6 +314,7 @@
   addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(function(){ ticking = false; update(); }); } }, {passive:true});
   addEventListener('resize', function(){ measure(); update(); });
   addEventListener('load', function(){ measure(); update(); });
+  if ('ResizeObserver' in window) new ResizeObserver(function(){ measure(); update(); }).observe(document.body);
   measure(); update();
 })();
 </script>
