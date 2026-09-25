@@ -215,13 +215,17 @@ section>.wrap{position:relative;z-index:1}
 .critter svg{display:block;width:100%;height:auto;overflow:visible;animation:wiggle 1.6s ease-in-out infinite alternate}
 .critter .tail,.angler .tail{transform-box:fill-box;transform-origin:100% 50%;animation:tail .45s ease-in-out infinite alternate}
 .critter .fin,.angler .fin{transform-box:fill-box;transform-origin:100% 0;animation:fin .7s ease-in-out infinite alternate}
-.critter.lantern .tail{animation-duration:.35s}
+.critter.lantern .tail,.critter .school .tail{animation-duration:.3s}
 .angler .tail{animation-duration:.9s}
 .critter .bell{transform-box:fill-box;transform-origin:50% 0;animation:pulse 2.4s ease-in-out infinite}
 .critter .tentacles{transform-box:fill-box;transform-origin:50% 0;animation:sway 3.2s ease-in-out infinite alternate}
-.critter.jelly{filter:drop-shadow(0 0 10px rgba(255,120,200,.35))}
+.critter.jelly{filter:drop-shadow(0 0 12px rgba(255,190,120,.25))}
 .critter .lights{filter:drop-shadow(0 0 3px #7ff6ff) drop-shadow(0 0 6px rgba(127,246,255,.6));animation:twinkle 3s ease-in-out infinite}
-.critter.clown,.critter.tang{filter:drop-shadow(3px 4px 0 rgba(22,20,19,.18))}
+.critter.clown,.critter.tang,.critter.sardine{filter:drop-shadow(0 6px 6px rgba(10,40,50,.18))}
+.critter .school{position:relative;aspect-ratio:2.2/1}
+.critter .school>div{position:absolute;width:40%;animation:schoolbob 2.6s ease-in-out infinite alternate}
+.critter .school svg{filter:drop-shadow(0 4px 4px rgba(10,40,50,.15))}
+@keyframes schoolbob{from{transform:translate(-3px,-3px)}to{transform:translate(3px,3px)}}
 @keyframes tail{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
 @keyframes fin{from{transform:rotate(-10deg)}to{transform:rotate(18deg)}}
 @keyframes pulse{0%,100%{transform:scale(1,1)}40%{transform:scale(1.07,.9)}}
