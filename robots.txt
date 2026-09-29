@@ -1,4 +1,5 @@
 # DedZedoffishal was here, if you are looking here you missed the ID-10-T error
 User-agent: *
 Allow: /
+Disallow: /auth/
 Sitemap: https://fishhwb.github.io/sitemap.xml
