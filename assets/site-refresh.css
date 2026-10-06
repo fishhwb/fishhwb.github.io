@@ -1,0 +1,156 @@
+/* 2026 site refresh: richer sea life + startup parody ad */
+
+/* Sea-life polish. Keep the original lightweight swim system, upgrade the rendering. */
+.critter{
+  --fish-glow:rgba(255,255,255,.12);
+  perspective:500px;
+  transform-style:preserve-3d;
+}
+.critter.clown,.critter.tang{width:calc(var(--size) * 1.32)}
+.critter.lantern{width:calc(var(--size) * 1.22)}
+.critter.jelly{width:calc(var(--size) * 1.14)}
+.critter svg{
+  width:100%;
+  overflow:visible;
+  filter:drop-shadow(0 5px 7px rgba(0,0,0,.16));
+}
+.critter.clown svg,.critter.tang svg{
+  filter:drop-shadow(0 5px 6px rgba(0,0,0,.22)) drop-shadow(0 0 10px var(--fish-glow));
+}
+.critter.lantern svg{filter:drop-shadow(0 0 5px rgba(74,225,255,.2))}
+.critter .fish-scale{opacity:.34}
+.critter .fish-highlight{mix-blend-mode:screen;opacity:.72}
+.critter .fish-gill{opacity:.72}
+.critter .fish-pupil{transform-box:fill-box;transform-origin:center;animation:fish-look 5.8s ease-in-out infinite alternate}
+.critter .fish-fin-ray{opacity:.42}
+.critter .fish-speck{opacity:.5}
+.critter .lights circle{animation:bio-pulse 2.8s ease-in-out infinite alternate}
+.critter .lights circle:nth-child(2n){animation-delay:-1.1s}
+.critter .lights circle:nth-child(3n){animation-delay:-2s}
+
+@keyframes fish-look{
+  0%,22%{transform:translate(0,0)}
+  50%{transform:translate(-1px,.5px)}
+  78%,100%{transform:translate(.5px,-.7px)}
+}
+@keyframes bio-pulse{
+  from{opacity:.45;filter:drop-shadow(0 0 1px #8ff8ff)}
+  to{opacity:1;filter:drop-shadow(0 0 5px #8ff8ff)}
+}
+
+.angler .skin-speck{opacity:.45}
+.angler .lure-core{filter:drop-shadow(0 0 5px #fff7b8) drop-shadow(0 0 14px #ffe27a)}
+.angler .tooth{filter:drop-shadow(0 0 1px rgba(255,255,255,.35))}
+.angler .eye-glow{filter:drop-shadow(0 0 5px rgba(170,220,255,.7))}
+
+/* Startup parody ad. This is intentionally NOT a Google ad. */
+.startup-bait-ad{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  background:rgba(2,6,14,.72);
+  backdrop-filter:blur(8px) saturate(.8);
+  animation:bait-in .22s ease-out both;
+}
+.startup-bait-ad[hidden]{display:none!important}
+.startup-bait-shell{position:relative;width:min(560px,100%)}
+.startup-bait-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:22px;
+  align-items:center;
+  min-height:260px;
+  padding:28px;
+  border:3px solid #161413;
+  background:#fff7df;
+  color:#161413;
+  box-shadow:12px 12px 0 #ff2b91,24px 24px 0 rgba(18,179,214,.6);
+  text-decoration:none;
+  overflow:hidden;
+}
+.startup-bait-card:before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:repeating-linear-gradient(135deg,transparent 0 28px,rgba(255,43,145,.06) 28px 56px);
+  transform:rotate(7deg);
+  pointer-events:none;
+}
+.startup-bait-fish{
+  position:relative;
+  width:140px;
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  font-size:92px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff 0 10%,#78e7ff 11% 35%,#12b3d6 36% 70%,#087691 71%);
+  border:3px solid #161413;
+  transform:rotate(-8deg);
+  box-shadow:6px 6px 0 #161413;
+}
+.startup-bait-copy{position:relative}
+.startup-bait-kicker{
+  display:inline-block;
+  margin-bottom:10px;
+  padding:5px 8px;
+  border:2px solid #161413;
+  background:#ffcf3f;
+  font:800 .72rem/1 var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.startup-bait-card h2{
+  margin:0 0 10px;
+  font:900 clamp(2.1rem,6vw,4rem)/.86 var(--head);
+  font-variation-settings:"wdth" 72;
+  text-transform:uppercase;
+  letter-spacing:-.025em;
+}
+.startup-bait-card p{margin:0 0 18px;font:500 .9rem/1.45 var(--mono);max-width:34ch}
+.startup-bait-cta{
+  display:inline-block;
+  padding:11px 14px;
+  border:2px solid #161413;
+  background:#161413;
+  color:#fff7df;
+  font:800 .8rem/1 var(--mono);
+  text-transform:uppercase;
+  box-shadow:4px 4px 0 #12b3d6;
+}
+.startup-bait-card:hover{transform:translate(-2px,-2px)}
+.startup-bait-card:hover .startup-bait-cta{background:#ff2b91}
+.startup-bait-close{
+  position:absolute;
+  z-index:2;
+  top:-18px;
+  right:-18px;
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:3px solid #161413;
+  border-radius:50%;
+  background:#f3efe6;
+  color:#161413;
+  box-shadow:4px 4px 0 #161413;
+  cursor:pointer;
+  font:900 1.6rem/1 var(--head);
+}
+.startup-bait-close:hover{background:#ffcf3f;transform:rotate(7deg)}
+@keyframes bait-in{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+
+@media(max-width:620px){
+  .startup-bait-card{grid-template-columns:1fr;text-align:center;padding:28px 22px 26px}
+  .startup-bait-fish{width:110px;font-size:72px;margin:auto}
+  .startup-bait-card p{margin-left:auto;margin-right:auto}
+  .startup-bait-close{right:-8px;top:-18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .startup-bait-ad,.critter .fish-pupil,.critter .lights circle{animation:none!important}
+}
