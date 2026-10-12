@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12T06:45:00Z",
+  "updatedAt": "2026-10-12T06:35:50.066Z",
   "worldIds": [
     "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
     "wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
@@ -7,14 +7,26 @@
   "worlds": [
     {
       "id": "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
-      "name": "Clicker Game Prefab Preview",
-      "description": "Preview world for the FISH HWB VRChat Clicker Game Prefab, including the clicker, passive income, store, rebirth and settings systems. The site's scheduled updater keeps the live VRChat name, description and thumbnail current.",
+      "name": "Echo Reef",
+      "description": "Welcome to Echo Reef a calm‚ oceanlit hangout space filled with soft ambience‚ glowing coral‚ and gentle underwater soundscapes․ Whether youre here to chill with friends‚ explore the reef‚ or just escape the noise of the surface world‚ the deep is always ready to welcome you․ We also have the Twilight Zone a place of the horrors you see around From Angler Fish to a Goblin Shark explore and have fun We have our own Clicker Game （Yes FISH CLICKER） as well as a fish Scanner to explore with while the VIP users get a single NPC interaction",
+      "thumbnailImageUrl": "https://api.vrchat.cloud/api/1/image/file_01fec3b1-0874-46a6-88a0-721b363dba7d/2/256",
+      "imageUrl": "https://api.vrchat.cloud/api/1/file/file_01fec3b1-0874-46a6-88a0-721b363dba7d/2/file",
+      "capacity": 32,
+      "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
+      "authorName": "DedZedOffishal",
+      "updatedAt": "2026-02-24T23:34:43.347Z",
       "url": "https://vrchat.com/home/world/wrld_2e9d399f-749f-43a5-958c-a524ad3bec56"
     },
     {
       "id": "wrld_873faac1-2a30-4574-be0b-d1a5856f5402",
-      "name": "Portal Teleporter Preview",
-      "description": "VRChat world showcasing the FISH HWB performance-focused Portal Teleporter prefab and its active/inactive destination setup. The site's scheduled updater keeps the live VRChat name, description and thumbnail current.",
+      "name": "Ded Haven",
+      "description": "Welcome to the Fiery world of Metal Music‚ explore the world and listen to heavy music without a care in the world‚ please don't throw things at the large beast it's not good for them nor attempt to jump into the lava （It's clearly not safe） World has simple games and features for you to mess around with and if lucky launch your friends in the sky if you can figure out the secret hidden in the world",
+      "thumbnailImageUrl": "https://api.vrchat.cloud/api/1/image/file_1bc2cba8-978f-4476-ad75-eed1c10bf061/4/256",
+      "imageUrl": "https://api.vrchat.cloud/api/1/file/file_1bc2cba8-978f-4476-ad75-eed1c10bf061/4/file",
+      "capacity": 32,
+      "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
+      "authorName": "DedZedOffishal",
+      "updatedAt": "2025-11-24T23:43:02.269Z",
       "url": "https://vrchat.com/home/world/wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
     }
   ]
