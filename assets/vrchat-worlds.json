@@ -1,14 +1,21 @@
 {
-  "updatedAt": "2026-10-12T00:00:00Z",
+  "updatedAt": "2026-10-12T06:45:00Z",
   "worldIds": [
-    "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56"
+    "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
+    "wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
   ],
   "worlds": [
     {
       "id": "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
       "name": "Clicker Game Prefab Preview",
-      "description": "Preview world for the FISH HWB VRChat clicker game prefab. Live VRChat metadata will replace this fallback when the updater runs.",
+      "description": "Preview world for the FISH HWB VRChat Clicker Game Prefab, including the clicker, passive income, store, rebirth and settings systems. The site's scheduled updater keeps the live VRChat name, description and thumbnail current.",
       "url": "https://vrchat.com/home/world/wrld_2e9d399f-749f-43a5-958c-a524ad3bec56"
+    },
+    {
+      "id": "wrld_873faac1-2a30-4574-be0b-d1a5856f5402",
+      "name": "Portal Teleporter Preview",
+      "description": "VRChat world showcasing the FISH HWB performance-focused Portal Teleporter prefab and its active/inactive destination setup. The site's scheduled updater keeps the live VRChat name, description and thumbnail current.",
+      "url": "https://vrchat.com/home/world/wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
     }
   ]
 }
