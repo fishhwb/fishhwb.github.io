@@ -10,6 +10,8 @@ const headers = {
   Accept: 'application/json',
   'User-Agent': 'FISHHWB-Website/1.0 (+https://github.com/fishhwb/fishhwb.github.io)'
 };
+const authCookie = process.env.VRCHAT_AUTH_COOKIE || '';
+if (authCookie) headers.Cookie = authCookie.includes('auth=') ? authCookie : `auth=${authCookie}`;
 
 async function getWorld(id) {
   const r = await fetch(`https://api.vrchat.cloud/api/1/worlds/${encodeURIComponent(id)}`, { headers });
@@ -51,7 +53,8 @@ for (const id of seedIds) {
 }
 
 // Once an author ID is known, ask VRChat for all public worlds by that author.
-// If VRChat ever requires authentication for this search, the known seed list still works.
+// VRChat requires authentication for author enumeration, so the workflow can use VRCHAT_AUTH_COOKIE.
+// Individual known public worlds still refresh without authentication.
 for (const authorId of authorIds) {
   try {
     for (let offset = 0; offset < 2000; offset += 100) {

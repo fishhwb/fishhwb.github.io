@@ -103,7 +103,8 @@
     var fallback = {
       'dedzedofficial/Meshy-Importer-for-Blender-Unity': 'Imports and locally decodes Meshy .meshy models for Unity, Blender, Godot and Unreal Engine.',
       'dedzedofficial/Optimize-Your-Project': 'A free Unity and Blender optimization toolkit that turns repetitive cleanup and performance work into guarded, clear actions.',
-      'dedzedofficial/Blender-XR': 'Free, open-source VR mesh modelling and scene building inside Blender using a controller-first OpenXR workflow.'
+      'dedzedofficial/Blender-XR': 'Free, open-source VR mesh modelling and scene building inside Blender using a controller-first OpenXR workflow.',
+      'fishhwb/fishhwb.github.io': 'The FISH HWB website and public project hub.'
     };
 
     Promise.all(['dedzedofficial','fishhwb'].map(function(owner){
@@ -112,7 +113,7 @@
       var seen={}, repos=[].concat.apply([],lists).filter(function(r){
         if(!r||r.fork||r.archived||r.private||seen[r.full_name]) return false;
         seen[r.full_name]=1;
-        return !/\.github\.io$/i.test(r.name) && r.name!=='.github';
+        return r.name!=='.github';
       }).sort(function(a,b){return new Date(b.pushed_at)-new Date(a.pushed_at);});
       if (!repos.length) repos = Object.keys(fallback).map(function(full){
         return {full_name:full,name:full.split('/')[1],html_url:'https://github.com/'+full,description:fallback[full],language:'Open source',pushed_at:''};
@@ -161,7 +162,7 @@
   }
 
   var style=el('style');
-  style.textContent='.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}.project{min-width:0}.project-loading{opacity:.7}.world-projects{margin-top:3rem}.world-projects-head{display:flex;gap:1rem;align-items:baseline;justify-content:space-between;flex-wrap:wrap}.world-projects-head p{opacity:.72;margin:0}.world-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}.world-card{display:block;overflow:hidden;border:1px solid currentColor;border-radius:1rem;text-decoration:none;color:inherit;background:rgba(255,255,255,.035)}.world-card img{width:100%;aspect-ratio:16/9;display:block;object-fit:cover}.world-card-body{padding:1rem}.world-card h4{margin:0 0 .4rem;font-size:1.1rem}.world-card p{margin:.3rem 0 .8rem}.world-card small{opacity:.65}.legal-links{display:flex;gap:.35rem}.legal-links a{color:inherit}.site-head .nav{justify-content:space-between}';
+  style.textContent='#projects{background:linear-gradient(#0a2440,#08203a);color:#eef4f5}.project{background:#07192e!important;color:#f4fbff!important;border-color:#d8efff!important}.project h3{color:#fff!important}.project p{color:#d9e8f2!important}.project .tags span{color:#fff!important;border-color:#9dc8e2!important}.project .button.alt{background:#f4fbff!important;color:#07192e!important;border-color:#f4fbff!important}.world-card{background:#07192e!important;color:#f4fbff!important;border-color:#9dc8e2!important}.world-card h4{color:#fff!important}.world-card p{color:#d9e8f2!important}.world-card small{color:#b9d5e5!important;opacity:1!important}.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}.project{min-width:0}.project-loading{opacity:.7}.world-projects{margin-top:3rem}.world-projects-head{display:flex;gap:1rem;align-items:baseline;justify-content:space-between;flex-wrap:wrap}.world-projects-head p{opacity:.72;margin:0}.world-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}.world-card{display:block;overflow:hidden;border:1px solid currentColor;border-radius:1rem;text-decoration:none;color:inherit;background:rgba(255,255,255,.035)}.world-card img{width:100%;aspect-ratio:16/9;display:block;object-fit:cover}.world-card-body{padding:1rem}.world-card h4{margin:0 0 .4rem;font-size:1.1rem}.world-card p{margin:.3rem 0 .8rem}.world-card small{opacity:.65}.legal-links{display:flex;gap:.35rem}.legal-links a{color:inherit}.site-head .nav{justify-content:space-between}';
   document.head.appendChild(style);
 
   /* ---------- dev log + Patreon ---------- */
