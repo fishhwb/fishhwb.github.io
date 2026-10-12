@@ -12,6 +12,8 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    env:
+      VRCHAT_AUTH_COOKIE: ${{ secrets.VRCHAT_AUTH_COOKIE }}
     steps:
       - uses: actions/checkout@v4
       - name: De-sync scheduled public API request
