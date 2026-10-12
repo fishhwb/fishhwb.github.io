@@ -1,0 +1,29 @@
+name: Refresh VRChat worlds
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 5 * * *'
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: De-sync public API request
+        shell: bash
+        run: sleep $((RANDOM % 1800))
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh public world metadata
+        run: node .github/scripts/update-vrchat-worlds.mjs
+      - name: Commit metadata changes
+        shell: bash
+        run: |
+          if git diff --quiet -- assets/vrchat-worlds.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/vrchat-worlds.json
+          git commit -m "Refresh VRChat world metadata"
+          git push

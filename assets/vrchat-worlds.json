@@ -1,0 +1,14 @@
+{
+  "updatedAt": "2026-10-12T00:00:00Z",
+  "worldIds": [
+    "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56"
+  ],
+  "worlds": [
+    {
+      "id": "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
+      "name": "Clicker Game Prefab Preview",
+      "description": "Preview world for the FISH HWB VRChat clicker game prefab. Live VRChat metadata will replace this fallback when the updater runs.",
+      "url": "https://vrchat.com/home/world/wrld_2e9d399f-749f-43a5-958c-a524ad3bec56"
+    }
+  ]
+}

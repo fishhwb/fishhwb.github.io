@@ -2,4 +2,5 @@
 User-agent: *
 Allow: /
 Disallow: /auth/
+Disallow: /terms-of-friendship/
 Sitemap: https://fishhwb.github.io/sitemap.xml

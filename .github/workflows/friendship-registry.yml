@@ -1,0 +1,27 @@
+name: Friendship registry
+on:
+  issues:
+    types: [opened]
+permissions:
+  issues: write
+jobs:
+  acknowledge:
+    if: "${{ startsWith(github.event.issue.title, 'Friendship terms accepted: ') }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: 'Thank you for your friendship 🐟 Your name and acceptance date can now appear in the hidden friendship registry.'
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',
+              state_reason: 'completed'
+            });

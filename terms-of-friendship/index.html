@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#061523">
+<title>Terms of Friendship | FISH HWB</title>
+<link rel="icon" href="../assets/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{font-family:Archivo,system-ui,sans-serif;color:#eef8ff;background:#061523}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#174968 0,#082238 36%,#04111d 75%);min-height:100vh}a{color:#99dcff}.wrap{width:min(880px,calc(100% - 32px));margin:auto}.head{padding:26px 0 10px}.brand{display:inline-flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font-weight:800}.brand img{width:42px;height:42px;border-radius:50%}.card{margin:24px auto 64px;padding:clamp(22px,5vw,48px);background:rgba(5,18,30,.82);border:1px solid rgba(165,221,255,.22);border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.32);backdrop-filter:blur(16px)}.eyebrow{font:500 12px/1.2 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:#74d4ff}.joke{padding:14px 16px;border:1px solid #ffdb7a55;background:#ffdb7a10;border-radius:12px}.terms{counter-reset:fish;padding:0;list-style:none}.terms li{counter-increment:fish;padding:16px 0 16px 48px;border-bottom:1px solid #ffffff12;position:relative}.terms li:before{content:counter(fish);position:absolute;left:0;top:14px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#57c7ff1c;border:1px solid #74d4ff66;font:500 13px 'IBM Plex Mono',monospace}.sign{margin-top:30px;padding-top:24px;border-top:1px solid #ffffff22}.field{display:grid;gap:8px;margin:15px 0}.field input[type=text]{width:100%;padding:13px 14px;border-radius:10px;border:1px solid #9bdfff55;background:#03101b;color:#fff;font:inherit}.check{display:flex;gap:10px;align-items:flex-start;margin:18px 0}.check input{margin-top:4px}.button{border:0;border-radius:999px;padding:13px 20px;background:#8addff;color:#052033;font:800 15px Archivo;cursor:pointer}.button:disabled{opacity:.5;cursor:not-allowed}.thanks{margin-top:22px;padding:20px;border-radius:16px;background:#67e8a51c;border:1px solid #67e8a566}.registry{margin-top:38px}.registry ul{padding:0;list-style:none}.registry li{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid #ffffff12}.registry time{font-family:'IBM Plex Mono',monospace;font-size:12px;opacity:.72}.muted{opacity:.68;font-size:.92rem}.pending{opacity:.72;font-style:italic}@media(max-width:600px){.registry li{display:block}.card{border-radius:18px}}
+</style></head><body><header class="head"><div class="wrap"><a class="brand" href="../"><img src="../assets/fishhwb-mascot.png" alt=""><span>FISH HWB</span></a></div></header>
+<main class="wrap"><article class="card"><div class="eyebrow">classified friendship paperwork</div><h1>Terms of Friendship</h1>
+<p class="joke"><strong>Important legal-ish fish notice:</strong> this page is a meme, not a binding contract. Real consent, boundaries, privacy, safety and anyone's right to leave or change a friendship always override every joke written below.</p>
+<p>By choosing to accept this extremely serious and definitely-not-serious document, the undersigned acknowledges the following friendship lore:</p>
+<ol class="terms">
+<li><strong>Stupidity is covered.</strong> Bad jokes, questionable ideas, cursed experiments and “what happens if we try this?” are expected. Nobody is required to do anything unsafe, illegal or genuinely uncomfortable.</li>
+<li><strong>Camera clause.</strong> If you're knowingly taking part in a recording, stream or original video with Ded Zed, clips and edits may be made from that recording. Hidden recording is not granted by this page, and reasonable privacy/removal requests still matter.</li>
+<li><strong>Flirting may occur.</strong> Silly or flirty banter can happen. It stops when someone says no, asks for it to stop or clearly isn't enjoying it. The joke never outranks consent.</li>
+<li><strong>The friendship escape hatch has been “removed.”</strong> According to the meme, friendship can only advance to <em>Best Friend</em> after enough good times. According to reality, either person can step away whenever they want.</li>
+<li><strong>Testing stupid ideas is part of the job description.</strong> When summoned, friends are strongly encouraged to appear and help test nonsense when they're free. Availability, safety, common sense and actual responsibilities remain valid excuses.</li>
+<li><strong>Best Friend promotion.</strong> Promotion may occur after sufficient laughs, chaos, mutual trust, surviving the stupid ideas above and at least one story that sounds fake when retold.</li>
+</ol>
+<form id="friend-form" class="sign"><h2>Sign the nonsense</h2><div class="field"><label for="friend-name">Your name / name you want shown publicly</label><input id="friend-name" name="name" type="text" maxlength="60" autocomplete="name" required></div>
+<label class="check"><input id="friend-check" type="checkbox" required><span>I have read this nonsense, understand it is a joke, and voluntarily accept the Terms of Friendship.</span></label>
+<button class="button" type="submit">Accept friendship terms</button><p class="muted">Acceptance is recorded as a public GitHub issue so the list below can be shared. GitHub will open with a pre-filled record for you to submit.</p></form>
+<div id="thanks" class="thanks" hidden><h2>Thank you for your friendship 🐟</h2><p>Your signature is ready to be recorded. Submit the pre-filled GitHub page that opened, then come back here; the public registry will update from GitHub.</p></div>
+<section class="registry"><h2>Friends who accepted the terms</h2><p class="muted">Signed name and acceptance date only.</p><ul id="friend-list"><li class="pending">Loading the friendship registry…</li></ul></section>
+</article></main>
+<script>
+(function(){
+  'use strict';
+  var prefix='Friendship terms accepted: ', api='https://api.github.com/repos/fishhwb/fishhwb.github.io/issues?state=all&per_page=100&sort=created&direction=desc';
+  var list=document.getElementById('friend-list'), form=document.getElementById('friend-form'), thanks=document.getElementById('thanks');
+  function draw(items){
+    list.textContent='';
+    var matches=(items||[]).filter(function(x){return !x.pull_request&&String(x.title||'').indexOf(prefix)===0;});
+    if(!matches.length){var empty=document.createElement('li');empty.className='pending';empty.textContent='Nobody has signed the public registry yet. Suspicious.';list.appendChild(empty);return;}
+    matches.forEach(function(issue){
+      var li=document.createElement('li'), name=document.createElement('strong'), time=document.createElement('time');
+      name.textContent=String(issue.title).slice(prefix.length).trim()||'Mysterious Friend';
+      var d=new Date(issue.created_at); time.dateTime=issue.created_at; time.textContent=isNaN(d)?'date unknown':d.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});
+      li.append(name,time); list.appendChild(li);
+    });
+  }
+  function refresh(){fetch(api,{headers:{Accept:'application/vnd.github+json'},cache:'no-store'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(draw).catch(function(){list.innerHTML='<li class="pending">The registry could not be loaded right now.</li>';});}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var input=document.getElementById('friend-name'), check=document.getElementById('friend-check'), name=input.value.trim();
+    if(!name||!check.checked){form.reportValidity();return;}
+    var now=new Date(), date=now.toISOString().slice(0,10);
+    var title=prefix+name;
+    var body='## Friendship Terms acceptance\n\nSigned name: **'+name.replace(/[\r\n]+/g,' ')+'**\n\nDate accepted: **'+date+'**\n\n- [x] I read the Terms of Friendship.\n- [x] I understand this is a joke/meme, not a legally binding contract.\n- [x] I voluntarily accept the friendship terms.\n\nThis issue exists only as the public acceptance record used by the hidden friendship page.';
+    var url='https://github.com/fishhwb/fishhwb.github.io/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
+    thanks.hidden=false; thanks.scrollIntoView({behavior:'smooth',block:'nearest'}); window.open(url,'_blank','noopener');
+    try{localStorage.setItem('fish-friend-last',JSON.stringify({name:name,date:date}));}catch(_e){}
+  });
+  addEventListener('focus',refresh); refresh();
+})();
+</script></body></html>
