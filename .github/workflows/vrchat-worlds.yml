@@ -1,6 +1,10 @@
 name: Refresh VRChat worlds
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/scripts/update-vrchat-worlds.mjs'
+      - '.github/workflows/vrchat-worlds.yml'
   schedule:
     - cron: '23 5 * * *'
 permissions:
@@ -10,13 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: De-sync public API request
+      - name: De-sync scheduled public API request
+        if: github.event_name == 'schedule'
         shell: bash
         run: sleep $((RANDOM % 1800))
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Refresh public world metadata
+      - name: Refresh and discover public world metadata
         run: node .github/scripts/update-vrchat-worlds.mjs
       - name: Commit metadata changes
         shell: bash
