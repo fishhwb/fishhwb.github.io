@@ -1,3 +1,14 @@
-/* Compatibility shim: fish-refresh.js still loads the v7 stylesheet URL.
-   The live artwork is now the v8 stylised surface-fish / angler pass. */
-@import url("fish-approved-v8.css?v=8");
+/* Surface fish, anglerfish and abyss scan feature intentionally removed.
+   Jellyfish and lanternfish remain handled by the existing sea-life system. */
+
+.critter.clown,
+.critter.tang,
+.angler,
+.abyss .dark {
+  display: none !important;
+}
+
+/* The abyss remains visible normally now that the moving lure/scan mask is gone. */
+.abyss {
+  cursor: default;
+}
