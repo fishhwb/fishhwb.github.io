@@ -1,0 +1,92 @@
+name: Apply selected site v2 upgrades
+
+on:
+  push:
+    branches: [site-v2-selected-upgrades]
+    paths:
+      - '.github/workflows/apply-site-v2.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: site-v2-selected-upgrades
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build optimized mascot
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq webp
+          cwebp -quiet -q 84 -resize 768 0 assets/fishhwb-mascot.png -o assets/fishhwb-mascot.webp
+
+      - name: Integrate v2 into the live page
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text()
+
+          if 'assets/site-v2.css' not in s:
+              s = s.replace('<link rel="stylesheet" href="assets/style.css">', '<link rel="stylesheet" href="assets/style.css">\n<link rel="stylesheet" href="assets/site-v2.css">')
+
+          schema = '''<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Ded Zed","alternateName":["Our Fish Overlord","DedZedOffishal"],"url":"https://fishhwb.github.io/","sameAs":["https://github.com/dedzedofficial","https://www.twitch.tv/dedzedoffishal","https://www.youtube.com/channel/UCtcFAWZJeiEp_DOKy8U_YYg","https://open.spotify.com/artist/3G5lgBc7shS09fLh4ovfL4"]},{"@type":"WebSite","name":"FISH HWB","url":"https://fishhwb.github.io/","description":"Ded Zed's creator hub for streams, music, 3D work, VRChat worlds and open-source projects."}]}</script>'''
+          if 'application/ld+json' not in s:
+              s = s.replace('</head>', schema + '\n</head>')
+
+          # Heavy embeds only connect to third parties when the visitor gets near them.
+          domains = r'(?:player\.twitch\.tv|www\.twitch\.tv|www\.youtube-nocookie\.com|open\.spotify\.com|discord\.com)'
+          s = re.sub(r'<iframe\s+src="(https://'+domains+r'/[^"]*)"', r'<iframe data-src="\1"', s)
+
+          s = s.replace('Renders going up soon.', '3D files are indexed automatically.')
+          s = s.replace('Works in progress get posted in the Discord first.', 'Interactive models and renders appear here from the assets/3d folder.')
+
+          old = '<script src="assets/sea.js" defer></script>\n<script src="assets/extras.js" defer></script>'
+          new = '<script src="assets/sea.js" defer></script>\n<script src="assets/fish-refresh.js" defer></script>\n<script src="assets/site-v2.js" defer></script>\n<script src="assets/extras.js" defer></script>'
+          if 'assets/site-v2.js' not in s:
+              s = s.replace(old, new)
+
+          # WebP exists in the same commit, so avoid downloading the 1.3 MB PNG on normal pages.
+          s = s.replace('assets/fishhwb-mascot.png', 'assets/fishhwb-mascot.webp')
+          p.write_text(s)
+
+          # Remove the legacy direct GitHub API fetch. projects.json is generated server-side instead.
+          p = Path('assets/extras.js')
+          s = p.read_text()
+          old = """Promise.all(['dedzedofficial','fishhwb'].map(function(owner){\n      return getJSON('https://api.github.com/users/'+owner+'/repos?sort=pushed&per_page=100').catch(function(){return [];});\n    })).then(function(lists){"""
+          new = """getJSON('assets/projects.json', false).then(function(data){\n      var lists=[data.repos||[]];"""
+          if old in s:
+              s = s.replace(old, new)
+          p.write_text(s)
+
+          # Generated project pages should use the optimized mascot too.
+          p = Path('.github/scripts/build-site-content.mjs')
+          s = p.read_text().replace('../../assets/fishhwb-mascot.png', '../../assets/fishhwb-mascot.webp')
+          p.write_text(s)
+          PY
+
+      - name: Generate current project pages and gallery index
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node .github/scripts/build-site-content.mjs
+
+      - name: Remove this one-shot workflow and commit
+        shell: bash
+        run: |
+          git rm .github/workflows/apply-site-v2.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Integrate selected site v2 upgrades"
+          git push
