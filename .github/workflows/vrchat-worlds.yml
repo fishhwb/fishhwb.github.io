@@ -22,6 +22,8 @@ jobs:
         with:
           node-version: '22'
       - name: Refresh and discover public world metadata
+        env:
+          VRCHAT_AUTH_COOKIE: ${{ secrets.VRCHAT_AUTH_COOKIE }}
         run: node .github/scripts/update-vrchat-worlds.mjs
       - name: Commit metadata changes
         shell: bash
