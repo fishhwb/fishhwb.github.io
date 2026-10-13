@@ -191,32 +191,10 @@
     item('Projects','#projects');item('3D gallery','#models');item('Latest videos','#videos');
     var whats=el('button','','What’s new?');whats.type='button';whats.addEventListener('click',function(){var repo=(data.repos||[]).find(function(r){return r.release&&r.release.tag_name;})||(data.repos||[])[0];say(repo?(repo.name+' is the latest project update'+(repo.release&&repo.release.tag_name?' — '+repo.release.tag_name:'')+'.'):"I haven't got a fresh project update right now.");menu.hidden=true;});menu.insertBefore(whats,menu.firstChild);
     var random=el('button','','Random dive');random.type='button';random.addEventListener('click',function(){var ids=['stream','videos','music','models','projects','devlog','discord'];var target=document.getElementById(ids[Math.floor(Math.random()*ids.length)]);if(target)target.scrollIntoView({behavior:'smooth'});menu.hidden=true;});menu.appendChild(random);
-    var relics=el('button','','Seafloor log');relics.type='button';relics.addEventListener('click',function(){openRelicLog();menu.hidden=true;});menu.appendChild(relics);
     tools.addEventListener('click',function(e){e.stopPropagation();menu.hidden=!menu.hidden;});menu.addEventListener('click',function(e){e.stopPropagation();});root.append(tools,menu);
     document.addEventListener('click',function(){menu.hidden=true;});
     addEventListener('depth',function(e){var d=e.detail.depth;root.classList.toggle('buddy-zone-twilight',d>=200&&d<1000);root.classList.toggle('buddy-zone-midnight',d>=1000&&d<4000);root.classList.toggle('buddy-zone-abyss',d>=4000);});
     var music=document.getElementById('music');if(music&&'IntersectionObserver'in window)new IntersectionObserver(function(es){root.classList.toggle('buddy-music',es[0].isIntersecting);},{threshold:.35}).observe(music);
-  }
-
-  /* ---------- seabed relic hunt ---------- */
-  var RELICS={bones:'Ancient fish bones',bottle:'Message in a bottle',coin:'Lost abyss coin',chest:'Seafloor treasure'};
-  function loadRelics(){try{return JSON.parse(localStorage.getItem('fishhwb-relics')||'{}');}catch(e){return {};}}
-  function saveRelics(v){try{localStorage.setItem('fishhwb-relics',JSON.stringify(v));}catch(e){}}
-  function toast(text){var t=el('div','relic-toast',text);document.body.appendChild(t);setTimeout(function(){t.remove();},3600);}
-  function setupRelics(){
-    var abyss=document.querySelector('.abyss');if(abyss)abyss.removeAttribute('aria-hidden');
-    var picks=[['bones','.abyss .bones'],['bottle','.abyss .bottle'],['coin','.abyss .coin-lost'],['chest','.floor .chest']];
-    picks.forEach(function(pair){var id=pair[0],node=document.querySelector(pair[1]);if(!node)return;node.classList.add('v2-relic');node.tabIndex=0;node.setAttribute('role','button');node.setAttribute('aria-label','Investigate '+RELICS[id]);
-      function collect(e){if(e&&e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;if(e&&e.type==='keydown')e.preventDefault();var state=loadRelics();if(!state[id]){state[id]=new Date().toISOString();saveRelics(state);toast('Found: '+RELICS[id]);say('You found '+RELICS[id].toLowerCase()+'. I am absolutely keeping that.');}else toast(RELICS[id]+' already logged.');if(id==='chest')openRelicLog();}
-      node.addEventListener('click',collect);node.addEventListener('keydown',collect);
-    });
-  }
-  function openRelicLog(){
-    var old=document.querySelector('.relic-log');if(old)old.remove();var state=loadRelics(),modal=el('div','relic-log'),card=el('div','relic-card');modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');
-    card.append(el('h2','',"Seafloor archive"),el('p','',Object.keys(state).length+' of '+Object.keys(RELICS).length+' strange things recovered.'));
-    var ul=el('ul');Object.keys(RELICS).forEach(function(k){ul.appendChild(el('li','',(state[k]?'✓ ':'○ ')+RELICS[k]));});card.appendChild(ul);
-    if(Object.keys(state).length===Object.keys(RELICS).length)card.appendChild(el('p','',"Complete. You have officially looted the entire website. Cube'z denies involvement."));
-    var close=el('button','','Close');close.type='button';close.addEventListener('click',function(){modal.remove();});card.appendChild(close);modal.appendChild(card);modal.addEventListener('click',function(e){if(e.target===modal)modal.remove();});document.body.appendChild(modal);close.focus();
   }
 
   /* ---------- ambient life ---------- */
@@ -228,7 +206,7 @@
   function useOptimizedMascot(){var probe=new Image();probe.onload=function(){[].forEach.call(document.querySelectorAll('img[src$="fishhwb-mascot.png"]'),function(img){img.src='assets/fishhwb-mascot.webp';});};probe.src='assets/fishhwb-mascot.webp';}
 
   document.addEventListener('DOMContentLoaded',function(){
-    lazyMedia();renderGallery();setupRelics();addPlankton();useOptimizedMascot();
+    lazyMedia();renderGallery();addPlankton();useOptimizedMascot();
     projectDataPromise.then(function(data){
       upgradeBuddy(data);
       // extras.js starts its local JSON requests after this script. Give it a moment to

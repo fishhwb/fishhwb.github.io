@@ -73,17 +73,6 @@ iframe[data-src]{background:rgba(0,0,0,.18)}
 .buddy-zone-midnight .buddy-bubbles i,.buddy-zone-abyss .buddy-bubbles i{opacity:.7}
 @keyframes buddy-bubble{from{transform:translate(15px,18px);opacity:0}25%{opacity:.7}to{transform:translate(-5px,-90px);opacity:0}}
 
-/* ---------- abyss relic hunt ---------- */
-.abyss .found.v2-relic,.floor .chest.v2-relic{pointer-events:auto;cursor:pointer}
-.abyss .found.v2-relic:focus-visible,.floor .chest.v2-relic:focus-visible{outline:3px solid #ffcf3f;outline-offset:5px}
-.relic-toast{position:fixed;left:50%;bottom:28px;z-index:80;transform:translateX(-50%);max-width:min(520px,calc(100% - 32px));padding:12px 16px;border:2px solid #d9eef7;background:#06152a;color:#eef7fb;box-shadow:6px 6px 0 rgba(0,0,0,.35);font:500 .78rem/1.4 var(--mono)}
-.relic-log{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px;background:rgba(1,5,12,.78);backdrop-filter:blur(7px)}
-.relic-log[hidden]{display:none!important}
-.relic-card{width:min(560px,100%);max-height:min(680px,90vh);overflow:auto;border:2px solid #cfe8f5;background:#06152a;color:#eef7fb;padding:26px;box-shadow:10px 10px 0 #02060e}
-.relic-card h2{font:900 2.2rem/.95 var(--head);text-transform:uppercase;margin:0 0 12px}
-.relic-card ul{padding-left:20px}.relic-card li{margin:8px 0;color:#c8dce7}
-.relic-card button{border:1.5px solid #eef7fb;background:#eef7fb;color:#06152a;padding:10px 13px;cursor:pointer;font:700 .8rem/1 var(--head)}
-
 /* ---------- more realistic sea-life rendering ---------- */
 .critter{--fish-glow:rgba(255,255,255,.12);perspective:500px;transform-style:preserve-3d}
 .critter.clown,.critter.tang{width:calc(var(--size) * 1.32)}
@@ -107,18 +96,8 @@ iframe[data-src]{background:rgba(0,0,0,.18)}
 @media(prefers-reduced-motion:reduce){.critter .fish-pupil,.critter .lights circle,.buddy-bubbles i,.v2-plankton i{animation:none!important}}
 
 
-/* ---------- seamless abyss transition ---------- */
+/* ---------- continuous abyss transition ---------- */
 .abyss{
-  background:
-    radial-gradient(ellipse at 50% 18%,rgba(29,95,124,.18) 0%,rgba(29,95,124,0) 52%),
-    linear-gradient(180deg,#071a31 0%,#06172b 24%,#04111f 58%,#030914 82%,#040d1c 100%);
-}
-.abyss .dark{
-  background:radial-gradient(circle 240px at var(--lx,50%) var(--ly,50%),rgba(1,2,8,0) 0 38%,rgba(1,2,8,.18) 62%,rgba(1,2,8,.44) 100%);
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 16%,#000 84%,transparent 100%);
-  mask-image:linear-gradient(to bottom,transparent 0%,#000 16%,#000 84%,transparent 100%);
-}
-.abyss .glow{
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%);
-  mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%);
+  height:clamp(360px,58vh,620px);
+  background:linear-gradient(180deg,#071a31 0%,#06162a 32%,#05111f 68%,#040d1c 100%);
 }
