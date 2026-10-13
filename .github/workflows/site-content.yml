@@ -37,19 +37,11 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq webp
 
-      - name: Optimize large site images
+      - name: Optimize the main mascot
         shell: bash
         run: |
           if [ -f assets/fishhwb-mascot.png ]; then
             cwebp -quiet -q 84 -resize 768 0 assets/fishhwb-mascot.png -o assets/fishhwb-mascot.webp
-          fi
-          if [ -d assets/3d ]; then
-            find assets/3d -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) -print0 | while IFS= read -r -d '' image; do
-              out="${image%.*}.webp"
-              if [ ! -f "$out" ] || [ "$image" -nt "$out" ]; then
-                cwebp -quiet -q 84 "$image" -o "$out" || true
-              fi
-            done
           fi
 
       - name: Build project hub, 3D index and sitemap
@@ -57,15 +49,34 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: node .github/scripts/build-site-content.mjs
 
+      - name: Ignore timestamp-only JSON changes
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          for file in ('assets/projects.json', 'assets/gallery.json'):
+              try:
+                  old_text = subprocess.check_output(['git','show','HEAD:'+file], text=True)
+                  old = json.loads(old_text)
+                  new = json.loads(Path(file).read_text())
+              except Exception:
+                  continue
+              old.pop('updatedAt', None)
+              new.pop('updatedAt', None)
+              if old == new:
+                  Path(file).write_text(old_text)
+          PY
+
       - name: Commit generated content
         shell: bash
         run: |
-          if git diff --quiet -- assets/projects.json assets/gallery.json assets/3d assets/fishhwb-mascot.webp projects sitemap.xml; then
+          if git diff --quiet -- assets/projects.json assets/gallery.json assets/fishhwb-mascot.webp projects sitemap.xml; then
             echo "Generated content is already current."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/projects.json assets/gallery.json assets/3d assets/fishhwb-mascot.webp projects sitemap.xml
+          git add assets/projects.json assets/gallery.json assets/fishhwb-mascot.webp projects sitemap.xml
           git commit -m "Refresh generated site content"
           git push
