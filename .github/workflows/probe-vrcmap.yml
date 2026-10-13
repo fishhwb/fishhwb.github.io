@@ -1,0 +1,46 @@
+name: Probe public VRChat world indexes
+on:
+  push:
+    paths:
+      - '.github/workflows/probe-vrcmap.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe VRCmap and public indexes
+        shell: bash
+        run: |
+          set -u
+          echo '=== VRCmap homepage ==='
+          curl -LfsS https://vrcmap.com/ -o /tmp/vrcmap.html || true
+          grep -oE '<script[^>]+src="[^"]+' /tmp/vrcmap.html | head -20 || true
+          python - <<'PY'
+          import re, pathlib, subprocess, urllib.parse
+          html=pathlib.Path('/tmp/vrcmap.html').read_text(errors='ignore') if pathlib.Path('/tmp/vrcmap.html').exists() else ''
+          srcs=re.findall(r'<script[^>]+src="([^"]+)', html)
+          print('scripts', srcs[:20])
+          for i,src in enumerate(srcs[:20]):
+              u=urllib.parse.urljoin('https://vrcmap.com/',src)
+              try:
+                  data=subprocess.check_output(['curl','-LfsS',u],text=True,timeout=20)
+              except Exception:
+                  continue
+              hits=sorted(set(re.findall(r'https?://[^"\'` ]+|/api/[A-Za-z0-9_?&=./{}:-]+',data)))
+              if hits:
+                  print('\nSCRIPT',u)
+                  for h in hits[:100]: print(h[:300])
+          PY
+          echo '=== likely endpoints ==='
+          for u in \
+            'https://vrcmap.com/api/search?q=DedZedOffishal' \
+            'https://vrcmap.com/api/worlds?search=DedZedOffishal' \
+            'https://vrcmap.com/api/worlds?author=DedZedOffishal' \
+            'https://vrcmap.com/api/worlds?authorId=usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2' \
+            'https://vrcavatarsearch.nekosunevr.co.uk/api/v1/worlds/search?search=DedZedOffishal' \
+            'https://vrcavatarsearch.nekosunevr.co.uk/api/v1/worlds/by-author/usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2'; do
+            echo "--- $u"
+            curl -L -sS -w '\nHTTP:%{http_code}\n' "$u" | head -c 12000
+            echo
+          done
