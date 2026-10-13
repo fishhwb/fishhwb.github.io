@@ -101,4 +101,9 @@
   function run(){upgradeFish();upgradeAngler();}
   run();if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true});addEventListener('load',run,{once:true});
   var observer=new MutationObserver(function(changes){for(var i=0;i<changes.length;i++){if(changes[i].addedNodes&&changes[i].addedNodes.length){upgradeFish();break;}}});observer.observe(document.body,{childList:true,subtree:true});
+  // Approved concept-art overlay: surface fish + angler only.
+  var approvedV7 = document.createElement('script');
+  approvedV7.src = 'assets/fish-approved-v7.js';
+  approvedV7.async = false;
+  document.head.appendChild(approvedV7);
 })();
