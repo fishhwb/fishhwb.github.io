@@ -1,12 +1,54 @@
 {
-  "updatedAt": "2026-10-13T19:11:50.181Z",
+  "updatedAt": "2026-10-13T19:41:35.097Z",
   "ownerUserId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
-  "worldIds": [
-    "wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567",
+  "seedWorldIds": [
     "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
+    "wrld_5ee23cc0-0821-49e2-82b6-0dd8b94d47f8",
+    "wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567",
+    "wrld_873faac1-2a30-4574-be0b-d1a5856f5402",
+    "wrld_c531ec2c-4a65-4695-8d5a-6b46100f45a5",
+    "wrld_b2350f58-8dd4-499e-ad26-a065114a4d39"
+  ],
+  "worldIds": [
+    "wrld_c531ec2c-4a65-4695-8d5a-6b46100f45a5",
+    "wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567",
+    "wrld_b2350f58-8dd4-499e-ad26-a065114a4d39",
+    "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
+    "wrld_5ee23cc0-0821-49e2-82b6-0dd8b94d47f8",
     "wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
   ],
   "worlds": [
+    {
+      "id": "wrld_c531ec2c-4a65-4695-8d5a-6b46100f45a5",
+      "name": "Murder Party",
+      "description": "Explore the back streets of the crime scene and try and solve the mystery on who died tonight‚ you might get a cookie out of it․ The world was build as more of a Movie watch space as well as a space for people to take photos in a back alley crime scene",
+      "thumbnailImageUrl": "https://api.vrchat.cloud/api/1/image/file_5f013fd8-5dd7-4061-b842-ed7977e9d99a/2/256",
+      "imageUrl": "https://api.vrchat.cloud/api/1/file/file_5f013fd8-5dd7-4061-b842-ed7977e9d99a/2/file",
+      "capacity": 32,
+      "recommendedCapacity": 16,
+      "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
+      "authorName": "DedZedOffishal",
+      "visits": 730,
+      "favorites": 30,
+      "popularity": 4,
+      "heat": 2,
+      "releaseStatus": "public",
+      "publicationDate": "2026-01-02T02:35:45.157Z",
+      "labsPublicationDate": "2025-02-10T19:36:29.488Z",
+      "platforms": [],
+      "tags": [
+        "author_tag_chill",
+        "author_tag_muder_mystery",
+        "author_tag_hangout",
+        "author_tag_alley",
+        "system_monetized_world",
+        "author_tag_photography",
+        "system_approved",
+        "content_horror"
+      ],
+      "updatedAt": "2026-10-06T12:37:46.822Z",
+      "url": "https://vrchat.com/home/world/wrld_c531ec2c-4a65-4695-8d5a-6b46100f45a5"
+    },
     {
       "id": "wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567",
       "name": "Greggs",
@@ -37,6 +79,37 @@
       "url": "https://vrchat.com/home/world/wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567"
     },
     {
+      "id": "wrld_b2350f58-8dd4-499e-ad26-a065114a4d39",
+      "name": "DayScare",
+      "description": "VJQYQX KZQFJZPZ QEB LQEBK",
+      "thumbnailImageUrl": "https://api.vrchat.cloud/api/1/image/file_cec7cce7-fedc-4e81-a329-9857f0318e66/1/256",
+      "imageUrl": "https://api.vrchat.cloud/api/1/file/file_cec7cce7-fedc-4e81-a329-9857f0318e66/1/file",
+      "capacity": 32,
+      "recommendedCapacity": 16,
+      "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
+      "authorName": "DedZedOffishal",
+      "visits": 562,
+      "favorites": 13,
+      "popularity": 4,
+      "heat": 4,
+      "releaseStatus": "public",
+      "publicationDate": "2026-10-04T04:07:48.509Z",
+      "labsPublicationDate": "2026-09-23T00:31:35.370Z",
+      "platforms": [],
+      "tags": [
+        "content_horror",
+        "content_adult",
+        "feature_emoji_disabled",
+        "feature_stickers_disabled",
+        "feature_prints_disabled",
+        "feature_drones_disabled",
+        "feature_props_disabled",
+        "system_approved"
+      ],
+      "updatedAt": "2026-10-04T11:33:02.251Z",
+      "url": "https://vrchat.com/home/world/wrld_b2350f58-8dd4-499e-ad26-a065114a4d39"
+    },
+    {
       "id": "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
       "name": "Echo Reef",
       "description": "Welcome to Echo Reef a calm‚ oceanlit hangout space filled with soft ambience‚ glowing coral‚ and gentle underwater soundscapes․ Whether youre here to chill with friends‚ explore the reef‚ or just escape the noise of the surface world‚ the deep is always ready to welcome you․ We also have the Twilight Zone a place of the horrors you see around From Angler Fish to a Goblin Shark explore and have fun We have our own Clicker Game （Yes FISH CLICKER） as well as a fish Scanner to explore with while the VIP users get a single NPC interaction",
@@ -65,6 +138,36 @@
       ],
       "updatedAt": "2026-02-24T23:34:43.347Z",
       "url": "https://vrchat.com/home/world/wrld_2e9d399f-749f-43a5-958c-a524ad3bec56"
+    },
+    {
+      "id": "wrld_5ee23cc0-0821-49e2-82b6-0dd8b94d47f8",
+      "name": "Marked Realms",
+      "description": "Marked Realms is a actually fully working Tattoo Studio where you can tattoo on your friends and even strangers‚ claim one of the 8 tables and start designing․ There are plans for more this project and those will be coming more in the future so please check it out before stuff changes Marked Realms は、実際に完全に機能するタトゥースタジオです。友達や見知らぬ人にタトゥーを入れることができ、8つのテーブルのいずれかを確保してデザインを始められます。 このプロジェクトには今後さらに多くの計画があり、将来的に追加されていく予定なので、変更が入る前にぜひチェックしてみてください。",
+      "thumbnailImageUrl": "https://api.vrchat.cloud/api/1/image/file_ae146a99-5d20-4297-9a7c-6de666bd6324/3/256",
+      "imageUrl": "https://api.vrchat.cloud/api/1/file/file_ae146a99-5d20-4297-9a7c-6de666bd6324/3/file",
+      "capacity": 32,
+      "recommendedCapacity": 32,
+      "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
+      "authorName": "DedZedOffishal",
+      "visits": 21316,
+      "favorites": 1491,
+      "popularity": 6,
+      "heat": 2,
+      "releaseStatus": "public",
+      "publicationDate": "2025-07-24T15:32:31.190Z",
+      "labsPublicationDate": "2025-07-22T08:01:41.295Z",
+      "platforms": [],
+      "tags": [
+        "author_tag_tattoo",
+        "author_tag_avatar",
+        "author_tag_tattoostudio",
+        "content_adult",
+        "author_tag_asmr",
+        "author_tag_artistic",
+        "system_approved"
+      ],
+      "updatedAt": "2026-02-06T19:38:09.129Z",
+      "url": "https://vrchat.com/home/world/wrld_5ee23cc0-0821-49e2-82b6-0dd8b94d47f8"
     },
     {
       "id": "wrld_873faac1-2a30-4574-be0b-d1a5856f5402",
