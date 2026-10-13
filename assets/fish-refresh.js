@@ -1,16 +1,16 @@
-// 2026 FISH HWB sea-life art v5.
-// Unifies every creature around the Aurora Jelly's translucent, bioluminescent visual language.
+// 2026 FISH HWB sea-life art v6.
+// Richer Aurora biology: preserve the successful jelly, deepen every fish with layered anatomy.
 (function(){
-  ['v3','v4'].forEach(function(v){
+  ['v3','v4','v5'].forEach(function(v){
     var old = document.querySelector('link[data-fish-art-'+v+']');
     if(old) old.remove();
   });
-  var artStyle = document.querySelector('link[data-fish-art-v5]');
+  var artStyle = document.querySelector('link[data-fish-art-v6]');
   if(!artStyle){
     artStyle = document.createElement('link');
     artStyle.rel = 'stylesheet';
-    artStyle.href = 'assets/fish-art-v5.css';
-    artStyle.dataset.fishArtV5 = '1';
+    artStyle.href = 'assets/fish-art-v6.css';
+    artStyle.dataset.fishArtV6 = '1';
     document.head.appendChild(artStyle);
   }
 
@@ -19,165 +19,86 @@
   function variant(){ return count % 3; }
   function palette(v){
     return v === 1
-      ? { glow:'#7cf7ff', mid:'#53d6ff', deep:'#4c49d8', soft:'#dffcff' }
+      ? {glow:'#7cf7ff',mid:'#53d6ff',deep:'#4c49d8',soft:'#e9ffff',accent:'#9b8cff'}
       : v === 2
-        ? { glow:'#ffc45d', mid:'#ff8fb8', deep:'#b94c8f', soft:'#fff1cf' }
-        : { glow:'#ff7ed8', mid:'#bd70ff', deep:'#6d46d8', soft:'#ffe4f7' };
+        ? {glow:'#ffc45d',mid:'#ff8fb8',deep:'#b94c8f',soft:'#fff5dc',accent:'#ff72cf'}
+        : {glow:'#ff7ed8',mid:'#bd70ff',deep:'#6d46d8',soft:'#fff0fb',accent:'#6ee7ff'};
   }
 
-  function auroraReef(id, v){
-    var p = palette(v);
-    return '<svg class="fish-art aurora-reef" viewBox="0 0 270 160" aria-hidden="true">' +
-      '<defs>' +
-        '<radialGradient id="'+id+'-body" cx="64%" cy="36%" r="78%"><stop offset="0" stop-color="#fff" stop-opacity=".84"/><stop offset=".18" stop-color="'+p.glow+'" stop-opacity=".72"/><stop offset=".56" stop-color="'+p.mid+'" stop-opacity=".48"/><stop offset="1" stop-color="'+p.deep+'" stop-opacity=".16"/></radialGradient>' +
-        '<linearGradient id="'+id+'-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset=".35" stop-color="'+p.glow+'" stop-opacity=".5"/><stop offset="1" stop-color="'+p.deep+'" stop-opacity=".03"/></linearGradient>' +
-        '<radialGradient id="'+id+'-core"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".3" stop-color="'+p.glow+'" stop-opacity=".62"/><stop offset="1" stop-color="'+p.glow+'" stop-opacity="0"/></radialGradient>' +
-        '<filter id="'+id+'-glow"><feGaussianBlur stdDeviation="2.4"/></filter>' +
-        '<clipPath id="'+id+'-clip"><path d="M55 81C58 40 96 20 143 24c50 4 85 34 84 68-2 38-40 64-90 60-48-4-85-29-82-71z"/></clipPath>' +
-      '</defs>' +
-      '<g class="tail"><path d="M60 81C40 67 22 51 7 34c8 20 10 34 8 47-1 14-6 29-15 46 20-12 39-27 61-43z" fill="url(#'+id+'-fin)"/><path d="M14 47c15 10 28 21 41 34M10 81h46M13 116c16-10 29-21 42-33" fill="none" stroke="'+p.soft+'" stroke-opacity=".2" stroke-width="1"/></g>' +
-      '<path class="dorsal" d="M83 46C99 8 145 3 187 26c-32-4-62 6-88 27z" fill="url(#'+id+'-fin)"/>' +
-      '<path class="streamer" d="M128 31C146 2 169-4 192 4c-16 13-24 30-27 51-2 14-3 30-3 49-8-28-19-52-34-73z" fill="url(#'+id+'-fin)" opacity=".86"/>' +
-      '<path class="ventral" d="M105 143c22 7 44 8 67 1-18 17-40 24-62 19-5-6-7-12-5-20z" fill="url(#'+id+'-fin)"/>' +
-      '<path class="aurora-body" d="M55 81C58 40 96 20 143 24c50 4 85 34 84 68-2 38-40 64-90 60-48-4-85-29-82-71z" fill="url(#'+id+'-body)" stroke="'+p.glow+'" stroke-opacity=".26" stroke-width="1.2"/>' +
-      '<g clip-path="url(#'+id+'-clip)">' +
-        '<ellipse class="inner-core" cx="145" cy="88" rx="47" ry="34" fill="url(#'+id+'-core)" opacity=".5"/>' +
-        '<path class="inner-vein" d="M76 85c35-15 81-15 121 2" fill="none" stroke="'+p.glow+'" stroke-opacity=".3" stroke-width="2"/>' +
-        '<path class="aurora-band" d="M78 51c32-17 80-19 119-3" fill="none" stroke="'+p.soft+'" stroke-opacity=".28" stroke-width="8" stroke-linecap="round"/>' +
-        '<g fill="'+p.soft+'" opacity=".34"><circle cx="98" cy="62" r="1.4"/><circle cx="116" cy="50" r="1"/><circle cx="133" cy="72" r="1.2"/><circle cx="157" cy="55" r="1.1"/><circle cx="177" cy="75" r="1.3"/><circle cx="118" cy="105" r="1.1"/><circle cx="152" cy="115" r="1.4"/></g>' +
-      '</g>' +
-      '<path class="pectoral" d="M159 98c-19 3-36 14-49 31 23 1 43-7 57-24z" fill="url(#'+id+'-fin)"/>' +
-      '<path d="M194 63c-5 11-5 26 1 36" fill="none" stroke="'+p.soft+'" stroke-opacity=".22" stroke-width="1.1"/>' +
-      '<ellipse cx="209" cy="62" rx="5.2" ry="5.6" fill="'+p.soft+'" fill-opacity=".5"/><ellipse class="fish-pupil" cx="210" cy="62.5" rx="2" ry="2.5" fill="'+p.deep+'"/><circle cx="211" cy="61" r=".7" fill="#fff"/>' +
-      '<path d="M223 87c4 .7 8 0 11-2.5" fill="none" stroke="'+p.soft+'" stroke-opacity=".32" stroke-width="1.1" stroke-linecap="round"/>' +
-    '</svg>';
+  function reefScales(p){
+    var pts=[[104,65],[122,57],[140,64],[158,55],[176,65],[194,59],[112,82],[132,76],[151,84],[171,78],[191,86],[118,101],[139,96],[160,104],[181,99],[130,118],[153,116],[174,116]];
+    return '<g class="scale-field" fill="none" stroke="'+p.soft+'" stroke-opacity=".28" stroke-width=".85">' +
+      pts.map(function(q,i){ return '<path class="scale-cell" d="M'+q[0]+' '+q[1]+'q7 7 14 0q-7-7-14 0z" opacity="'+(.34+(i%4)*.08)+'"/>'; }).join('') +
+    '</g>';
   }
 
-  function auroraGlider(id, v){
-    var p = palette(v);
-    return '<svg class="fish-art aurora-glider" viewBox="0 0 300 130" aria-hidden="true">' +
-      '<defs>' +
-        '<linearGradient id="'+id+'-body" x1="0" y1=".2" x2="1" y2=".7"><stop offset="0" stop-color="'+p.deep+'" stop-opacity=".22"/><stop offset=".28" stop-color="'+p.mid+'" stop-opacity=".55"/><stop offset=".58" stop-color="'+p.glow+'" stop-opacity=".7"/><stop offset=".82" stop-color="'+p.deep+'" stop-opacity=".4"/><stop offset="1" stop-color="#0c1832" stop-opacity=".2"/></linearGradient>' +
-        '<linearGradient id="'+id+'-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".56"/><stop offset=".38" stop-color="'+p.glow+'" stop-opacity=".44"/><stop offset="1" stop-color="'+p.deep+'" stop-opacity=".02"/></linearGradient>' +
-        '<radialGradient id="'+id+'-core"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset=".28" stop-color="'+p.glow+'" stop-opacity=".5"/><stop offset="1" stop-color="'+p.glow+'" stop-opacity="0"/></radialGradient>' +
-      '</defs>' +
-      '<g class="tail"><path d="M63 65L11 26c12 18 15 31 14 40-1 10-5 23-16 38l55-34z" fill="url(#'+id+'-fin)"/><path d="M18 37l40 27M14 66h43M18 95l40-27" fill="none" stroke="'+p.soft+'" stroke-opacity=".18" stroke-width=".9"/></g>' +
-      '<path class="dorsal" d="M94 38c38-23 93-24 139-4-45-5-88 0-128 17z" fill="url(#'+id+'-fin)"/>' +
-      '<path class="ventral" d="M113 95c36 12 81 13 121 3-37 20-82 24-115 13z" fill="url(#'+id+'-fin)"/>' +
-      '<path class="aurora-body" d="M58 65c21-29 73-44 134-35 51 7 87 25 98 42-10 19-49 36-101 38-61 2-109-12-131-45z" fill="url(#'+id+'-body)" stroke="'+p.glow+'" stroke-opacity=".2" stroke-width="1.1"/>' +
-      '<ellipse class="inner-core" cx="172" cy="68" rx="58" ry="25" fill="url(#'+id+'-core)" opacity=".34"/>' +
-      '<path class="inner-vein" d="M81 71c51-12 112-9 164 7" fill="none" stroke="'+p.glow+'" stroke-opacity=".25" stroke-width="1.7"/>' +
-      '<path class="aurora-band" d="M79 47c53-15 121-12 174 9" fill="none" stroke="'+p.soft+'" stroke-opacity=".22" stroke-width="7" stroke-linecap="round"/>' +
-      '<g class="scale-specks" fill="'+p.soft+'" opacity=".27"><circle cx="104" cy="59" r="1"/><circle cx="121" cy="49" r="1.2"/><circle cx="140" cy="63" r=".9"/><circle cx="160" cy="48" r="1.1"/><circle cx="183" cy="58" r="1.2"/><circle cx="205" cy="47" r=".9"/><circle cx="222" cy="66" r="1.1"/><circle cx="128" cy="82" r="1"/><circle cx="174" cy="88" r="1.2"/><circle cx="216" cy="85" r=".9"/></g>' +
-      '<path class="pectoral" d="M183 73c-20 5-38 14-51 28 23 1 42-5 57-21z" fill="url(#'+id+'-fin)"/>' +
-      '<path d="M238 50c-4 8-3 20 2 28" fill="none" stroke="'+p.soft+'" stroke-opacity=".2" stroke-width="1"/>' +
-      '<ellipse cx="258" cy="54" rx="4.8" ry="5.1" fill="'+p.soft+'" fill-opacity=".44"/><ellipse class="fish-pupil" cx="259" cy="54.2" rx="1.8" ry="2.2" fill="'+p.deep+'"/><circle cx="260" cy="53" r=".65" fill="#fff"/>' +
-      '<path d="M276 72c4 .7 7 0 10-2" fill="none" stroke="'+p.soft+'" stroke-opacity=".3" stroke-width="1" stroke-linecap="round"/>' +
-    '</svg>';
+  function auroraReef(id,v){
+    var p=palette(v);
+    return `<svg class="fish-art aurora-reef-v6" viewBox="0 0 320 190" aria-hidden="true">
+      <defs>
+        <radialGradient id="${id}-body" cx="62%" cy="34%" r="82%"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".18" stop-color="${p.glow}" stop-opacity=".76"/><stop offset=".52" stop-color="${p.mid}" stop-opacity=".5"/><stop offset=".8" stop-color="${p.deep}" stop-opacity=".24"/><stop offset="1" stop-color="#10152e" stop-opacity=".08"/></radialGradient>
+        <linearGradient id="${id}-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".72"/><stop offset=".3" stop-color="${p.glow}" stop-opacity=".48"/><stop offset=".72" stop-color="${p.accent}" stop-opacity=".25"/><stop offset="1" stop-color="${p.deep}" stop-opacity=".02"/></linearGradient>
+        <radialGradient id="${id}-core"><stop offset="0" stop-color="#fff" stop-opacity=".98"/><stop offset=".3" stop-color="${p.glow}" stop-opacity=".66"/><stop offset="1" stop-color="${p.glow}" stop-opacity="0"/></radialGradient>
+        <linearGradient id="${id}-rim"><stop offset="0" stop-color="${p.soft}" stop-opacity="0"/><stop offset=".48" stop-color="${p.soft}" stop-opacity=".7"/><stop offset="1" stop-color="${p.soft}" stop-opacity="0"/></linearGradient>
+        <clipPath id="${id}-clip"><path d="M65 96C67 46 112 23 164 26c57 4 99 37 98 78-1 43-45 75-104 70-54-4-96-34-93-78z"/></clipPath>
+      </defs>
+      <g class="tail fin-membrane"><path d="M72 96C47 77 24 55 5 31c10 27 12 47 10 65-2 19-8 39-15 60 23-17 47-36 74-56z" fill="url(#${id}-fin)"/><g class="fin-rays" fill="none" stroke="${p.soft}" stroke-opacity=".32" stroke-width="1"><path class="fin-ray" d="M66 94L14 45M66 96L11 76M67 99L8 111M69 101L15 143"/></g></g>
+      <g class="dorsal fin-membrane"><path d="M92 55C111 9 166 0 217 27c-41-2-79 10-111 38z" fill="url(#${id}-fin)"/><g fill="none" stroke="${p.soft}" stroke-opacity=".26" stroke-width=".9"><path class="fin-ray" d="M105 50L129 18M120 46L153 10M137 43L178 11M155 42L198 19"/></g></g>
+      <g class="streamer fin-membrane"><path d="M150 36C167 2 198-8 226 5c-20 16-31 38-35 65-3 19-3 40-2 62-11-40-24-72-39-96z" fill="url(#${id}-fin)" opacity=".9"/><path d="M166 34c11-14 24-23 40-27M175 52c8-17 18-30 30-40" fill="none" stroke="${p.soft}" stroke-opacity=".28" stroke-width="1"/></g>
+      <g class="ventral fin-membrane"><path d="M119 163c27 10 57 10 86 0-23 24-50 34-79 26-6-7-8-16-7-26z" fill="url(#${id}-fin)"/><path d="M130 169l8 15M149 168l4 18M168 168v17M187 165l-4 15" fill="none" stroke="${p.soft}" stroke-opacity=".23" stroke-width=".9"/></g>
+      <path class="aurora-body" d="M65 96C67 46 112 23 164 26c57 4 99 37 98 78-1 43-45 75-104 70-54-4-96-34-93-78z" fill="url(#${id}-body)" stroke="${p.glow}" stroke-opacity=".3" stroke-width="1.25"/>
+      <g clip-path="url(#${id}-clip)"><ellipse class="inner-core" cx="165" cy="101" rx="56" ry="41" fill="url(#${id}-core)" opacity=".48"/><ellipse class="organ" cx="146" cy="111" rx="20" ry="12" fill="${p.accent}" fill-opacity=".18"/><ellipse class="organ" cx="176" cy="105" rx="13" ry="9" fill="${p.glow}" fill-opacity=".2"/><path class="inner-vein" d="M86 101c40-19 91-20 138 1" fill="none" stroke="${p.glow}" stroke-opacity=".38" stroke-width="2"/><path class="branch-vein" d="M123 95c8-18 17-32 30-43M145 92c12-18 27-31 45-40M150 105c11 14 19 30 22 49M178 101c15 13 26 27 33 44" fill="none" stroke="${p.glow}" stroke-opacity=".2" stroke-width="1.2"/><path class="aurora-band" d="M88 60c39-23 98-25 145-2" fill="none" stroke="url(#${id}-rim)" stroke-width="12" stroke-linecap="round"/>${reefScales(p)}<g fill="${p.soft}" opacity=".44"><circle cx="111" cy="49" r="1.4"/><circle cx="134" cy="44" r="1"/><circle cx="158" cy="53" r="1.2"/><circle cx="184" cy="47" r="1.3"/><circle cx="208" cy="63" r="1.1"/><circle cx="102" cy="118" r="1"/><circle cx="127" cy="133" r="1.4"/><circle cx="155" cy="138" r="1"/><circle cx="187" cy="134" r="1.2"/><circle cx="216" cy="120" r="1.1"/></g></g>
+      <g class="pectoral fin-membrane"><path d="M182 111c-24 5-46 20-61 43 28 1 51-10 69-33z" fill="url(#${id}-fin)"/><path d="M177 115l-44 31M181 119l-34 30M184 123l-20 24" fill="none" stroke="${p.soft}" stroke-opacity=".3" stroke-width=".9"/></g>
+      <path class="rim-light" d="M83 78c28-35 82-49 131-31" fill="none" stroke="${p.soft}" stroke-opacity=".38" stroke-width="4.5" stroke-linecap="round"/><path d="M221 72c-6 13-5 31 2 43" fill="none" stroke="${p.soft}" stroke-opacity=".26" stroke-width="1.2"/>
+      <g class="eye"><ellipse cx="240" cy="70" rx="7.4" ry="7.8" fill="${p.soft}" fill-opacity=".58"/><ellipse cx="240" cy="70" rx="5" ry="5.4" fill="${p.deep}" fill-opacity=".45"/><ellipse class="fish-pupil" cx="241" cy="70.5" rx="2.3" ry="2.8" fill="#08101c"/><circle cx="242.2" cy="68.8" r="1" fill="#fff"/></g><path d="M256 101c6 1 11 0 15-3.5" fill="none" stroke="${p.soft}" stroke-opacity=".36" stroke-width="1.1" stroke-linecap="round"/>
+    </svg>`;
   }
 
-  // Kept deliberately unchanged from the previous pass.
+  function auroraGlider(id,v){
+    var p=palette(v);
+    return `<svg class="fish-art aurora-glider-v6" viewBox="0 0 350 160" aria-hidden="true">
+      <defs><linearGradient id="${id}-body" x1="0" y1=".15" x2="1" y2=".75"><stop offset="0" stop-color="${p.deep}" stop-opacity=".2"/><stop offset=".24" stop-color="${p.mid}" stop-opacity=".52"/><stop offset=".52" stop-color="${p.glow}" stop-opacity=".75"/><stop offset=".76" stop-color="${p.accent}" stop-opacity=".48"/><stop offset="1" stop-color="#101832" stop-opacity=".12"/></linearGradient><linearGradient id="${id}-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".62"/><stop offset=".35" stop-color="${p.glow}" stop-opacity=".4"/><stop offset=".72" stop-color="${p.accent}" stop-opacity=".18"/><stop offset="1" stop-color="${p.deep}" stop-opacity=".02"/></linearGradient><radialGradient id="${id}-core"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".3" stop-color="${p.glow}" stop-opacity=".55"/><stop offset="1" stop-color="${p.glow}" stop-opacity="0"/></radialGradient><clipPath id="${id}-clip"><path d="M68 80c24-35 83-52 151-41 60 9 103 31 118 50-15 22-60 41-121 43-68 2-124-16-148-52z"/></clipPath></defs>
+      <g class="tail fin-membrane"><path d="M73 79L11 28c16 23 19 40 17 52-1 13-7 29-21 49l68-44z" fill="url(#${id}-fin)"/><path d="M18 41l50 36M14 79h52M18 117l50-34" fill="none" stroke="${p.soft}" stroke-opacity=".3" stroke-width="1"/></g>
+      <g class="dorsal fin-membrane"><path d="M108 48c45-30 111-31 167-6-55-5-107 1-155 23z" fill="url(#${id}-fin)"/><path d="M123 50l20-22M149 46l21-25M178 44l18-24M208 43l16-18M238 43l12-13" fill="none" stroke="${p.soft}" stroke-opacity=".27" stroke-width=".9"/></g>
+      <g class="ventral fin-membrane"><path d="M127 116c43 16 96 17 143 4-43 27-96 31-136 16z" fill="url(#${id}-fin)"/><path d="M148 122l7 13M176 125l4 15M205 125v15M234 123l-5 13" fill="none" stroke="${p.soft}" stroke-opacity=".24" stroke-width=".85"/></g>
+      <path class="aurora-body" d="M68 80c24-35 83-52 151-41 60 9 103 31 118 50-15 22-60 41-121 43-68 2-124-16-148-52z" fill="url(#${id}-body)" stroke="${p.glow}" stroke-opacity=".24" stroke-width="1.2"/>
+      <g clip-path="url(#${id}-clip)"><ellipse class="inner-core" cx="205" cy="82" rx="69" ry="31" fill="url(#${id}-core)" opacity=".35"/><ellipse class="organ" cx="183" cy="89" rx="20" ry="10" fill="${p.accent}" fill-opacity=".15"/><path class="inner-vein" d="M95 87c59-16 132-13 193 7" fill="none" stroke="${p.glow}" stroke-opacity=".34" stroke-width="1.9"/><path class="branch-vein" d="M142 84c11-15 22-26 36-35M178 84c13-18 29-30 48-37M181 94c12 12 22 25 28 39M222 94c13 10 24 21 34 34" fill="none" stroke="${p.glow}" stroke-opacity=".18" stroke-width="1.05"/><path class="aurora-band" d="M94 57c60-21 139-18 202 9" fill="none" stroke="${p.soft}" stroke-opacity=".24" stroke-width="9" stroke-linecap="round"/><g class="scale-field" fill="none" stroke="${p.soft}" stroke-opacity=".25" stroke-width=".8"><path class="scale-cell" d="M118 66q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M139 61q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M161 67q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M183 61q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M206 68q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M229 63q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M128 82q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M151 87q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M174 81q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M199 88q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M224 82q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M248 89q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M141 101q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M166 105q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M192 101q8 7 16 0q-8-7-16 0z"/><path class="scale-cell" d="M219 106q8 7 16 0q-8-7-16 0z"/></g></g>
+      <g class="pectoral fin-membrane"><path d="M217 89c-25 5-48 17-67 37 29 3 54-5 75-26z" fill="url(#${id}-fin)"/><path d="M212 92l-48 29M216 96l-37 27M219 100l-24 22" fill="none" stroke="${p.soft}" stroke-opacity=".28" stroke-width=".9"/></g>
+      <path class="rim-light" d="M94 62c52-32 135-39 204-7" fill="none" stroke="${p.soft}" stroke-opacity=".34" stroke-width="4.8" stroke-linecap="round"/><path d="M284 61c-4 10-3 24 2 33" fill="none" stroke="${p.soft}" stroke-opacity=".22" stroke-width="1"/><ellipse cx="307" cy="66" rx="6.5" ry="6.8" fill="${p.soft}" fill-opacity=".48"/><ellipse cx="307" cy="66" rx="4.3" ry="4.6" fill="${p.deep}" fill-opacity=".45"/><ellipse class="fish-pupil" cx="308" cy="66.2" rx="2" ry="2.35" fill="#07101b"/><circle cx="309" cy="64.9" r=".8" fill="#fff"/><path d="M326 88c5 .8 9 0 12-2.5" fill="none" stroke="${p.soft}" stroke-opacity=".32" stroke-width="1" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  // Intentionally unchanged — this is the reference style.
   function auroraJelly(id, v){
     var glow = v === 1 ? '#7cf7ff' : v === 2 ? '#ffc45d' : '#ff7ed8';
     var deep = v === 1 ? '#4c49d8' : v === 2 ? '#b94c8f' : '#6d46d8';
-    return '<svg class="fish-art aurora-jelly" viewBox="0 0 150 210" aria-hidden="true">' +
-      '<defs>' +
-        '<radialGradient id="'+id+'-bell" cx="42%" cy="25%" r="78%"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".2" stop-color="'+glow+'" stop-opacity=".8"/><stop offset=".56" stop-color="'+deep+'" stop-opacity=".52"/><stop offset="1" stop-color="#17134a" stop-opacity=".12"/></radialGradient>' +
-        '<radialGradient id="'+id+'-core" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".35" stop-color="'+glow+'" stop-opacity=".75"/><stop offset="1" stop-color="'+glow+'" stop-opacity="0"/></radialGradient>' +
-        '<linearGradient id="'+id+'-tent" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".28" stop-color="'+glow+'" stop-opacity=".72"/><stop offset="1" stop-color="'+deep+'" stop-opacity="0"/></linearGradient>' +
-      '</defs>' +
-      '<g class="tentacles">' +
-        '<path class="ribbon r1" d="M34 78c-19 26 10 39-5 68s13 39-5 61" fill="none" stroke="url(#'+id+'-tent)" stroke-width="3" stroke-linecap="round"/>' +
-        '<path class="ribbon r2" d="M116 77c20 29-12 43 4 71s-12 36 5 58" fill="none" stroke="url(#'+id+'-tent)" stroke-width="3" stroke-linecap="round"/>' +
-        '<path class="ribbon r3" d="M52 80c-14 23 11 33-2 58s10 33-2 64" fill="none" stroke="url(#'+id+'-tent)" stroke-width="5" stroke-linecap="round" opacity=".78"/>' +
-        '<path class="ribbon r4" d="M98 80c14 23-11 33 2 58s-10 33 2 64" fill="none" stroke="url(#'+id+'-tent)" stroke-width="5" stroke-linecap="round" opacity=".78"/>' +
-        '<path class="ribbon r5" d="M67 82c-10 18 8 28-1 46s7 27 0 73" fill="none" stroke="'+glow+'" stroke-opacity=".48" stroke-width="8" stroke-linecap="round"/>' +
-        '<path class="ribbon r6" d="M83 82c10 18-8 28 1 46s-7 27 0 73" fill="none" stroke="'+glow+'" stroke-opacity=".48" stroke-width="8" stroke-linecap="round"/>' +
-      '</g>' +
-      '<g class="bell">' +
-        '<path d="M12 80C12 29 39 8 75 8s63 21 63 72c-12 9-20-2-31 4-12 6-21-5-32 2-11-7-20 4-32-2-11-6-20 4-31-4z" fill="url(#'+id+'-bell)" stroke="'+glow+'" stroke-opacity=".78" stroke-width="2.6"/>' +
-        '<ellipse class="jelly-core" cx="75" cy="59" rx="27" ry="25" fill="url(#'+id+'-core)"/>' +
-        '<path d="M27 55c9-25 29-37 52-39" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="7" stroke-linecap="round"/>' +
-        '<path d="M40 74c8-18 18-29 31-35M76 79c5-23 14-39 29-51M103 76c5-15 13-25 23-31" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>' +
-        '<g class="aurora-specks" fill="#fff"><circle cx="42" cy="39" r="2"/><circle cx="112" cy="35" r="1.7"/><circle cx="95" cy="21" r="1.4"/><circle cx="55" cy="24" r="1.5"/><circle cx="120" cy="58" r="1.2"/></g>' +
-      '</g>' +
-    '</svg>';
+    return '<svg class="fish-art aurora-jelly" viewBox="0 0 150 210" aria-hidden="true">' + '<defs>' + '<radialGradient id="'+id+'-bell" cx="42%" cy="25%" r="78%"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".2" stop-color="'+glow+'" stop-opacity=".8"/><stop offset=".56" stop-color="'+deep+'" stop-opacity=".52"/><stop offset="1" stop-color="#17134a" stop-opacity=".12"/></radialGradient>' + '<radialGradient id="'+id+'-core" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".35" stop-color="'+glow+'" stop-opacity=".75"/><stop offset="1" stop-color="'+glow+'" stop-opacity="0"/></radialGradient>' + '<linearGradient id="'+id+'-tent" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".28" stop-color="'+glow+'" stop-opacity=".72"/><stop offset="1" stop-color="'+deep+'" stop-opacity="0"/></linearGradient>' + '</defs>' + '<g class="tentacles">' + '<path class="ribbon r1" d="M34 78c-19 26 10 39-5 68s13 39-5 61" fill="none" stroke="url(#'+id+'-tent)" stroke-width="3" stroke-linecap="round"/>' + '<path class="ribbon r2" d="M116 77c20 29-12 43 4 71s-12 36 5 58" fill="none" stroke="url(#'+id+'-tent)" stroke-width="3" stroke-linecap="round"/>' + '<path class="ribbon r3" d="M52 80c-14 23 11 33-2 58s10 33-2 64" fill="none" stroke="url(#'+id+'-tent)" stroke-width="5" stroke-linecap="round" opacity=".78"/>' + '<path class="ribbon r4" d="M98 80c14 23-11 33 2 58s-10 33 2 64" fill="none" stroke="url(#'+id+'-tent)" stroke-width="5" stroke-linecap="round" opacity=".78"/>' + '<path class="ribbon r5" d="M67 82c-10 18 8 28-1 46s7 27 0 73" fill="none" stroke="'+glow+'" stroke-opacity=".48" stroke-width="8" stroke-linecap="round"/>' + '<path class="ribbon r6" d="M83 82c10 18-8 28 1 46s-7 27 0 73" fill="none" stroke="'+glow+'" stroke-opacity=".48" stroke-width="8" stroke-linecap="round"/>' + '</g>' + '<g class="bell">' + '<path d="M12 80C12 29 39 8 75 8s63 21 63 72c-12 9-20-2-31 4-12 6-21-5-32 2-11-7-20 4-32-2-11-6-20 4-31-4z" fill="url(#'+id+'-bell)" stroke="'+glow+'" stroke-opacity=".78" stroke-width="2.6"/>' + '<ellipse class="jelly-core" cx="75" cy="59" rx="27" ry="25" fill="url(#'+id+'-core)"/>' + '<path d="M27 55c9-25 29-37 52-39" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="7" stroke-linecap="round"/>' + '<path d="M40 74c8-18 18-29 31-35M76 79c5-23 14-39 29-51M103 76c5-15 13-25 23-31" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>' + '<g class="aurora-specks" fill="#fff"><circle cx="42" cy="39" r="2"/><circle cx="112" cy="35" r="1.7"/><circle cx="95" cy="21" r="1.4"/><circle cx="55" cy="24" r="1.5"/><circle cx="120" cy="58" r="1.2"/></g>' + '</g>' + '</svg>';
   }
 
-  function auroraLantern(id, v){
-    var p = palette(v);
-    return '<svg class="fish-art aurora-lantern" viewBox="0 0 295 125" aria-hidden="true">' +
-      '<defs>' +
-        '<linearGradient id="'+id+'-body" x1="0" y1=".2" x2="1" y2=".7"><stop offset="0" stop-color="'+p.deep+'" stop-opacity=".18"/><stop offset=".38" stop-color="#0d1730" stop-opacity=".7"/><stop offset=".7" stop-color="'+p.mid+'" stop-opacity=".28"/><stop offset="1" stop-color="#020714" stop-opacity=".82"/></linearGradient>' +
-        '<linearGradient id="'+id+'-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+p.soft+'" stop-opacity=".42"/><stop offset=".45" stop-color="'+p.glow+'" stop-opacity=".27"/><stop offset="1" stop-color="'+p.deep+'" stop-opacity=".02"/></linearGradient>' +
-        '<radialGradient id="'+id+'-core"><stop offset="0" stop-color="#fff" stop-opacity=".88"/><stop offset=".25" stop-color="'+p.glow+'" stop-opacity=".66"/><stop offset="1" stop-color="'+p.glow+'" stop-opacity="0"/></radialGradient>' +
-      '</defs>' +
-      '<g class="tail"><path d="M64 63L12 32c12 14 15 25 14 33-1 9-6 20-17 31l56-28z" fill="url(#'+id+'-fin)"/></g>' +
-      '<path class="dorsal" d="M102 34c34-19 82-19 123-2-40-4-79 1-115 15z" fill="url(#'+id+'-fin)"/>' +
-      '<path class="ventral" d="M116 91c37 11 82 11 120 0-36 19-79 22-114 12z" fill="url(#'+id+'-fin)"/>' +
-      '<path class="aurora-body" d="M59 63c21-27 71-40 129-33 50 6 87 23 98 39-11 19-49 34-100 35-59 1-106-13-127-41z" fill="url(#'+id+'-body)" stroke="'+p.glow+'" stroke-opacity=".18" stroke-width="1"/>' +
-      '<ellipse class="inner-core" cx="162" cy="65" rx="36" ry="17" fill="url(#'+id+'-core)" opacity=".4"/>' +
-      '<path class="inner-vein" d="M84 70c43-10 95-9 141 5" fill="none" stroke="'+p.glow+'" stroke-opacity=".28" stroke-width="1.5"/>' +
-      '<path class="aurora-band" d="M80 47c54-13 121-10 172 8" fill="none" stroke="'+p.soft+'" stroke-opacity=".15" stroke-width="7" stroke-linecap="round"/>' +
-      '<path class="pectoral" d="M180 72c-21 5-39 14-53 28 24 1 44-5 59-21z" fill="url(#'+id+'-fin)"/>' +
-      '<g fill="'+p.glow+'" style="color:'+p.glow+'"><circle class="photophore" cx="89" cy="80" r="1.6"/><circle class="photophore" cx="106" cy="84" r="1.5"/><circle class="photophore" cx="124" cy="87" r="1.6"/><circle class="photophore" cx="143" cy="88" r="1.4"/><circle class="photophore" cx="162" cy="88" r="1.6"/><circle class="photophore" cx="181" cy="86" r="1.5"/><circle class="photophore" cx="200" cy="82" r="1.6"/><circle class="photophore" cx="219" cy="77" r="1.5"/><circle class="photophore" cx="132" cy="60" r="1"/><circle class="photophore" cx="160" cy="61" r="1"/><circle class="photophore" cx="188" cy="58" r="1"/></g>' +
-      '<ellipse cx="251" cy="53" rx="4.5" ry="5" fill="'+p.soft+'" fill-opacity=".34"/><ellipse class="fish-pupil" cx="252" cy="53.3" rx="1.7" ry="2.1" fill="'+p.glow+'" opacity=".75"/><circle cx="253" cy="52" r=".6" fill="#fff"/>' +
-      '<path d="M269 70c3 .6 7 0 9-2" fill="none" stroke="'+p.soft+'" stroke-opacity=".25" stroke-width=".9" stroke-linecap="round"/>' +
-    '</svg>';
+  function auroraLantern(id,v){
+    var p=palette(v);
+    return `<svg class="fish-art aurora-lantern-v6" viewBox="0 0 340 145" aria-hidden="true"><defs><linearGradient id="${id}-body" x1="0" y1=".2" x2="1" y2=".72"><stop offset="0" stop-color="${p.deep}" stop-opacity=".15"/><stop offset=".3" stop-color="#0b1530" stop-opacity=".68"/><stop offset=".58" stop-color="${p.mid}" stop-opacity=".3"/><stop offset=".82" stop-color="#09101f" stop-opacity=".78"/><stop offset="1" stop-color="#020612" stop-opacity=".92"/></linearGradient><linearGradient id="${id}-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${p.soft}" stop-opacity=".44"/><stop offset=".4" stop-color="${p.glow}" stop-opacity=".26"/><stop offset="1" stop-color="${p.deep}" stop-opacity=".015"/></linearGradient><radialGradient id="${id}-core"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".28" stop-color="${p.glow}" stop-opacity=".64"/><stop offset="1" stop-color="${p.glow}" stop-opacity="0"/></radialGradient><clipPath id="${id}-clip"><path d="M69 73c23-31 81-47 146-38 58 8 101 27 116 45-14 21-58 39-117 40-66 1-121-15-145-47z"/></clipPath></defs><g class="tail fin-membrane"><path d="M75 73L11 31c15 18 20 32 19 43-1 12-7 26-21 42l68-37z" fill="url(#${id}-fin)"/><path d="M20 42l48 30M16 74h51M19 105l49-29" fill="none" stroke="${p.soft}" stroke-opacity=".26" stroke-width=".9"/></g><g class="dorsal fin-membrane"><path d="M117 40c40-24 96-24 143-4-46-4-90 2-132 19z" fill="url(#${id}-fin)"/><path d="M133 42l20-18M161 39l21-19M190 39l18-17M220 39l14-11" fill="none" stroke="${p.soft}" stroke-opacity=".23" stroke-width=".85"/></g><g class="ventral fin-membrane"><path d="M132 106c42 14 93 14 136 2-40 23-89 27-128 14z" fill="url(#${id}-fin)"/></g><path class="aurora-body" d="M69 73c23-31 81-47 146-38 58 8 101 27 116 45-14 21-58 39-117 40-66 1-121-15-145-47z" fill="url(#${id}-body)" stroke="${p.glow}" stroke-opacity=".2" stroke-width="1.05"/><g clip-path="url(#${id}-clip)"><ellipse class="inner-core" cx="198" cy="76" rx="43" ry="22" fill="url(#${id}-core)" opacity=".38"/><ellipse class="organ" cx="179" cy="82" rx="18" ry="10" fill="${p.accent}" fill-opacity=".16"/><path class="inner-vein" d="M96 82c51-13 111-11 166 6" fill="none" stroke="${p.glow}" stroke-opacity=".32" stroke-width="1.6"/><path class="branch-vein" d="M141 78c9-13 20-24 32-31M175 78c11-14 25-25 40-32M181 88c12 10 21 21 27 31M220 86c13 9 24 19 33 29" fill="none" stroke="${p.glow}" stroke-opacity=".16" stroke-width="1"/><path class="aurora-band" d="M94 53c61-18 135-14 198 8" fill="none" stroke="${p.soft}" stroke-opacity=".14" stroke-width="8" stroke-linecap="round"/><path d="M117 57c14 10 18 32 10 50M147 49c13 15 17 40 7 62M178 47c12 18 15 43 5 67M210 48c11 19 13 41 3 63M241 51c9 17 10 36 2 54" fill="none" stroke="${p.soft}" stroke-opacity=".07" stroke-width="2"/></g><g class="pectoral fin-membrane"><path d="M214 84c-24 5-46 17-63 34 27 2 51-5 70-24z" fill="url(#${id}-fin)"/><path d="M209 87l-45 27M213 91l-34 24M217 95l-22 19" fill="none" stroke="${p.soft}" stroke-opacity=".24" stroke-width=".8"/></g><g fill="${p.glow}" style="color:${p.glow}"><circle class="photophore" cx="104" cy="95" r="1.7"/><circle class="photophore" cx="122" cy="100" r="1.55"/><circle class="photophore" cx="141" cy="103" r="1.7"/><circle class="photophore" cx="161" cy="105" r="1.5"/><circle class="photophore" cx="181" cy="105" r="1.65"/><circle class="photophore" cx="201" cy="103" r="1.5"/><circle class="photophore" cx="221" cy="99" r="1.65"/><circle class="photophore" cx="242" cy="94" r="1.55"/><circle class="photophore" cx="263" cy="88" r="1.45"/><circle class="photophore" cx="146" cy="73" r="1"/><circle class="photophore" cx="176" cy="74" r="1"/><circle class="photophore" cx="207" cy="70" r="1"/><circle class="photophore" cx="236" cy="71" r=".9"/></g><path class="rim-light" d="M96 56c57-24 138-24 203 2" fill="none" stroke="${p.soft}" stroke-opacity=".18" stroke-width="4" stroke-linecap="round"/><ellipse cx="294" cy="62" rx="6" ry="6.5" fill="${p.soft}" fill-opacity=".28"/><ellipse cx="294" cy="62" rx="4" ry="4.5" fill="${p.deep}" fill-opacity=".55"/><ellipse class="fish-pupil" cx="295" cy="62.3" rx="1.8" ry="2.2" fill="${p.glow}" opacity=".86"/><circle cx="296" cy="61" r=".7" fill="#fff"/><path d="M315 82c4 .7 8 0 11-2.2" fill="none" stroke="${p.soft}" stroke-opacity=".26" stroke-width=".9" stroke-linecap="round"/></svg>`;
   }
 
   function upgradeFish(){
-    [].forEach.call(document.querySelectorAll('.critter'), function(el){
-      if(el.dataset.artUpgraded === '5') return;
-      var id = uid('fish'), v = variant();
-      if(el.classList.contains('clown')){ el.innerHTML = auroraReef(id,v); el.dataset.artSpecies='aurora-reef'; }
-      else if(el.classList.contains('tang')){ el.innerHTML = auroraGlider(id,v); el.dataset.artSpecies='aurora-glider'; }
-      else if(el.classList.contains('jelly')){ el.innerHTML = auroraJelly(id,v); el.dataset.artSpecies='aurora-jelly'; }
-      else if(el.classList.contains('lantern')){ el.innerHTML = auroraLantern(id,v); el.dataset.artSpecies='aurora-lantern'; }
+    [].forEach.call(document.querySelectorAll('.critter'),function(el){
+      if(el.dataset.artUpgraded === '6') return;
+      var id=uid('fish'),v=variant();
+      if(el.classList.contains('clown')){el.innerHTML=auroraReef(id,v);el.dataset.artSpecies='aurora-reef-v6';}
+      else if(el.classList.contains('tang')){el.innerHTML=auroraGlider(id,v);el.dataset.artSpecies='aurora-glider-v6';}
+      else if(el.classList.contains('jelly')){el.innerHTML=auroraJelly(id,v);el.dataset.artSpecies='aurora-jelly';}
+      else if(el.classList.contains('lantern')){el.innerHTML=auroraLantern(id,v);el.dataset.artSpecies='aurora-lantern-v6';}
       else return;
-      el.dataset.artVariant = String(v);
-      el.dataset.artUpgraded = '5';
-      el.style.setProperty('--art-delay', (-Math.random()*8).toFixed(2)+'s');
-      el.style.setProperty('--art-speed', (6.4+Math.random()*3.6).toFixed(2)+'s');
-      el.style.setProperty('--art-roll', ((Math.random()-.5)*1.3).toFixed(2)+'deg');
+      el.dataset.artVariant=String(v);el.dataset.artUpgraded='6';el.style.setProperty('--art-delay',(-Math.random()*9).toFixed(2)+'s');el.style.setProperty('--art-speed',(7.2+Math.random()*4.1).toFixed(2)+'s');el.style.setProperty('--art-roll',((Math.random()-.5)*1.2).toFixed(2)+'deg');
     });
   }
 
   function upgradeAngler(){
-    var a = document.querySelector('.angler');
-    if(!a || a.dataset.artUpgraded === '5') return;
-    a.dataset.artUpgraded = '5';
-    a.dataset.artSpecies = 'aurora-angler';
-    a.innerHTML =
-      '<defs>' +
-        '<radialGradient id="angler-v5-body" cx="58%" cy="42%" r="78%"><stop offset="0" stop-color="#7cf7ff" stop-opacity=".38"/><stop offset=".28" stop-color="#35406f" stop-opacity=".5"/><stop offset=".68" stop-color="#11152e" stop-opacity=".82"/><stop offset="1" stop-color="#03040c" stop-opacity=".92"/></radialGradient>' +
-        '<linearGradient id="angler-v5-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7ffff" stop-opacity=".34"/><stop offset=".42" stop-color="#7cf7ff" stop-opacity=".24"/><stop offset="1" stop-color="#6d46d8" stop-opacity=".02"/></linearGradient>' +
-        '<radialGradient id="angler-v5-core"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".25" stop-color="#7cf7ff" stop-opacity=".55"/><stop offset="1" stop-color="#7cf7ff" stop-opacity="0"/></radialGradient>' +
-        '<radialGradient id="angler-v5-lure"><stop offset="0" stop-color="#fff"/><stop offset=".2" stop-color="#eaffff"/><stop offset=".48" stop-color="#7cf7ff" stop-opacity=".76"/><stop offset="1" stop-color="#7cf7ff" stop-opacity="0"/></radialGradient>' +
-      '</defs>' +
-      '<g class="angler-tail"><path d="M51 72L7 42c10 15 13 27 12 36-1 9-6 21-15 33l49-32z" fill="url(#angler-v5-fin)"/></g>' +
-      '<path class="lure-stalk" d="M102 39C116 12 148 7 171 22" fill="none" stroke="#b7f7ff" stroke-opacity=".44" stroke-width="1.5" stroke-linecap="round"/>' +
-      '<circle cx="172" cy="22" r="20" fill="url(#angler-v5-lure)" opacity=".82"/>' +
-      '<path class="aurora-body" d="M44 74c-1-32 24-55 62-56 40-1 68 21 70 51 2 33-26 58-69 58-39 0-62-19-63-53z" fill="url(#angler-v5-body)" stroke="#7cf7ff" stroke-opacity=".18" stroke-width="1.1"/>' +
-      '<ellipse class="inner-core" cx="103" cy="72" rx="35" ry="27" fill="url(#angler-v5-core)" opacity=".22"/>' +
-      '<path class="angler-spines" d="M69 34l-5-18 11 12 4-19 8 17 10-13 1 18 13-9-4 19" fill="url(#angler-v5-fin)" opacity=".72"/>' +
-      '<path class="inner-vein" d="M62 77c27-10 56-9 84 0" fill="none" stroke="#7cf7ff" stroke-opacity=".18" stroke-width="1.2"/>' +
-      '<path d="M119 68c17-8 39-8 54 0-4 25-19 38-43 32 9-8 8-22-11-32z" fill="#02030a" fill-opacity=".86" stroke="#dfffff" stroke-opacity=".16" stroke-width="1"/>' +
-      '<g fill="#efffff" opacity=".78"><path d="M124 69l4 10 4-11 4 12 4-12 5 12 4-12 4 11 4-9z"/><path d="M129 98l4-9 4 10 4-11 4 10 4-9 3 7z"/></g>' +
-      '<path class="angler-pectoral" d="M90 84c-14 13-27 17-38 13 10-12 23-17 38-13z" fill="url(#angler-v5-fin)"/>' +
-      '<ellipse cx="119" cy="50" rx="4.6" ry="5" fill="#eaffff" fill-opacity=".22"/><ellipse cx="120" cy="50" rx="1.7" ry="2.1" fill="#7cf7ff" opacity=".72"/>' +
-      '<circle class="lure-core" cx="172" cy="22" r="5.5" fill="#f3ffff" stroke="#7cf7ff" stroke-opacity=".66" stroke-width="1"/>';
+    var a=document.querySelector('.angler');if(!a || a.dataset.artUpgraded === '6') return;a.dataset.artUpgraded='6';a.dataset.artSpecies='aurora-angler-v6';
+    a.innerHTML=`<defs><radialGradient id="angler-v6-body" cx="57%" cy="40%" r="82%"><stop offset="0" stop-color="#7cf7ff" stop-opacity=".42"/><stop offset=".27" stop-color="#4b4f89" stop-opacity=".5"/><stop offset=".62" stop-color="#161a35" stop-opacity=".8"/><stop offset="1" stop-color="#02040c" stop-opacity=".95"/></radialGradient><linearGradient id="angler-v6-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#efffff" stop-opacity=".42"/><stop offset=".4" stop-color="#7cf7ff" stop-opacity=".25"/><stop offset="1" stop-color="#6d46d8" stop-opacity=".02"/></linearGradient><radialGradient id="angler-v6-core"><stop offset="0" stop-color="#fff" stop-opacity=".92"/><stop offset=".28" stop-color="#7cf7ff" stop-opacity=".58"/><stop offset="1" stop-color="#7cf7ff" stop-opacity="0"/></radialGradient><radialGradient id="angler-v6-lure"><stop offset="0" stop-color="#fff"/><stop offset=".2" stop-color="#efffff"/><stop offset=".48" stop-color="#7cf7ff" stop-opacity=".8"/><stop offset="1" stop-color="#7cf7ff" stop-opacity="0"/></radialGradient></defs><g class="angler-tail fin-membrane"><path d="M54 75L5 38c12 19 15 33 14 43-1 11-7 24-18 40l55-40z" fill="url(#angler-v6-fin)"/><path d="M13 50l37 25M9 79h42M12 109l39-28" fill="none" stroke="#dfffff" stroke-opacity=".22" stroke-width=".9"/></g><path class="lure-stalk" d="M104 42C118 12 151 5 177 21" fill="none" stroke="#caffff" stroke-opacity=".48" stroke-width="1.5" stroke-linecap="round"/><circle cx="178" cy="21" r="22" fill="url(#angler-v6-lure)" opacity=".84"/><path class="aurora-body" d="M45 77c-1-35 26-61 67-62 44-1 75 24 77 57 2 36-29 63-76 63-43 0-67-21-68-58z" fill="url(#angler-v6-body)" stroke="#7cf7ff" stroke-opacity=".22" stroke-width="1.2"/><ellipse class="inner-core" cx="109" cy="77" rx="39" ry="30" fill="url(#angler-v6-core)" opacity=".24"/><ellipse class="organ" cx="91" cy="84" rx="18" ry="11" fill="#bd70ff" fill-opacity=".14"/><path class="angler-spines fin-membrane" d="M69 38l-6-21 12 14 4-22 9 20 11-15 1 20 14-10-4 22 15-5-9 17" fill="url(#angler-v6-fin)" opacity=".78"/><path class="inner-vein" d="M62 82c30-12 63-11 94 1" fill="none" stroke="#7cf7ff" stroke-opacity=".24" stroke-width="1.4"/><path class="branch-vein" d="M84 77c8-13 16-23 26-31M106 79c11-14 23-23 37-28M106 88c10 10 18 21 23 33" fill="none" stroke="#7cf7ff" stroke-opacity=".14" stroke-width="1"/><g class="skin-specks" fill="#dfffff" opacity=".28"><circle cx="69" cy="61" r="1"/><circle cx="78" cy="101" r="1.2"/><circle cx="91" cy="53" r=".8"/><circle cx="103" cy="113" r="1"/><circle cx="122" cy="42" r=".9"/><circle cx="133" cy="112" r=".8"/><circle cx="151" cy="54" r="1.1"/></g><path d="M124 70c18-9 42-9 58 0-5 28-21 42-47 35 10-9 9-24-11-35z" fill="#02030a" fill-opacity=".9" stroke="#dfffff" stroke-opacity=".2" stroke-width="1"/><g fill="#efffff" opacity=".86"><path d="M129 71l4 11 4-12 5 13 4-13 5 13 5-13 4 12 5-10z"/><path d="M135 103l4-10 4 11 5-12 4 11 5-10 4 8z"/></g><g class="angler-pectoral fin-membrane"><path d="M94 89c-16 15-31 20-43 15 11-14 26-19 43-15z" fill="url(#angler-v6-fin)"/><path d="M89 92l-30 9M91 95l-24 8" fill="none" stroke="#dfffff" stroke-opacity=".2" stroke-width=".8"/></g><g fill="#7cf7ff" style="color:#7cf7ff"><circle class="photophore" cx="72" cy="93" r="1.2"/><circle class="photophore" cx="83" cy="104" r="1.1"/><circle class="photophore" cx="98" cy="111" r="1.2"/><circle class="photophore" cx="116" cy="114" r="1"/><circle class="photophore" cx="137" cy="111" r="1.1"/></g><ellipse cx="122" cy="51" rx="5.4" ry="5.8" fill="#efffff" fill-opacity=".24"/><ellipse cx="123" cy="51" rx="2" ry="2.4" fill="#7cf7ff" opacity=".82"/><circle cx="124" cy="49.8" r=".7" fill="#fff"/><circle class="lure-core" cx="178" cy="21" r="6" fill="#f6ffff" stroke="#7cf7ff" stroke-opacity=".72" stroke-width="1"/>`;
   }
 
-  function run(){ upgradeFish(); upgradeAngler(); }
-  run();
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, {once:true});
-  addEventListener('load', run, {once:true});
-
-  var observer = new MutationObserver(function(changes){
-    for(var i=0;i<changes.length;i++){
-      if(changes[i].addedNodes && changes[i].addedNodes.length){ upgradeFish(); break; }
-    }
-  });
-  observer.observe(document.body,{childList:true,subtree:true});
+  function run(){upgradeFish();upgradeAngler();}
+  run();if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true});addEventListener('load',run,{once:true});
+  var observer=new MutationObserver(function(changes){for(var i=0;i<changes.length;i++){if(changes[i].addedNodes&&changes[i].addedNodes.length){upgradeFish();break;}}});observer.observe(document.body,{childList:true,subtree:true});
 })();
