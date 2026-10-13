@@ -1,10 +1,41 @@
 {
-  "updatedAt": "2026-10-13T12:48:08.647Z",
+  "updatedAt": "2026-10-13T19:11:50.181Z",
+  "ownerUserId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
   "worldIds": [
+    "wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567",
     "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
     "wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
   ],
   "worlds": [
+    {
+      "id": "wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567",
+      "name": "Greggs",
+      "description": "Welcome to Greggs‚ the home of the greatest sausage roll‚ reminder to use the app to earn free rewards at your local greggs‚ thank you Yes this is a entire recreation of Greggs for VR - all models are either hand made or 3D Scanned and Optimized （Food）",
+      "thumbnailImageUrl": "https://api.vrchat.cloud/api/1/image/file_a30b0b1f-1753-4803-b235-f4a553814f3d/3/256",
+      "imageUrl": "https://api.vrchat.cloud/api/1/file/file_a30b0b1f-1753-4803-b235-f4a553814f3d/3/file",
+      "capacity": 32,
+      "recommendedCapacity": 32,
+      "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
+      "authorName": "DedZedOffishal",
+      "visits": 7841,
+      "favorites": 195,
+      "popularity": 5,
+      "heat": 2,
+      "releaseStatus": "public",
+      "publicationDate": "2025-07-28T08:56:17.740Z",
+      "labsPublicationDate": "2025-06-22T16:32:47.175Z",
+      "platforms": [],
+      "tags": [
+        "author_tag_bakery",
+        "author_tag_greggs",
+        "author_tag_uk",
+        "system_approved",
+        "author_tag_british",
+        "author_tag_food"
+      ],
+      "updatedAt": "2026-10-04T12:36:42.955Z",
+      "url": "https://vrchat.com/home/world/wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567"
+    },
     {
       "id": "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
       "name": "Echo Reef",
