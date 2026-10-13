@@ -1,0 +1,16 @@
+{
+  "dedzedofficial/Blender-XR": {
+    "name": "XR Mesh",
+    "summary": "Build and edit meshes in VR with a controller-first OpenXR workflow inside Blender. Project source and releases remain on the Blender-XR repository."
+  },
+  "dedzedofficial/Meshy-Importer-for-Blender-Unity": {
+    "summary": "Import and locally decode Meshy .meshy models for Unity, Blender, Godot and Unreal Engine."
+  },
+  "dedzedofficial/Optimize-Your-Project": {
+    "summary": "A free Unity and Blender optimisation toolkit that turns repetitive cleanup and performance work into guarded, clear actions."
+  },
+  "fishhwb/fishhwb.github.io": {
+    "name": "FISH HWB Website",
+    "summary": "The FISH HWB creator website, project hub and home of the interactive deep-sea experience."
+  }
+}
