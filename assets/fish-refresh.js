@@ -112,7 +112,7 @@
   if(!style){
     style = document.createElement('link');
     style.rel = 'stylesheet';
-    style.href = 'assets/fish-approved-v7.css?v=7.2';
+    style.href = 'assets/fish-approved-v7.css?v=7.3';
     style.dataset.approvedFishV7 = '1';
     document.head.appendChild(style);
   }
@@ -250,6 +250,8 @@
     var a=document.querySelector('.angler');
     if(a && a.dataset.approvedArt !== '7'){
       a.setAttribute('viewBox','0 0 285 195');
+      a.setAttribute('width','285');
+      a.setAttribute('height','195');
       a.innerHTML=anglerArt();
       a.dataset.approvedArt='7';
       a.dataset.artSpecies='approved-angler-v7';
