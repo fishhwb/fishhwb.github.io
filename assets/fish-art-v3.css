@@ -1,0 +1,150 @@
+/* FISH HWB portfolio fish art v3
+   The fish are illustrations first, background decoration second. */
+
+.critter[data-art-upgraded="2"]{
+  --art-speed:6.2s;
+  --art-delay:-2s;
+  --art-roll:0deg;
+  overflow:visible;
+  isolation:isolate;
+  filter:none;
+}
+.critter[data-art-upgraded="2"]::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:18%;
+  top:28%;
+  width:62%;
+  height:42%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(109,225,255,.12),rgba(109,225,255,0) 68%);
+  filter:blur(8px);
+  opacity:.7;
+  transform:translateZ(-1px);
+  pointer-events:none;
+}
+.critter[data-art-upgraded="2"] .fish-art{
+  display:block;
+  width:100%;
+  height:auto;
+  overflow:visible;
+  transform-origin:50% 55%;
+  animation:fish-art-breathe var(--art-speed) ease-in-out var(--art-delay) infinite alternate;
+  filter:drop-shadow(0 7px 7px rgba(0,0,0,.22));
+}
+.critter[data-art-upgraded="2"] .tail,
+.critter[data-art-upgraded="2"] .fin,
+.critter[data-art-upgraded="2"] .crest,
+.critter[data-art-upgraded="2"] .ventral-banner,
+.critter[data-art-upgraded="2"] .sail-top,
+.critter[data-art-upgraded="2"] .sail-bottom{
+  transform-box:fill-box;
+  transform-origin:center;
+  will-change:transform;
+}
+.critter[data-art-upgraded="2"] .tail{animation:fish-tail-v3 1.35s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="2"] .fin{animation:fish-fin-v3 1.75s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="2"] .fish-pupil{animation:fish-eye-v3 6.8s ease-in-out var(--art-delay) infinite}
+.critter[data-art-upgraded="2"] .scale-mosaic{opacity:.8}
+.critter[data-art-upgraded="2"] .fish-highlight{mix-blend-mode:screen}
+
+/* Reef Crown — flamboyant surface fish with banner fins. */
+.critter[data-art-species="reef-crown"]{width:calc(var(--size) * 1.58)}
+.critter[data-art-species="reef-crown"]::after{background:radial-gradient(ellipse,rgba(255,128,204,.14),rgba(255,205,85,.08) 35%,transparent 70%)}
+.critter[data-art-species="reef-crown"] .fish-art{filter:drop-shadow(0 8px 8px rgba(18,5,24,.28)) drop-shadow(0 0 8px rgba(255,158,205,.15))}
+.critter[data-art-species="reef-crown"] .crest{transform-origin:35% 85%;animation:crown-crest 2.9s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="reef-crown"] .ventral-banner{transform-origin:35% 10%;animation:crown-banner 3.6s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="reef-crown"] .pearl-dots{animation:pearl-shimmer 2.4s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="reef-crown"][data-art-variant="1"]{--fish-glow:rgba(93,224,255,.32)}
+.critter[data-art-species="reef-crown"][data-art-variant="2"]{--fish-glow:rgba(255,218,92,.3)}
+
+/* Prism Sail — angular, iridescent, almost fashion-editorial. */
+.critter[data-art-species="prism-sail"]{width:calc(var(--size) * 1.68)}
+.critter[data-art-species="prism-sail"]::after{background:radial-gradient(ellipse,rgba(89,190,255,.17),rgba(126,92,255,.09) 42%,transparent 72%)}
+.critter[data-art-species="prism-sail"] .fish-art{filter:drop-shadow(0 8px 8px rgba(1,7,29,.3)) drop-shadow(0 0 9px rgba(100,209,255,.19))}
+.critter[data-art-species="prism-sail"] .sail-top{transform-origin:28% 75%;animation:sail-top-v3 3.8s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="prism-sail"] .sail-bottom{transform-origin:32% 15%;animation:sail-bottom-v3 4.3s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="prism-sail"] .iridescent-ribbon{animation:prism-flare 3.2s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="prism-sail"] .prism-mask{filter:drop-shadow(0 1px 0 rgba(255,255,255,.06))}
+
+/* Aurora Jelly — floating light sculpture rather than generic jellyfish. */
+.critter[data-art-species="aurora-jelly"]{width:calc(var(--size) * 1.32)}
+.critter[data-art-species="aurora-jelly"]::after{left:12%;top:8%;width:76%;height:58%;background:radial-gradient(circle,rgba(247,140,255,.23),rgba(94,129,255,.1) 38%,transparent 72%);filter:blur(12px)}
+.critter[data-art-species="aurora-jelly"] .fish-art{filter:drop-shadow(0 0 11px rgba(255,122,223,.22)) drop-shadow(0 8px 8px rgba(5,4,32,.18));animation:jelly-drift-v3 var(--art-speed) ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="aurora-jelly"] .bell{transform-box:fill-box;transform-origin:center bottom;animation:jelly-bell-v3 2.8s ease-in-out var(--art-delay) infinite}
+.critter[data-art-species="aurora-jelly"] .jelly-core{animation:jelly-core-v3 2.15s ease-in-out var(--art-delay) infinite alternate;transform-box:fill-box;transform-origin:center}
+.critter[data-art-species="aurora-jelly"] .ribbon{transform-box:fill-box;transform-origin:top center;animation:ribbon-sway-a 3.7s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="aurora-jelly"] .r2,.critter[data-art-species="aurora-jelly"] .r4,.critter[data-art-species="aurora-jelly"] .r6{animation-name:ribbon-sway-b;animation-duration:4.25s}
+.critter[data-art-species="aurora-jelly"] .r3{animation-duration:3.15s}.critter[data-art-species="aurora-jelly"] .r5{animation-duration:4.8s}
+.critter[data-art-species="aurora-jelly"] .aurora-specks{animation:pearl-shimmer 2.7s ease-in-out var(--art-delay) infinite alternate}
+
+/* Glass Lantern — transparent abyss fish with luminous anatomy. */
+.critter[data-art-species="glass-lantern"]{width:calc(var(--size) * 1.62)}
+.critter[data-art-species="glass-lantern"]::after{background:radial-gradient(ellipse,rgba(94,244,255,.18),rgba(94,244,255,.05) 42%,transparent 72%)}
+.critter[data-art-species="glass-lantern"] .fish-art{filter:drop-shadow(0 0 8px rgba(96,235,255,.22)) drop-shadow(0 8px 8px rgba(0,4,12,.36))}
+.critter[data-art-species="glass-lantern"] .glass-sheen{animation:glass-sheen-v3 3.4s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="glass-lantern"] .internal-spine{stroke-dasharray:4 8;animation:spine-flow-v3 3.3s linear var(--art-delay) infinite}
+.critter[data-art-species="glass-lantern"] .organ-glow{animation:organ-pulse-v3 2.2s ease-in-out var(--art-delay) infinite alternate;transform-box:fill-box;transform-origin:center}
+.critter[data-art-species="glass-lantern"] .lights circle{animation:bio-pulse-v3 2.4s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-species="glass-lantern"] .lights circle:nth-child(2n){animation-delay:calc(var(--art-delay) - .8s)}
+.critter[data-art-species="glass-lantern"] .lights circle:nth-child(3n){animation-delay:calc(var(--art-delay) - 1.4s)}
+
+/* The abyss angler now gets the same illustration treatment. */
+.angler[data-art-upgraded="2"] .tail{transform-box:fill-box;transform-origin:right center;animation:fish-tail-v3 1.7s ease-in-out infinite alternate}
+.angler[data-art-upgraded="2"] .fin{transform-box:fill-box;transform-origin:right center;animation:fish-fin-v3 2.2s ease-in-out -.8s infinite alternate}
+.angler[data-art-upgraded="2"] .lure-stalk{animation:lure-stalk-v3 3.8s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:left bottom}
+.angler[data-art-upgraded="2"] .lure-core{filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 12px #8df2ff) drop-shadow(0 0 24px rgba(141,242,255,.65));animation:lure-pulse-v3 1.9s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+.angler[data-art-upgraded="2"] .eye-glow{filter:drop-shadow(0 0 7px rgba(174,233,255,.8))}
+.angler[data-art-upgraded="2"] .angler-jaw{filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}
+.angler[data-art-upgraded="2"] .tooth{filter:drop-shadow(0 0 1px rgba(255,255,255,.5))}
+
+@keyframes fish-art-breathe{
+  0%{transform:rotate(var(--art-roll)) translateY(0) scale(1)}
+  100%{transform:rotate(calc(var(--art-roll) * -1)) translateY(-1.5px) scale(1.012)}
+}
+@keyframes fish-tail-v3{from{transform:skewY(-4deg) rotate(-2deg)}to{transform:skewY(5deg) rotate(3deg)}}
+@keyframes fish-fin-v3{from{transform:rotate(-5deg) scaleY(.95)}to{transform:rotate(8deg) scaleY(1.06)}}
+@keyframes fish-eye-v3{0%,18%,68%,100%{transform:translate(0,0)}30%{transform:translate(-1.3px,.5px)}48%{transform:translate(.7px,-.5px)}82%{transform:translate(1px,.4px)}}
+@keyframes crown-crest{from{transform:rotate(-2deg) skewX(-2deg)}to{transform:rotate(4deg) skewX(3deg)}}
+@keyframes crown-banner{from{transform:rotate(2deg) scaleY(.96)}to{transform:rotate(-5deg) scaleY(1.04)}}
+@keyframes pearl-shimmer{from{opacity:.42;filter:drop-shadow(0 0 1px currentColor)}to{opacity:1;filter:drop-shadow(0 0 5px currentColor)}}
+@keyframes sail-top-v3{from{transform:rotate(-3deg) scaleY(.95)}to{transform:rotate(4deg) scaleY(1.05)}}
+@keyframes sail-bottom-v3{from{transform:rotate(3deg) scaleY(.96)}to{transform:rotate(-4deg) scaleY(1.05)}}
+@keyframes prism-flare{from{opacity:.25;stroke-width:6}to{opacity:.82;stroke-width:10}}
+@keyframes jelly-drift-v3{from{transform:translateY(1px) rotate(-1deg)}to{transform:translateY(-4px) rotate(1.2deg)}}
+@keyframes jelly-bell-v3{0%,100%{transform:scaleX(1) scaleY(1)}48%{transform:scaleX(1.035) scaleY(.94)}62%{transform:scaleX(.985) scaleY(1.035)}}
+@keyframes jelly-core-v3{from{opacity:.42;transform:scale(.88)}to{opacity:.9;transform:scale(1.1)}}
+@keyframes ribbon-sway-a{from{transform:rotate(-3deg) translateX(-1px)}to{transform:rotate(5deg) translateX(2px)}}
+@keyframes ribbon-sway-b{from{transform:rotate(4deg) translateX(1px)}to{transform:rotate(-5deg) translateX(-2px)}}
+@keyframes glass-sheen-v3{from{opacity:.2;transform:translateX(-5px)}to{opacity:.82;transform:translateX(5px)}}
+@keyframes spine-flow-v3{to{stroke-dashoffset:-24}}
+@keyframes organ-pulse-v3{from{opacity:.25;transform:scale(.88)}to{opacity:.8;transform:scale(1.12)}}
+@keyframes bio-pulse-v3{from{opacity:.35;filter:drop-shadow(0 0 1px currentColor)}to{opacity:1;filter:drop-shadow(0 0 7px currentColor)}}
+@keyframes lure-stalk-v3{from{transform:rotate(-2deg)}to{transform:rotate(4deg)}}
+@keyframes lure-pulse-v3{from{transform:scale(.88);opacity:.78}to{transform:scale(1.16);opacity:1}}
+
+@media(max-width:680px){
+  .critter[data-art-species="reef-crown"]{width:calc(var(--size) * 1.42)}
+  .critter[data-art-species="prism-sail"]{width:calc(var(--size) * 1.48)}
+  .critter[data-art-species="glass-lantern"]{width:calc(var(--size) * 1.48)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .critter[data-art-upgraded="2"] .fish-art,
+  .critter[data-art-upgraded="2"] .tail,
+  .critter[data-art-upgraded="2"] .fin,
+  .critter[data-art-upgraded="2"] .crest,
+  .critter[data-art-upgraded="2"] .ventral-banner,
+  .critter[data-art-upgraded="2"] .sail-top,
+  .critter[data-art-upgraded="2"] .sail-bottom,
+  .critter[data-art-upgraded="2"] .fish-pupil,
+  .critter[data-art-upgraded="2"] .ribbon,
+  .critter[data-art-upgraded="2"] .bell,
+  .critter[data-art-upgraded="2"] .jelly-core,
+  .critter[data-art-upgraded="2"] .glass-sheen,
+  .critter[data-art-upgraded="2"] .internal-spine,
+  .critter[data-art-upgraded="2"] .organ-glow,
+  .critter[data-art-upgraded="2"] .lights circle,
+  .angler[data-art-upgraded="2"] *{animation:none!important}
+}
