@@ -107,9 +107,8 @@
       'fishhwb/fishhwb.github.io': 'The FISH HWB website and public project hub.'
     };
 
-    Promise.all(['dedzedofficial','fishhwb'].map(function(owner){
-      return getJSON('https://api.github.com/users/'+owner+'/repos?sort=pushed&per_page=100').catch(function(){return [];});
-    })).then(function(lists){
+    getJSON('assets/projects.json', false).then(function(data){
+      var lists=[data.repos||[]];
       var seen={}, repos=[].concat.apply([],lists).filter(function(r){
         if(!r||r.fork||r.archived||r.private||seen[r.full_name]) return false;
         seen[r.full_name]=1;
