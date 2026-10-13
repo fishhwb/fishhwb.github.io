@@ -8,6 +8,7 @@ const ownerId = current.ownerUserId
   || (current.worlds || []).find(w => /^usr_[0-9a-f-]{36}$/i.test(String(w?.authorId || '')))?.authorId
   || 'usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2';
 const authCookie = String(process.env.VRCHAT_AUTH_COOKIE || '').trim();
+const discoveryFile = String(process.env.VRCHAT_DISCOVERY_FILE || '').trim();
 
 // Public worlds found under DedZedOffishal. Keeping these as permanent candidates
 // means an incomplete third-party search index cannot silently remove a world.
@@ -27,7 +28,7 @@ const seedWorldIds = [...new Set([
 
 const headers = {
   Accept: 'application/json',
-  'User-Agent': 'FISHHWB-Website/2.3 (+https://fishhwb.github.io/)'
+  'User-Agent': 'FISHHWB-Website/2.4 (+https://fishhwb.github.io/)'
 };
 
 function officialHeaders() {
@@ -105,6 +106,20 @@ function collectWorldIds(value) {
   for (const child of Object.values(value)) collectWorldIds(child);
 }
 
+let discoverySucceeded = false;
+if (discoveryFile) {
+  try {
+    const discovered = JSON.parse(await readFile(discoveryFile, 'utf8'));
+    const before = ids.size;
+    collectWorldIds(discovered);
+    const added = ids.size - before;
+    discoverySucceeded = true;
+    console.log(`Browser author search added ${added} candidate world${added === 1 ? '' : 's'}.`);
+  } catch (err) {
+    console.warn(`Browser world discovery unavailable: ${err.message}.`);
+  }
+}
+
 async function discoverFromVrchat() {
   let offset = 0;
   let addedTotal = 0;
@@ -127,7 +142,6 @@ async function discoverFromVrchat() {
   console.log(`VRChat author search added ${addedTotal} candidate world${addedTotal === 1 ? '' : 's'}.`);
 }
 
-let discoverySucceeded = false;
 try {
   await discoverFromVrchat();
   discoverySucceeded = true;
