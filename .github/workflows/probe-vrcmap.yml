@@ -9,69 +9,20 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Search VRCDB by author
+      - name: Resolve VRCDB world redirects
         shell: bash
         run: |
-          python -m pip install --quiet selenium
-          python - <<'PY'
-          import re, time
-          from selenium import webdriver
-          from selenium.webdriver.common.by import By
-          from selenium.webdriver.support.ui import WebDriverWait
-          from selenium.webdriver.support import expected_conditions as EC
-
-          options = webdriver.ChromeOptions()
-          options.add_argument('--headless=new')
-          options.add_argument('--no-sandbox')
-          options.add_argument('--disable-gpu')
-          options.add_argument('--disable-dev-shm-usage')
-          options.add_argument('--window-size=1440,1600')
-          driver = webdriver.Chrome(options=options)
-          wait = WebDriverWait(driver, 35)
-          try:
-              driver.get('https://vrcdb.com/worlds')
-              time.sleep(5)
-              form = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'form.search-form-card')))
-              print('FORM_INITIAL', form.get_attribute('outerHTML')[:8000])
-              print('BUTTONS_INITIAL')
-              for b in form.find_elements(By.CSS_SELECTOR,'button'):
-                  print('BUTTON', b.get_attribute('type'), b.get_attribute('class'), repr((b.text or '').strip()), 'disabled=',b.get_attribute('disabled'),'aria=',b.get_attribute('aria-pressed'))
-              author = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.search-btn-author')))
-              driver.execute_script('arguments[0].click()', author)
-              time.sleep(2)
-              form = driver.find_element(By.CSS_SELECTOR, 'form.search-form-card')
-              author = driver.find_element(By.CSS_SELECTOR,'.search-btn-author')
-              box = driver.find_element(By.CSS_SELECTOR,'.search-input')
-              print('AFTER_AUTHOR_CLASS', author.get_attribute('class'))
-              print('AFTER_AUTHOR_ARIA', author.get_attribute('aria-pressed'))
-              print('AFTER_AUTHOR_PLACEHOLDER', box.get_attribute('placeholder'))
-              print('FORM_AFTER_AUTHOR', form.get_attribute('outerHTML')[:8000])
-              box.clear()
-              box.send_keys('DedZedOffishal')
-              time.sleep(1)
-              submits=form.find_elements(By.CSS_SELECTOR,'button[type="submit"], input[type="submit"]')
-              print('SUBMITS',len(submits))
-              for s in submits: print('SUBMIT',s.get_attribute('outerHTML')[:1000])
-              if submits:
-                  driver.execute_script('arguments[0].click()',submits[0])
-              else:
-                  driver.execute_script("arguments[0].dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}))",form)
-              time.sleep(10)
-              html = driver.page_source
-              body=(driver.find_element(By.TAG_NAME,'body').text or '')
-              print('URL', driver.current_url)
-              print('FORM_FINAL', driver.find_element(By.CSS_SELECTOR,'form.search-form-card').get_attribute('outerHTML')[:8000])
-              ids = sorted(set(re.findall(r'wrld_[0-9a-fA-F-]{36}', html)))
-              print('WORLD_IDS', len(ids))
-              for wid in ids: print(wid)
-              print('=== BODY ===')
-              print(body[:30000])
-              print('=== WORLDISH LINKS ===')
-              for a in driver.find_elements(By.CSS_SELECTOR, 'a[href]'):
-                  href=a.get_attribute('href') or ''
-                  text=(a.text or '').strip().replace('\n',' | ')
-                  if 'world' in href.lower() or 'wrld_' in href or 'DedZed' in text:
-                      print('LINK', href, 'TEXT', text[:1000])
-          finally:
-              driver.quit()
-          PY
+          set -u
+          while IFS='|' read -r name url; do
+            echo "=== $name ==="
+            curl -sS -o /dev/null -D - "$url" | grep -iE '^(HTTP/|location:)' || true
+            echo 'FINAL:'
+            curl -LsS -o /dev/null -w '%{url_effective}\n' "$url" || true
+          done <<'EOF'
+          Echo Reef|https://vrcdb.com/go/world/w2Jc2qvuN15DBw0Y4NAs_uKWVcbm5SXFYfTgw9TZpKn6jpFPAUNOx6cwVbDzoxoDWg6EiqQQE7wbJiSmLTdI-VqPbTbLWT
+          Marked Realms|https://vrcdb.com/go/world/w2eFtAw5z2c_YZhNJ23UqJKY8eSzBN6Mi4umOREViEjOkhpqsS01yPxNLnTWvuO09-xQkC2jl6QWpVz8UXnin7bNDmLfX9
+          Greggs|https://vrcdb.com/go/world/w2KCKWtmzlYLBB7S0RzbI1T_Nt0JAJrSbdlMjqh2zpLNCH-1sCt9dx7-1-Vf8HwmZNuRaxWy5u6Qc1mD8wLGLyxRs0w4HF
+          Ded Haven|https://vrcdb.com/go/world/w248lecMx38ZllRSn7iGfVKmGfKDFSwFXZzdgus1jdnE7eMen3XqhxGsGmxM8qhWKCGIPhfWB5idblDB_dGGXyRoEjnXS5
+          Murder Party|https://vrcdb.com/go/world/w2jUASvg_bbtYX52PUNhHUp75OrA2a-Admvq2wPUB5wvh5K5bobr5lJONUtbkDoF0ByuekZauSXdI4MzmZVbFqSJJ3fL6M
+          DayScare|https://vrcdb.com/go/world/w2oYVV17MMwgdpV0oNifVXk7yswEBcav_TAVvw-0YXgzQF7PZxPInH40ohYDm0yclsM6ELqsmAjQzotD24JnvF8Ko5el77
+          EOF
