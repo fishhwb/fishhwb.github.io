@@ -9,25 +9,51 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe VRCmap with Chrome
+      - name: Probe VRCDB author search
         shell: bash
         run: |
           set -u
-          echo '=== chrome ==='
-          command -v google-chrome || command -v chromium || command -v chromium-browser || true
-          BROWSER="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
-          if [ -n "$BROWSER" ]; then
-            "$BROWSER" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=15000 --dump-dom 'https://vrcmap.com/?search=DedZedOffishal' > /tmp/vrcmap-dom.html 2>/tmp/chrome.err || true
-            echo '--- browser stderr ---'
-            tail -100 /tmp/chrome.err || true
-            echo '--- matching DOM text ---'
-            grep -oiE '.{0,100}(DedZedOffishal|Greggs|Echo Reef|Ded Haven|wrld_[0-9a-f-]{36}).{0,180}' /tmp/vrcmap-dom.html | head -100 || true
-            echo '--- world ids ---'
-            grep -oE 'wrld_[0-9a-f-]{36}' /tmp/vrcmap-dom.html | sort -u | head -200 || true
-          fi
-          echo '=== direct cached searches ==='
-          for term in Greggs 'Echo%20Reef' 'Ded%20Haven'; do
-            echo "--- $term"
-            curl -LsS "https://vrcavatarsearch.nekosunevr.co.uk/api/v1/worlds/search?search=$term" | head -c 12000
+          echo '=== VRCDB source ==='
+          curl -LfsS 'https://vrcdb.com/worlds' -o /tmp/vrcdb.html || true
+          grep -oE '<script[^>]+src="[^"]+|<link[^>]+href="[^"]+' /tmp/vrcdb.html | head -100 || true
+          echo '=== discover application strings ==='
+          python - <<'PY'
+          import re, pathlib, subprocess, urllib.parse
+          html=pathlib.Path('/tmp/vrcdb.html').read_text(errors='ignore') if pathlib.Path('/tmp/vrcdb.html').exists() else ''
+          urls=[]
+          for src in re.findall(r'(?:src|href)="([^"]+)',html):
+              if any(x in src for x in ('.js','.wasm','.dll','.json')):
+                  urls.append(urllib.parse.urljoin('https://vrcdb.com/worlds',src))
+          print('assets', urls[:100])
+          for u in urls[:80]:
+              try:
+                  data=subprocess.check_output(['curl','-LfsS',u],timeout=25)
+              except Exception:
+                  continue
+              text=data.decode('utf-8','ignore')
+              hits=sorted(set(re.findall(r'[^\x00-\x1f]{0,90}(?:/api/|worlds|author)[^\x00-\x1f]{0,150}',text,re.I)))
+              useful=[h for h in hits if '/api/' in h.lower() or 'world' in h.lower() and 'author' in h.lower()]
+              if useful:
+                  print('\nASSET',u)
+                  for h in useful[:80]: print(h[:400])
+          PY
+          echo '=== likely VRCDB endpoints ==='
+          for u in \
+            'https://vrcdb.com/api/worlds?search=DedZedOffishal&author=true' \
+            'https://vrcdb.com/api/worlds/search?search=DedZedOffishal&author=true' \
+            'https://vrcdb.com/api/worlds/search?q=DedZedOffishal&author=true' \
+            'https://vrcdb.com/api/world/search?search=DedZedOffishal&author=true' \
+            'https://vrcdb.com/api/world/search?q=DedZedOffishal&author=true' \
+            'https://vrcdb.com/api/search/worlds?search=DedZedOffishal&author=true'; do
+            echo "--- $u"
+            curl -LsS -w '\nHTTP:%{http_code}\n' "$u" | head -c 16000
             echo
           done
+          echo '=== chrome netlog ==='
+          BROWSER="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -n "$BROWSER" ]; then
+            "$BROWSER" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=12000 --log-net-log=/tmp/netlog.json --net-log-capture-mode=IncludeSensitive --dump-dom 'https://vrcdb.com/worlds' >/tmp/vrcdb-dom.html 2>/tmp/chrome.err || true
+            grep -oE 'https://vrcdb\.com[^" ]+|https://[^" ]+/api/[^" ]+' /tmp/netlog.json | sed 's/\\u0026/\&/g' | sort -u | head -200 || true
+            echo '--- DOM hints ---'
+            grep -oiE '.{0,100}(api|world|author).{0,180}' /tmp/vrcdb-dom.html | head -100 || true
+          fi
