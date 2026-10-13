@@ -9,6 +9,22 @@ const ownerId = current.ownerUserId
   || 'usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2';
 const authCookie = String(process.env.VRCHAT_AUTH_COOKIE || '').trim();
 
+// Public worlds found under DedZedOffishal. Keeping these as permanent candidates
+// means an incomplete third-party search index cannot silently remove a world.
+// Every candidate is still checked against VRChat below before it is published.
+const permanentSeedWorldIds = [
+  'wrld_2e9d399f-749f-43a5-958c-a524ad3bec56', // Echo Reef
+  'wrld_5ee23cc0-0821-49e2-82b6-0dd8b94d47f8', // Marked Realms
+  'wrld_ff5a8b4c-e722-4fd8-9fe1-01ce42925567', // Greggs
+  'wrld_873faac1-2a30-4574-be0b-d1a5856f5402', // Ded Haven
+  'wrld_c531ec2c-4a65-4695-8d5a-6b46100f45a5', // Murder Party
+  'wrld_b2350f58-8dd4-499e-ad26-a065114a4d39'  // DayScare
+];
+const seedWorldIds = [...new Set([
+  ...permanentSeedWorldIds,
+  ...(Array.isArray(current.seedWorldIds) ? current.seedWorldIds : [])
+])].filter(validWorldId);
+
 const headers = {
   Accept: 'application/json',
   'User-Agent': 'FISHHWB-Website/2.3 (+https://fishhwb.github.io/)'
@@ -70,6 +86,7 @@ function normalise(w, fallback = {}) {
 }
 
 const ids = new Set([
+  ...seedWorldIds,
   ...(Array.isArray(current.worldIds) ? current.worldIds : []),
   ...(current.worlds || []).map(w => w.id)
 ].filter(validWorldId));
@@ -160,9 +177,10 @@ worlds.sort((a, b) => {
 });
 
 const worldIds = worlds.map(w => w.id);
-const core = { ownerUserId: ownerId, worldIds, worlds };
+const core = { ownerUserId: ownerId, seedWorldIds, worldIds, worlds };
 const previousCore = {
   ownerUserId: current.ownerUserId || ownerId,
+  seedWorldIds: current.seedWorldIds || [],
   worldIds: current.worldIds || [],
   worlds: current.worlds || []
 };
