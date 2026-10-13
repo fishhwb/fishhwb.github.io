@@ -135,7 +135,7 @@
   }
 
   function apply(){
-    [].forEach.call(document.querySelectorAll('.critter.clown'), function(el){
+    [].forEach.call(document.querySelectorAll('.critter.clown, .critter.tang'), function(el){
       if(el.dataset.approvedArt === '7') return;
       var id=uid(), v=Number(el.dataset.artVariant||0)%3;
       el.innerHTML=surfaceFish(id,v);
