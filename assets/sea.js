@@ -134,7 +134,7 @@
   if (abyss) {
     var angler = abyss.querySelector('.angler');
     // where the lure sits inside the angler svg, in px at its drawn size
-    var LURE_X = 150, LURE_Y = 14;
+    var LURE_X_RATIO = 242 / 285, LURE_Y_RATIO = 85 / 195;
     var tx = 0, ty = 0, lx = 0, ly = 0, inside = false, t0 = performance.now();
     var aim = function(x, y){ var r = abyss.getBoundingClientRect(); tx = x - r.left; ty = y - r.top; inside = true; };
     abyss.addEventListener('pointermove', function(e){ aim(e.clientX, e.clientY); });
@@ -157,7 +157,8 @@
       abyss.style.setProperty('--lx', lx + 'px');
       abyss.style.setProperty('--ly', ly + 'px');
       var flip = tx < lx - 2 ? -1 : 1;
-      angler.style.transform = 'translate(' + (lx - LURE_X * flip) + 'px,' + (ly - LURE_Y) + 'px) scaleX(' + flip + ')';
+      var lureX = angler.clientWidth * LURE_X_RATIO, lureY = angler.clientHeight * LURE_Y_RATIO;
+      angler.style.transform = 'translate(' + (lx - lureX * flip) + 'px,' + (ly - lureY) + 'px) scaleX(' + flip + ')';
     })(performance.now());
   }
 
