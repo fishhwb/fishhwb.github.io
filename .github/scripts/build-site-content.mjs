@@ -4,6 +4,7 @@ import path from 'node:path';
 const ROOT = process.cwd();
 const token = process.env.GITHUB_TOKEN || '';
 const owners = ['dedzedofficial', 'fishhwb'];
+const excludedRepos = new Set(['fishhwb/fishhwb.github.io']);
 const siteBase = 'https://fishhwb.github.io';
 const headers = {
   Accept: 'application/vnd.github+json',
@@ -16,7 +17,6 @@ const fallback = {
   'dedzedofficial/Meshy-Importer-for-Blender-Unity': 'Imports and locally decodes Meshy .meshy models for Unity, Blender, Godot and Unreal Engine.',
   'dedzedofficial/Optimize-Your-Project': 'A free Unity and Blender optimisation toolkit for repetitive cleanup and performance work.',
   'dedzedofficial/Blender-XR': 'Open-source VR mesh modelling and scene building using a controller-first OpenXR workflow.',
-  'fishhwb/fishhwb.github.io': 'The FISH HWB website and public project hub.'
 };
 
 async function json(url, { allow404 = false } = {}) {
@@ -66,7 +66,7 @@ async function collectProjects() {
     raw.push(...list);
   }
   const seen = new Set();
-  raw = raw.filter(r => r && !r.private && !r.fork && r.name !== '.github' && !seen.has(r.full_name) && seen.add(r.full_name));
+  raw = raw.filter(r => r && !r.private && !r.fork && r.name !== '.github' && !excludedRepos.has(r.full_name) && !seen.has(r.full_name) && seen.add(r.full_name));
   raw.sort((a,b) => new Date(b.pushed_at || 0) - new Date(a.pushed_at || 0));
 
   const repos = [];

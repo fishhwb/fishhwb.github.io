@@ -104,7 +104,6 @@
       'dedzedofficial/Meshy-Importer-for-Blender-Unity': 'Imports and locally decodes Meshy .meshy models for Unity, Blender, Godot and Unreal Engine.',
       'dedzedofficial/Optimize-Your-Project': 'A free Unity and Blender optimization toolkit that turns repetitive cleanup and performance work into guarded, clear actions.',
       'dedzedofficial/Blender-XR': 'Free, open-source VR mesh modelling and scene building inside Blender using a controller-first OpenXR workflow.',
-      'fishhwb/fishhwb.github.io': 'The FISH HWB website and public project hub.'
     };
 
     getJSON('assets/projects.json', false).then(function(data){
