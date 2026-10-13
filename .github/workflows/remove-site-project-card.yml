@@ -1,0 +1,47 @@
+name: Remove website project card
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-site-project-card.yml'
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Stop exposing the website repository as a project
+        shell: python
+        run: |
+          from pathlib import Path
+
+          p = Path('.github/scripts/build-site-content.mjs')
+          s = p.read_text()
+          s = s.replace("const owners = ['dedzedofficial', 'fishhwb'];\n", "const owners = ['dedzedofficial', 'fishhwb'];\nconst excludedRepos = new Set(['fishhwb/fishhwb.github.io']);\n")
+          s = s.replace("  'fishhwb/fishhwb.github.io': 'The FISH HWB website and public project hub.'\n", "")
+          s = s.replace("raw = raw.filter(r => r && !r.private && !r.fork && r.name !== '.github' && !seen.has(r.full_name) && seen.add(r.full_name));", "raw = raw.filter(r => r && !r.private && !r.fork && r.name !== '.github' && !excludedRepos.has(r.full_name) && !seen.has(r.full_name) && seen.add(r.full_name));")
+          p.write_text(s)
+
+          for file in ['assets/extras.js', 'assets/site-v2.js']:
+            p = Path(file)
+            s = p.read_text()
+            s = s.replace("      'fishhwb/fishhwb.github.io': 'The FISH HWB website and public project hub.'\n", "")
+            s = s.replace("    'fishhwb/fishhwb.github.io':'The FISH HWB website and public project hub.'\n", "")
+            p.write_text(s)
+      - name: Regenerate public project data
+        run: |
+          rm -rf projects/fishhwb-fishhwb-github-io
+          node .github/scripts/build-site-content.mjs
+          rm -f .github/workflows/remove-site-project-card.yml
+      - name: Commit cleanup
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Hide website source repository from public projects"
+          git pull --rebase origin main
+          git push
