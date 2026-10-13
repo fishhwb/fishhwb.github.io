@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/scripts/update-vrchat-worlds.mjs'
+      - '.github/scripts/discover-vrcdb-worlds.py'
       - '.github/workflows/vrchat-worlds.yml'
   schedule:
     - cron: '23 5 * * *'
@@ -21,9 +22,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Refresh and discover public world metadata
+      - name: Discover public worlds by author
+        shell: bash
+        run: |
+          python -m pip install --quiet selenium
+          python .github/scripts/discover-vrcdb-worlds.py /tmp/vrcdb-world-ids.json
+      - name: Refresh and verify public world metadata
         env:
           VRCHAT_AUTH_COOKIE: ${{ secrets.VRCHAT_AUTH_COOKIE }}
+          VRCHAT_DISCOVERY_FILE: /tmp/vrcdb-world-ids.json
         run: node .github/scripts/update-vrchat-worlds.mjs
       - name: Commit metadata changes
         shell: bash
