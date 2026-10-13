@@ -9,51 +9,61 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe VRCDB author search
+      - name: Search VRCDB by author
         shell: bash
         run: |
-          set -u
-          echo '=== VRCDB source ==='
-          curl -LfsS 'https://vrcdb.com/worlds' -o /tmp/vrcdb.html || true
-          grep -oE '<script[^>]+src="[^"]+|<link[^>]+href="[^"]+' /tmp/vrcdb.html | head -100 || true
-          echo '=== discover application strings ==='
+          python -m pip install --quiet selenium
           python - <<'PY'
-          import re, pathlib, subprocess, urllib.parse
-          html=pathlib.Path('/tmp/vrcdb.html').read_text(errors='ignore') if pathlib.Path('/tmp/vrcdb.html').exists() else ''
-          urls=[]
-          for src in re.findall(r'(?:src|href)="([^"]+)',html):
-              if any(x in src for x in ('.js','.wasm','.dll','.json')):
-                  urls.append(urllib.parse.urljoin('https://vrcdb.com/worlds',src))
-          print('assets', urls[:100])
-          for u in urls[:80]:
-              try:
-                  data=subprocess.check_output(['curl','-LfsS',u],timeout=25)
-              except Exception:
-                  continue
-              text=data.decode('utf-8','ignore')
-              hits=sorted(set(re.findall(r'[^\x00-\x1f]{0,90}(?:/api/|worlds|author)[^\x00-\x1f]{0,150}',text,re.I)))
-              useful=[h for h in hits if '/api/' in h.lower() or 'world' in h.lower() and 'author' in h.lower()]
-              if useful:
-                  print('\nASSET',u)
-                  for h in useful[:80]: print(h[:400])
+          import re, time
+          from selenium import webdriver
+          from selenium.webdriver.common.by import By
+          from selenium.webdriver.common.keys import Keys
+          from selenium.webdriver.support.ui import WebDriverWait
+          from selenium.webdriver.support import expected_conditions as EC
+
+          options = webdriver.ChromeOptions()
+          options.add_argument('--headless=new')
+          options.add_argument('--no-sandbox')
+          options.add_argument('--disable-gpu')
+          options.add_argument('--disable-dev-shm-usage')
+          options.add_argument('--window-size=1440,1200')
+          driver = webdriver.Chrome(options=options)
+          try:
+              driver.get('https://vrcdb.com/worlds')
+              wait = WebDriverWait(driver, 25)
+              author = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.search-btn-author')))
+              author.click()
+              box = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.search-input')))
+              box.clear()
+              box.send_keys('DedZedOffishal')
+              box.send_keys(Keys.ENTER)
+              time.sleep(8)
+              html = driver.page_source
+              print('URL', driver.current_url)
+              print('TITLE', driver.title)
+              print('AUTHOR_BUTTON', driver.find_element(By.CSS_SELECTOR,'.search-btn-author').get_attribute('class'))
+              ids = sorted(set(re.findall(r'wrld_[0-9a-fA-F-]{36}', html)))
+              print('WORLD_IDS', len(ids))
+              for wid in ids: print(wid)
+              print('=== RESULT LINKS/TEXT ===')
+              for a in driver.find_elements(By.CSS_SELECTOR, 'a[href]'):
+                  href=a.get_attribute('href') or ''
+                  text=(a.text or '').strip().replace('\n',' | ')
+                  if 'world' in href.lower() or 'wrld_' in href or 'DedZed' in text:
+                      print('LINK', href, 'TEXT', text[:500])
+              print('=== RESULT CARDS ===')
+              for sel in ['.world-card','.avatar-card','.search-result','.card','article']:
+                  cards=driver.find_elements(By.CSS_SELECTOR,sel)
+                  if cards:
+                      print('SELECTOR',sel,'COUNT',len(cards))
+                      for c in cards[:100]:
+                          t=(c.text or '').strip().replace('\n',' | ')
+                          if t: print('CARD',t[:1000])
+              print('=== BODY MATCHES ===')
+              body=(driver.find_element(By.TAG_NAME,'body').text or '')
+              for line in body.splitlines():
+                  if 'DedZed' in line or 'Greggs' in line or 'Echo Reef' in line or 'Ded Haven' in line:
+                      print(line[:1000])
+          finally:
+              driver.quit()
           PY
-          echo '=== likely VRCDB endpoints ==='
-          for u in \
-            'https://vrcdb.com/api/worlds?search=DedZedOffishal&author=true' \
-            'https://vrcdb.com/api/worlds/search?search=DedZedOffishal&author=true' \
-            'https://vrcdb.com/api/worlds/search?q=DedZedOffishal&author=true' \
-            'https://vrcdb.com/api/world/search?search=DedZedOffishal&author=true' \
-            'https://vrcdb.com/api/world/search?q=DedZedOffishal&author=true' \
-            'https://vrcdb.com/api/search/worlds?search=DedZedOffishal&author=true'; do
-            echo "--- $u"
-            curl -LsS -w '\nHTTP:%{http_code}\n' "$u" | head -c 16000
-            echo
-          done
-          echo '=== chrome netlog ==='
-          BROWSER="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
-          if [ -n "$BROWSER" ]; then
-            "$BROWSER" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=12000 --log-net-log=/tmp/netlog.json --net-log-capture-mode=IncludeSensitive --dump-dom 'https://vrcdb.com/worlds' >/tmp/vrcdb-dom.html 2>/tmp/chrome.err || true
-            grep -oE 'https://vrcdb\.com[^" ]+|https://[^" ]+/api/[^" ]+' /tmp/netlog.json | sed 's/\\u0026/\&/g' | sort -u | head -200 || true
-            echo '--- DOM hints ---'
-            grep -oiE '.{0,100}(api|world|author).{0,180}' /tmp/vrcdb-dom.html | head -100 || true
-          fi
