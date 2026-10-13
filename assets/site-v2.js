@@ -1,0 +1,234 @@
+// FISH HWB selected upgrades.
+// Uses generated local JSON for project/gallery data so visitors do not depend on GitHub API calls.
+(function(){
+  'use strict';
+
+  var nativeFetch = window.fetch.bind(window);
+  var projectDataPromise = nativeFetch('assets/projects.json', {cache:'no-store'})
+    .then(function(r){ return r.ok ? r.json() : {repos:[]}; })
+    .catch(function(){ return {repos:[]}; });
+
+  // Keep legacy extras.js working while stopping it from calling GitHub directly.
+  window.fetch = function(input, init){
+    var url = typeof input === 'string' ? input : (input && input.url) || '';
+    var m = url.match(/^https:\/\/api\.github\.com\/users\/(dedzedofficial|fishhwb)\/repos(?:\?|$)/i);
+    if (!m) return nativeFetch(input, init);
+    var owner = m[1].toLowerCase();
+    return projectDataPromise.then(function(data){
+      var repos = (data.repos || []).filter(function(r){
+        var login = r.owner && r.owner.login ? r.owner.login : String(r.full_name || '').split('/')[0];
+        return String(login).toLowerCase() === owner;
+      });
+      return new Response(JSON.stringify(repos), {status:200, headers:{'Content-Type':'application/json'}});
+    });
+  };
+
+  function el(tag, cls, text){
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function safeDate(value){
+    if (!value) return '';
+    var d = new Date(value);
+    return isNaN(d) ? '' : new Intl.DateTimeFormat(undefined,{day:'numeric',month:'short',year:'numeric'}).format(d);
+  }
+  function say(text){ if (window.cubez && window.cubez.say) window.cubez.say(text); }
+
+  /* ---------- lazy embeds ---------- */
+  function lazyMedia(){
+    var frames = [].slice.call(document.querySelectorAll('iframe[data-src]'));
+    if (!frames.length) return;
+    frames.forEach(function(f){ var p=f.closest('.frame'); if(p)p.dataset.lazyMedia='1'; });
+    if (!('IntersectionObserver' in window)) {
+      frames.forEach(function(f){ f.src=f.dataset.src; f.removeAttribute('data-src'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var f=entry.target;
+        if(f.dataset.src){ f.src=f.dataset.src; f.removeAttribute('data-src'); }
+        io.unobserve(f);
+      });
+    },{rootMargin:'900px 0px'});
+    frames.forEach(function(f){io.observe(f);});
+  }
+
+  /* ---------- project hub ---------- */
+  var FALLBACK = {
+    'dedzedofficial/Meshy-Importer-for-Blender-Unity':'Imports and locally decodes Meshy .meshy models for Unity, Blender, Godot and Unreal Engine.',
+    'dedzedofficial/Optimize-Your-Project':'A free Unity and Blender optimisation toolkit for repetitive cleanup and performance work.',
+    'dedzedofficial/Blender-XR':'Open-source VR mesh modelling and scene building using a controller-first OpenXR workflow.',
+    'fishhwb/fishhwb.github.io':'The FISH HWB website and public project hub.'
+  };
+  function statusClass(status){ return /archive/i.test(status||'') ? 'status archived' : 'status'; }
+  function renderProjects(data){
+    var section=document.getElementById('projects')||document.getElementById('code');
+    if(!section) return;
+    var repos=(data.repos||[]).filter(function(r){return r && r.name && r.name!=='.github';});
+    if(!repos.length) return;
+    var grid=section.querySelector('.projects');
+    if(!grid) return;
+    grid.className='projects projects-v2'; grid.removeAttribute('style'); grid.textContent='';
+    var note=section.querySelector('.project-hub-note');
+    if(!note){ note=el('p','project-hub-note','Project data, releases and downloads are generated on GitHub and served locally.'); grid.parentNode.insertBefore(note,grid); }
+    repos.forEach(function(r){
+      var card=el('article','project-v2');
+      if(r.socialImage){ var media=el('div','project-v2-media'),img=el('img');img.src=r.socialImage;img.alt='';img.loading='lazy';media.appendChild(img);card.appendChild(media); }
+      var body=el('div','project-v2-body'), title=el('h3','',r.name), meta=el('div','meta');
+      meta.appendChild(el('span',statusClass(r.status),r.status||'Active'));
+      if(r.language) meta.appendChild(el('span','',r.language));
+      if(r.license && (r.license.spdx_id||r.license.name)) meta.appendChild(el('span','',r.license.spdx_id||r.license.name));
+      (r.topics||[]).slice(0,2).forEach(function(t){meta.appendChild(el('span','',t));});
+      var copy=el('p','',r.summary||FALLBACK[r.full_name]||r.description||'Public FISH HWB project.');
+      var release=el('div','release');
+      if(r.release && r.release.tag_name){ release.textContent='Latest: '+r.release.tag_name+(r.release.published_at?' · '+safeDate(r.release.published_at):''); }
+      else release.textContent=r.pushed_at?'Updated '+safeDate(r.pushed_at):'Open source project';
+      var actions=el('div','actions');
+      if(r.page){var page=el('a','','Project page');page.href=r.page;actions.appendChild(page);}
+      var gh=el('a','alt','GitHub ↗');gh.href=r.html_url;gh.target='_blank';gh.rel='noopener';actions.appendChild(gh);
+      if(r.release && r.release.download_url){var dl=el('a','','Download');dl.href=r.release.download_url;dl.target='_blank';dl.rel='noopener';actions.appendChild(dl);}
+      body.append(title,meta,copy,release,actions);card.appendChild(body);grid.appendChild(card);
+    });
+  }
+
+  /* ---------- richer VRChat worlds ---------- */
+  function renderWorlds(){
+    var section=document.getElementById('projects')||document.getElementById('code');
+    if(!section) return;
+    nativeFetch('assets/vrchat-worlds.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(data){
+      var items=(data.worlds||[]).filter(function(w){return w&&w.id;}); if(!items.length)return;
+      var host=section.querySelector('.world-projects');
+      if(!host){host=el('div','world-projects');var head=el('div','world-projects-head');head.append(el('h3','sub','VRChat worlds'),el('p','','Live metadata refreshed automatically.'));host.append(head,el('div','world-grid'));section.querySelector('.wrap').appendChild(host);}
+      var grid=host.querySelector('.world-grid');grid.textContent='';host.hidden=false;
+      items.forEach(function(w){
+        var card=el('article','world-card-v2');
+        if(w.thumbnailImageUrl||w.imageUrl){var img=el('img');img.src=w.thumbnailImageUrl||w.imageUrl;img.alt='';img.loading='lazy';card.appendChild(img);}
+        var body=el('div','world-card-v2-body');body.appendChild(el('h4','',w.name||'VRChat world'));
+        body.appendChild(el('p','',w.description||'Open this world in VRChat.'));
+        var meta=el('div','world-meta');
+        if(w.capacity)meta.appendChild(el('span','',w.capacity+' players'));
+        if(w.platforms&&w.platforms.length)meta.appendChild(el('span','',w.platforms.join(' + ')));
+        if(w.visits!=null)meta.appendChild(el('span','',Number(w.visits).toLocaleString()+' visits'));
+        if(w.favorites!=null)meta.appendChild(el('span','',Number(w.favorites).toLocaleString()+' favourites'));
+        if(w.updatedAt)meta.appendChild(el('span','','updated '+safeDate(w.updatedAt)));
+        var actions=el('div','world-actions'),open=el('a','','VRChat page ↗');open.href=w.url||('https://vrchat.com/home/world/'+encodeURIComponent(w.id));open.target='_blank';open.rel='noopener';
+        var copy=el('button','','Copy world ID');copy.type='button';copy.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(w.id);copy.textContent='Copied';setTimeout(function(){copy.textContent='Copy world ID';},1500);});
+        actions.append(open,copy);body.append(meta,actions);card.appendChild(body);grid.appendChild(card);
+      });
+      dispatchEvent(new Event('resize'));
+    }).catch(function(){});
+  }
+
+  /* ---------- automatic 3D gallery ---------- */
+  function renderGallery(){
+    var grid=document.querySelector('#models .gallery'); if(!grid)return;
+    nativeFetch('assets/gallery.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(data){
+      var items=(data.items||[]); grid.className='gallery gallery-v2'; grid.textContent='';
+      if(!items.length){grid.appendChild(el('div','gallery-v2-empty','Drop renders or 3D files into assets/3d/. Images appear automatically; GLB, GLTF, OBJ, STL and FBX files get interactive viewers.'));return;}
+      items.forEach(function(item){
+        var card=el('article','gallery-item'),preview=el('div','preview'),body=el('div','gallery-item-body');
+        if(item.type==='image'){
+          var img=el('img');img.src=item.preview||item.path;img.alt=item.title||'3D render';img.loading='lazy';preview.appendChild(img);
+        } else if(item.type==='model'){
+          preview.dataset.model=item.path;preview.dataset.ext=item.ext||'';preview.dataset.title=item.title||'3D model';
+          if(item.preview){var thumb=el('img','model-thumb');thumb.src=item.preview;thumb.alt='';thumb.loading='lazy';preview.appendChild(thumb);}
+          preview.appendChild(el('span','model-loading','3D preview loads when visible'));
+          preview.appendChild(el('span','model-hint','drag to orbit · wheel to zoom'));
+          observeModel(preview);
+        } else {
+          var source=el('div','model-loading','Browser preview unavailable for '+String(item.ext||'this format').toUpperCase()+'. Download the source file instead.');preview.appendChild(source);
+        }
+        body.appendChild(el('b','',item.title||'Untitled'));
+        var small=el('small','',item.label||((item.ext||'file').toUpperCase()));
+        if(item.type==='source'){small.appendChild(document.createTextNode(' · '));var a=el('a','','download');a.href=item.path;a.download='';small.appendChild(a);}
+        body.appendChild(small);card.append(preview,body);grid.appendChild(card);
+      });
+      dispatchEvent(new Event('resize'));
+    }).catch(function(){grid.innerHTML='<div class="gallery-v2-empty">3D gallery metadata is unavailable.</div>';});
+  }
+  var modelObserver;
+  function observeModel(node){
+    if(!('IntersectionObserver' in window)){loadModel(node);return;}
+    if(!modelObserver)modelObserver=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){loadModel(e.target);modelObserver.unobserve(e.target);}});},{rootMargin:'500px'});
+    modelObserver.observe(node);
+  }
+  async function loadModel(host){
+    if(host.dataset.loaded)return;host.dataset.loaded='1';
+    var loading=host.querySelector('.model-loading'); if(loading)loading.textContent='loading model…';
+    try{
+      var THREE=await import('three'), controlsMod=await import('three/addons/controls/OrbitControls.js'), ext=(host.dataset.ext||'').toLowerCase(), Loader;
+      if(ext==='glb'||ext==='gltf')Loader=(await import('three/addons/loaders/GLTFLoader.js')).GLTFLoader;
+      else if(ext==='obj')Loader=(await import('three/addons/loaders/OBJLoader.js')).OBJLoader;
+      else if(ext==='stl')Loader=(await import('three/addons/loaders/STLLoader.js')).STLLoader;
+      else if(ext==='fbx')Loader=(await import('three/addons/loaders/FBXLoader.js')).FBXLoader;
+      else throw new Error('Unsupported model format');
+      var canvas=el('canvas'),renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
+      var scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,1,.01,1000);scene.add(new THREE.HemisphereLight(0xe8f8ff,0x08203a,2.2));var key=new THREE.DirectionalLight(0xffffff,2);key.position.set(2,3,4);scene.add(key);
+      var loader=new Loader();loader.load(host.dataset.model,function(result){
+        var object;
+        if(ext==='glb'||ext==='gltf')object=result.scene;
+        else if(ext==='stl'){var mat=new THREE.MeshStandardMaterial({color:0xb9d9e8,roughness:.58,metalness:.08});object=new THREE.Mesh(result,mat);}
+        else object=result;
+        scene.add(object);var box=new THREE.Box3().setFromObject(object),size=box.getSize(new THREE.Vector3()),centre=box.getCenter(new THREE.Vector3()),span=Math.max(size.x,size.y,size.z)||1;object.position.sub(centre);camera.position.set(span*1.5,span*.8,span*2.1);camera.near=Math.max(span/1000,.001);camera.far=span*100;camera.updateProjectionMatrix();
+        var controls=new controlsMod.OrbitControls(camera,canvas);controls.enableDamping=true;controls.target.set(0,0,0);controls.minDistance=span*.35;controls.maxDistance=span*8;
+        var resize=function(){var w=host.clientWidth||300,h=host.clientHeight||300;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};resize();new ResizeObserver(resize).observe(host);
+        var thumb=host.querySelector('.model-thumb');if(thumb)thumb.remove();if(loading)loading.remove();host.insertBefore(canvas,host.firstChild);
+        (function loop(){if(!document.contains(host))return;requestAnimationFrame(loop);controls.update();renderer.render(scene,camera);})();
+      },undefined,function(){if(loading)loading.textContent='Could not render this model. You can still open the source file.';});
+    }catch(e){if(loading)loading.textContent='3D preview unavailable in this browser.';}
+  }
+
+  /* ---------- Cube'z companion v2 ---------- */
+  function upgradeBuddy(data){
+    var root=document.querySelector('.buddy'),head=root&&root.querySelector('.buddy-head');if(!root||!head)return;
+    var bubbles=el('span','buddy-bubbles');bubbles.innerHTML='<i></i><i></i><i></i>';root.appendChild(bubbles);
+    var tools=el('button','buddy-tools','⋯');tools.type='button';tools.setAttribute('aria-label',"Cube'z menu");
+    var menu=el('div','buddy-menu');menu.hidden=true;
+    function item(text,href){var a=el('a','',text);a.href=href;menu.appendChild(a);return a;}
+    item('Projects','#projects');item('3D gallery','#models');item('Latest videos','#videos');
+    var whats=el('button','','What’s new?');whats.type='button';whats.addEventListener('click',function(){var repo=(data.repos||[]).find(function(r){return r.release&&r.release.tag_name;})||(data.repos||[])[0];say(repo?(repo.name+' is the latest project update'+(repo.release&&repo.release.tag_name?' — '+repo.release.tag_name:'')+'.'):"I haven't got a fresh project update right now.");menu.hidden=true;});menu.insertBefore(whats,menu.firstChild);
+    var random=el('button','','Random dive');random.type='button';random.addEventListener('click',function(){var ids=['stream','videos','music','models','projects','devlog','discord'];var target=document.getElementById(ids[Math.floor(Math.random()*ids.length)]);if(target)target.scrollIntoView({behavior:'smooth'});menu.hidden=true;});menu.appendChild(random);
+    var relics=el('button','','Seafloor log');relics.type='button';relics.addEventListener('click',function(){openRelicLog();menu.hidden=true;});menu.appendChild(relics);
+    tools.addEventListener('click',function(e){e.stopPropagation();menu.hidden=!menu.hidden;});menu.addEventListener('click',function(e){e.stopPropagation();});root.append(tools,menu);
+    document.addEventListener('click',function(){menu.hidden=true;});
+    addEventListener('depth',function(e){var d=e.detail.depth;root.classList.toggle('buddy-zone-twilight',d>=200&&d<1000);root.classList.toggle('buddy-zone-midnight',d>=1000&&d<4000);root.classList.toggle('buddy-zone-abyss',d>=4000);});
+    var music=document.getElementById('music');if(music&&'IntersectionObserver'in window)new IntersectionObserver(function(es){root.classList.toggle('buddy-music',es[0].isIntersecting);},{threshold:.35}).observe(music);
+  }
+
+  /* ---------- seabed relic hunt ---------- */
+  var RELICS={bones:'Ancient fish bones',bottle:'Message in a bottle',coin:'Lost abyss coin',chest:'Seafloor treasure'};
+  function loadRelics(){try{return JSON.parse(localStorage.getItem('fishhwb-relics')||'{}');}catch(e){return {};}}
+  function saveRelics(v){try{localStorage.setItem('fishhwb-relics',JSON.stringify(v));}catch(e){}}
+  function toast(text){var t=el('div','relic-toast',text);document.body.appendChild(t);setTimeout(function(){t.remove();},3600);}
+  function setupRelics(){
+    var abyss=document.querySelector('.abyss');if(abyss)abyss.removeAttribute('aria-hidden');
+    var picks=[['bones','.abyss .bones'],['bottle','.abyss .bottle'],['coin','.abyss .coin-lost'],['chest','.floor .chest']];
+    picks.forEach(function(pair){var id=pair[0],node=document.querySelector(pair[1]);if(!node)return;node.classList.add('v2-relic');node.tabIndex=0;node.setAttribute('role','button');node.setAttribute('aria-label','Investigate '+RELICS[id]);
+      function collect(e){if(e&&e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;if(e&&e.type==='keydown')e.preventDefault();var state=loadRelics();if(!state[id]){state[id]=new Date().toISOString();saveRelics(state);toast('Found: '+RELICS[id]);say('You found '+RELICS[id].toLowerCase()+'. I am absolutely keeping that.');}else toast(RELICS[id]+' already logged.');if(id==='chest')openRelicLog();}
+      node.addEventListener('click',collect);node.addEventListener('keydown',collect);
+    });
+  }
+  function openRelicLog(){
+    var old=document.querySelector('.relic-log');if(old)old.remove();var state=loadRelics(),modal=el('div','relic-log'),card=el('div','relic-card');modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');
+    card.append(el('h2','',"Seafloor archive"),el('p','',Object.keys(state).length+' of '+Object.keys(RELICS).length+' strange things recovered.'));
+    var ul=el('ul');Object.keys(RELICS).forEach(function(k){ul.appendChild(el('li','',(state[k]?'✓ ':'○ ')+RELICS[k]));});card.appendChild(ul);
+    if(Object.keys(state).length===Object.keys(RELICS).length)card.appendChild(el('p','',"Complete. You have officially looted the entire website. Cube'z denies involvement."));
+    var close=el('button','','Close');close.type='button';close.addEventListener('click',function(){modal.remove();});card.appendChild(close);modal.appendChild(card);modal.addEventListener('click',function(e){if(e.target===modal)modal.remove();});document.body.appendChild(modal);close.focus();
+  }
+
+  /* ---------- ambient life ---------- */
+  function addPlankton(){
+    ['videos','music','models','projects'].forEach(function(id){var section=document.getElementById(id);if(!section||section.querySelector('.v2-plankton'))return;var layer=el('div','v2-plankton');layer.setAttribute('aria-hidden','true');for(var i=0;i<28;i++){var p=el('i');p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';p.style.setProperty('--drift',(8+Math.random()*14)+'s');p.style.setProperty('--dx',(-25+Math.random()*50)+'px');p.style.setProperty('--dy',(-20-Math.random()*60)+'px');layer.appendChild(p);}section.insertBefore(layer,section.firstChild);});
+  }
+
+  /* ---------- optimized mascot ---------- */
+  function useOptimizedMascot(){var probe=new Image();probe.onload=function(){[].forEach.call(document.querySelectorAll('img[src$="fishhwb-mascot.png"]'),function(img){img.src='assets/fishhwb-mascot.webp';});};probe.src='assets/fishhwb-mascot.webp';}
+
+  document.addEventListener('DOMContentLoaded',function(){
+    lazyMedia();renderWorlds();renderGallery();setupRelics();addPlankton();useOptimizedMascot();
+    projectDataPromise.then(function(data){renderProjects(data);upgradeBuddy(data);});
+  });
+})();
