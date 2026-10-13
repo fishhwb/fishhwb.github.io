@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12T06:35:50.066Z",
+  "updatedAt": "2026-10-13T00:47:19.426Z",
   "worldIds": [
     "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
     "wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
@@ -12,8 +12,26 @@
       "thumbnailImageUrl": "https://api.vrchat.cloud/api/1/image/file_01fec3b1-0874-46a6-88a0-721b363dba7d/2/256",
       "imageUrl": "https://api.vrchat.cloud/api/1/file/file_01fec3b1-0874-46a6-88a0-721b363dba7d/2/file",
       "capacity": 32,
+      "recommendedCapacity": 16,
       "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
       "authorName": "DedZedOffishal",
+      "visits": 44924,
+      "favorites": 1970,
+      "popularity": 6,
+      "heat": 3,
+      "releaseStatus": "public",
+      "publicationDate": "2025-09-25T19:04:36.251Z",
+      "labsPublicationDate": "2025-09-23T05:35:08.755Z",
+      "platforms": [],
+      "tags": [
+        "author_tag_aquarium",
+        "author_tag_chill",
+        "author_tag_hangout",
+        "system_approved",
+        "author_tag_idle",
+        "author_tag_game",
+        "system_monetized_world"
+      ],
       "updatedAt": "2026-02-24T23:34:43.347Z",
       "url": "https://vrchat.com/home/world/wrld_2e9d399f-749f-43a5-958c-a524ad3bec56"
     },
@@ -24,8 +42,26 @@
       "thumbnailImageUrl": "https://api.vrchat.cloud/api/1/image/file_1bc2cba8-978f-4476-ad75-eed1c10bf061/4/256",
       "imageUrl": "https://api.vrchat.cloud/api/1/file/file_1bc2cba8-978f-4476-ad75-eed1c10bf061/4/file",
       "capacity": 32,
+      "recommendedCapacity": 16,
       "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
       "authorName": "DedZedOffishal",
+      "visits": 832,
+      "favorites": 43,
+      "popularity": 4,
+      "heat": 1,
+      "releaseStatus": "public",
+      "publicationDate": "2025-08-19T07:47:48.972Z",
+      "labsPublicationDate": "2025-02-18T05:30:59.652Z",
+      "platforms": [],
+      "tags": [
+        "author_tag_metal",
+        "author_tag_music",
+        "author_tag_fantasy",
+        "author_tag_volcano",
+        "author_tag_lava",
+        "system_approved",
+        "system_monetized_world"
+      ],
       "updatedAt": "2025-11-24T23:43:02.269Z",
       "url": "https://vrchat.com/home/world/wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
     }

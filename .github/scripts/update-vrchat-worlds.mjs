@@ -8,7 +8,7 @@ const seedIds = Array.isArray(current.worldIds)
 const old = new Map((current.worlds || []).map(w => [w.id, w]));
 const headers = {
   Accept: 'application/json',
-  'User-Agent': 'FISHHWB-Website/1.0 (+https://github.com/fishhwb/fishhwb.github.io)'
+  'User-Agent': 'FISHHWB-Website/2.0 (+https://github.com/fishhwb/fishhwb.github.io)'
 };
 const authCookie = process.env.VRCHAT_AUTH_COOKIE || '';
 if (authCookie) headers.Cookie = authCookie.includes('auth=') ? authCookie : `auth=${authCookie}`;
@@ -17,6 +17,17 @@ async function getWorld(id) {
   const r = await fetch(`https://api.vrchat.cloud/api/1/worlds/${encodeURIComponent(id)}`, { headers });
   if (!r.ok) throw new Error(`VRChat returned ${r.status}`);
   return r.json();
+}
+
+function platformsFrom(w, fallback) {
+  const found = new Set();
+  for (const pkg of w.unityPackages || []) {
+    const p = String(pkg?.platform || '').toLowerCase();
+    if (p === 'standalonewindows' || p === 'windows') found.add('PC');
+    else if (p === 'android') found.add('Android/Quest');
+    else if (p) found.add(pkg.platform);
+  }
+  return found.size ? [...found] : (fallback.platforms || []);
 }
 
 function normalise(w, fallback = {}) {
@@ -28,8 +39,18 @@ function normalise(w, fallback = {}) {
     thumbnailImageUrl: w.thumbnailImageUrl || w.imageUrl || fallback.thumbnailImageUrl || '',
     imageUrl: w.imageUrl || fallback.imageUrl || '',
     capacity: w.capacity || w.recommendedCapacity || fallback.capacity || null,
+    recommendedCapacity: w.recommendedCapacity || fallback.recommendedCapacity || null,
     authorId: w.authorId || fallback.authorId || '',
     authorName: w.authorName || fallback.authorName || '',
+    visits: Number.isFinite(w.visits) ? w.visits : (fallback.visits ?? null),
+    favorites: Number.isFinite(w.favorites) ? w.favorites : (fallback.favorites ?? null),
+    popularity: Number.isFinite(w.popularity) ? w.popularity : (fallback.popularity ?? null),
+    heat: Number.isFinite(w.heat) ? w.heat : (fallback.heat ?? null),
+    releaseStatus: w.releaseStatus || fallback.releaseStatus || 'public',
+    publicationDate: w.publicationDate || fallback.publicationDate || '',
+    labsPublicationDate: w.labsPublicationDate || fallback.labsPublicationDate || '',
+    platforms: platformsFrom(w, fallback),
+    tags: Array.isArray(w.tags) ? w.tags : (fallback.tags || []),
     updatedAt: w.updated_at || w.updatedAt || fallback.updatedAt || '',
     url: `https://vrchat.com/home/world/${id}`
   };

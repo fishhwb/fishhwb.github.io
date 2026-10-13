@@ -25,14 +25,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/site-v2.css">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Ded Zed","alternateName":["Our Fish Overlord","DedZedOffishal"],"url":"https://fishhwb.github.io/","sameAs":["https://github.com/dedzedofficial","https://www.twitch.tv/dedzedoffishal","https://www.youtube.com/channel/UCtcFAWZJeiEp_DOKy8U_YYg","https://open.spotify.com/artist/3G5lgBc7shS09fLh4ovfL4"]},{"@type":"WebSite","name":"FISH HWB","url":"https://fishhwb.github.io/","description":"Ded Zed's creator hub for streams, music, 3D work, VRChat worlds and open-source projects."}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="site-head">
   <div class="wrap nav">
-    <a class="brand" href="./"><img src="assets/fishhwb-mascot.png" alt="" width="36" height="36">Fish HWB</a>
+    <a class="brand" href="./"><img src="assets/fishhwb-mascot.webp" alt="" width="36" height="36">Fish HWB</a>
     <nav class="links" aria-label="Main">
       <a href="#stream">stream</a>
       <a href="#videos">videos</a>
@@ -61,7 +63,7 @@
       </dl>
     </div>
     <figure class="sticker">
-      <img src="assets/fishhwb-mascot.png" alt="The FISH HWB mascot: a round, big-eyed creature with rainbow hair" width="1024" height="1024">
+      <img src="assets/fishhwb-mascot.webp" alt="The FISH HWB mascot: a round, big-eyed creature with rainbow hair" width="1024" height="1024">
       <figcaption>fig. 1: me, basically</figcaption>
     </figure>
   </div>
@@ -82,10 +84,10 @@
       </div>
       <div class="stream">
         <div class="frame ratio">
-          <iframe src="https://player.twitch.tv/?channel=dedzedoffishal&parent=fishhwb.github.io&parent=localhost&muted=true" title="Ded Zed live on Twitch" allowfullscreen></iframe>
+          <iframe data-src="https://player.twitch.tv/?channel=dedzedoffishal&parent=fishhwb.github.io&parent=localhost&muted=true" title="Ded Zed live on Twitch" allowfullscreen></iframe>
         </div>
         <div class="frame chat">
-          <iframe src="https://www.twitch.tv/embed/dedzedoffishal/chat?parent=fishhwb.github.io&parent=localhost" title="Twitch chat" loading="lazy"></iframe>
+          <iframe data-src="https://www.twitch.tv/embed/dedzedoffishal/chat?parent=fishhwb.github.io&parent=localhost" title="Twitch chat" loading="lazy"></iframe>
         </div>
       </div>
       <div class="caption"><span>If it's offline, follow on Twitch to get pinged when I go live.</span><span>chat's open either way</span></div>
@@ -107,7 +109,7 @@
         <a class="more" href="https://www.youtube.com/channel/UCtcFAWZJeiEp_DOKy8U_YYg?sub_confirmation=1" target="_blank" rel="noopener">subscribe on youtube ↗</a>
       </div>
       <div class="frame ratio">
-        <iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUtcFAWZJeiEp_DOKy8U_YYg" title="Latest uploads on YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UUtcFAWZJeiEp_DOKy8U_YYg" title="Latest uploads on YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <div class="caption"><span>Always starts on my newest upload. Playlist button, top right, for the back catalogue.</span></div>
     </div>
@@ -123,11 +125,11 @@
       <div class="two">
         <div class="artist">
           <div class="row"><h3>Ded Zed</h3><a class="more" href="https://open.spotify.com/artist/3G5lgBc7shS09fLh4ovfL4" target="_blank" rel="noopener">follow ↗</a></div>
-          <div class="frame"><iframe src="https://open.spotify.com/embed/artist/3G5lgBc7shS09fLh4ovfL4?utm_source=generator" title="Ded Zed on Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
+          <div class="frame"><iframe data-src="https://open.spotify.com/embed/artist/3G5lgBc7shS09fLh4ovfL4?utm_source=generator" title="Ded Zed on Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
         </div>
         <div class="artist">
           <div class="row"><h3>Our Fish Overlord</h3><a class="more" href="https://open.spotify.com/artist/61lcq8xxIfd0iLITBnjdtI" target="_blank" rel="noopener">follow ↗</a></div>
-          <div class="frame"><iframe src="https://open.spotify.com/embed/artist/61lcq8xxIfd0iLITBnjdtI?utm_source=generator" title="Our Fish Overlord on Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
+          <div class="frame"><iframe data-src="https://open.spotify.com/embed/artist/61lcq8xxIfd0iLITBnjdtI?utm_source=generator" title="Our Fish Overlord on Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
         </div>
       </div>
     </div>
@@ -151,7 +153,7 @@
           </figure>
           Delete the "soon" block below once you've added a few.
         -->
-        <div class="soon"><div><strong>Renders going up soon.</strong>Works in progress get posted in the Discord first.<br><a class="more" href="#discord">see the discord ↓</a></div></div>
+        <div class="soon"><div><strong>3D files are indexed automatically.</strong>Interactive models and renders appear here from the assets/3d folder.<br><a class="more" href="#discord">see the discord ↓</a></div></div>
       </div>
     </div>
   </section>
@@ -246,7 +248,7 @@
           <div class="signed"><b>Ded "Our Fish Overlord" Zed</b>founder, FISH HWB</div>
         </div>
         <div class="frame">
-          <iframe src="https://discord.com/widget?id=1186424320428363887&theme=dark" title="FISH HWB Discord server" loading="lazy" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+          <iframe data-src="https://discord.com/widget?id=1186424320428363887&theme=dark" title="FISH HWB Discord server" loading="lazy" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
       </div>
     </div>
@@ -275,7 +277,7 @@
   </button>
   <div class="seabed" aria-hidden="true"></div>
   <div class="wrap bottom">
-    <img src="assets/fishhwb-mascot.png" alt="" width="64" height="64" loading="lazy">
+    <img src="assets/fishhwb-mascot.webp" alt="" width="64" height="64" loading="lazy">
     <b>You hit the sea floor.</b>4,500 m down. Thanks for diving. <a class="more" href="#main">back to the surface ↑</a>
   </div>
   <div class="wrap foot">
@@ -291,11 +293,13 @@
   </div>
   <button class="buddy-head" type="button" aria-label="Cube'z. Click for the latest video or stream">
     <canvas width="240" height="240"></canvas>
-    <img src="assets/fishhwb-mascot.png" alt="" width="96" height="96">
+    <img src="assets/fishhwb-mascot.webp" alt="" width="96" height="96">
   </button>
 </aside>
 <script type="module" src="assets/buddy.js"></script>
 <script src="assets/sea.js" defer></script>
+<script src="assets/fish-refresh.js" defer></script>
+<script src="assets/site-v2.js" defer></script>
 <script src="assets/extras.js" defer></script>
 
 <div class="gauge" aria-hidden="true">
