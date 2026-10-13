@@ -1,13 +1,14 @@
-// 2026 FISH HWB portfolio sea-life art direction.
-// Keeps the lightweight sea.js movement system, but swaps the original
-// decorative fish for richer, species-specific SVG illustrations.
+// 2026 FISH HWB sea-life art v4.
+// Anatomy-first fish illustrations; the successful Aurora Jelly design is retained.
 (function(){
-  var artStyle = document.querySelector('link[data-fish-art-v3]');
+  var oldStyle = document.querySelector('link[data-fish-art-v3]');
+  if (oldStyle) oldStyle.remove();
+  var artStyle = document.querySelector('link[data-fish-art-v4]');
   if (!artStyle) {
     artStyle = document.createElement('link');
     artStyle.rel = 'stylesheet';
-    artStyle.href = 'assets/fish-art-v3.css';
-    artStyle.dataset.fishArtV3 = '1';
+    artStyle.href = 'assets/fish-art-v4.css';
+    artStyle.dataset.fishArtV4 = '1';
     document.head.appendChild(artStyle);
   }
 
@@ -15,68 +16,66 @@
   function uid(prefix){ count += 1; return prefix + '-' + count; }
   function variant(){ return count % 3; }
 
-  function reefCrown(id, v){
-    var accent = v === 1 ? '#8ff0ff' : v === 2 ? '#ffd85c' : '#ff7fc6';
-    var body2 = v === 1 ? '#1b75b9' : v === 2 ? '#cb3f5f' : '#ff6b32';
-    return '<svg class="fish-art reef-crown" viewBox="0 0 210 130" aria-hidden="true">' +
+  function moorishIdol(id, v){
+    var gold = v === 1 ? '#f2c94c' : v === 2 ? '#ffb84d' : '#ffd85c';
+    var cool = v === 1 ? '#54c5d8' : v === 2 ? '#6a8cff' : '#3fb6d3';
+    return '<svg class="fish-art moorish-idol" viewBox="0 0 270 190" aria-hidden="true">' +
       '<defs>' +
-        '<radialGradient id="'+id+'-body" cx="67%" cy="32%" r="78%"><stop offset="0" stop-color="#fff0c9"/><stop offset=".18" stop-color="'+accent+'"/><stop offset=".54" stop-color="'+body2+'"/><stop offset="1" stop-color="#331736"/></radialGradient>' +
-        '<linearGradient id="'+id+'-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".82"/><stop offset=".32" stop-color="'+accent+'" stop-opacity=".78"/><stop offset="1" stop-color="#7a2e7f" stop-opacity=".18"/></linearGradient>' +
-        '<linearGradient id="'+id+'-shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".48" stop-color="#fff" stop-opacity=".88"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
-        '<filter id="'+id+'-soft"><feGaussianBlur stdDeviation="2.6"/></filter>' +
-        '<clipPath id="'+id+'-clip"><path d="M45 67C52 35 91 17 139 25c31 5 52 21 55 40 3 19-15 38-47 47-46 13-93-3-102-45z"/></clipPath>' +
+        '<radialGradient id="'+id+'-body" cx="66%" cy="38%" r="76%"><stop offset="0" stop-color="#fffdf3"/><stop offset=".34" stop-color="#f4f0df"/><stop offset=".7" stop-color="#d8d3bf"/><stop offset="1" stop-color="#aaa58f"/></radialGradient>' +
+        '<linearGradient id="'+id+'-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0a4"/><stop offset=".42" stop-color="'+gold+'"/><stop offset="1" stop-color="#c67816"/></linearGradient>' +
+        '<linearGradient id="'+id+'-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".68"/><stop offset=".45" stop-color="'+cool+'" stop-opacity=".38"/><stop offset="1" stop-color="#173044" stop-opacity=".05"/></linearGradient>' +
+        '<linearGradient id="'+id+'-sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".48" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
+        '<clipPath id="'+id+'-clip"><path d="M58 95C60 44 99 20 147 25c47 5 80 38 76 75-5 42-43 69-91 63-46-6-76-30-74-68z"/></clipPath>' +
       '</defs>' +
-      '<g class="fish-shadow" opacity=".28" filter="url(#'+id+'-soft)"><ellipse cx="113" cy="108" rx="62" ry="8" fill="#020712"/></g>' +
-      '<g class="tail crown-tail">' +
-        '<path d="M50 67C29 48 17 27 5 11c7 23 7 40 1 55 8 18 7 35 0 55 15-18 29-34 45-50z" fill="url(#'+id+'-fin)" stroke="#2a1530" stroke-width="3"/>' +
-        '<path d="M43 57C27 45 17 32 10 22M43 69H8M43 80C27 90 18 101 10 112" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.4"/>' +
-      '</g>' +
-      '<path class="crest" d="M68 38C76 7 110-5 147 12c-23 1-39 12-53 32-8-1-17-3-26-6z" fill="url(#'+id+'-fin)" stroke="#2a1530" stroke-width="3"/>' +
-      '<path class="ventral-banner" d="M88 99c18 8 39 9 57 3-9 18-24 28-39 27-7-9-12-19-18-30z" fill="url(#'+id+'-fin)" stroke="#2a1530" stroke-width="3"/>' +
-      '<path d="M45 67C52 35 91 17 139 25c31 5 52 21 55 40 3 19-15 38-47 47-46 13-93-3-102-45z" fill="url(#'+id+'-body)" stroke="#25152d" stroke-width="3.5"/>' +
+      '<g class="tail"><path d="M62 96C43 80 27 67 10 58c8 18 10 31 9 39 0 10-3 23-11 39 19-9 36-22 55-38z" fill="url(#'+id+'-gold)" stroke="#423b2f" stroke-opacity=".55" stroke-width="1.4"/><path d="M18 68c15 9 27 18 40 28M14 97h45M18 126c15-9 27-18 40-28" fill="none" stroke="#7a6023" stroke-opacity=".4" stroke-width="1"/></g>' +
+      '<path class="dorsal" d="M86 44C104 4 156 5 190 28c-28-4-55 2-79 21z" fill="url(#'+id+'-fin)" stroke="#31424d" stroke-opacity=".5" stroke-width="1.2"/>' +
+      '<path class="streamer" d="M126 31C143 5 163-3 182 2c-9 8-15 17-20 28-5 12-7 30-8 53-8-20-17-36-28-52z" fill="url(#'+id+'-fin)" stroke="#31424d" stroke-opacity=".4" stroke-width="1.1"/>' +
+      '<path class="ventral" d="M103 153c17 12 34 18 53 17-16 13-35 18-53 12-7-8-10-18-10-29z" fill="url(#'+id+'-fin)" stroke="#31424d" stroke-opacity=".45" stroke-width="1.1"/>' +
+      '<path d="M58 95C60 44 99 20 147 25c47 5 80 38 76 75-5 42-43 69-91 63-46-6-76-30-74-68z" fill="url(#'+id+'-body)" stroke="#2d3232" stroke-opacity=".55" stroke-width="1.5"/>' +
       '<g clip-path="url(#'+id+'-clip)">' +
-        '<path d="M69 27c-4 22-1 55 14 83" fill="none" stroke="#fff7df" stroke-opacity=".78" stroke-width="13"/>' +
-        '<path d="M108 20c-8 25-5 62 12 95" fill="none" stroke="#fff7df" stroke-opacity=".8" stroke-width="14"/>' +
-        '<path d="M149 26c-8 22-6 53 8 81" fill="none" stroke="#fff7df" stroke-opacity=".75" stroke-width="12"/>' +
-        '<path d="M53 49c36-24 89-25 127-6" fill="none" stroke="url(#'+id+'-shine)" stroke-width="9" stroke-linecap="round" class="fish-highlight"/>' +
-        '<g class="scale-mosaic" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="1">' +
-          '<path d="M81 44q8 8 16 0M96 54q8 8 16 0M77 64q8 8 16 0M112 41q8 8 16 0M129 54q8 8 16 0M103 72q8 8 16 0M136 74q8 8 16 0M90 88q8 8 16 0"/>' +
-        '</g>' +
+        '<path d="M86 17c-2 42 8 91 29 145" fill="none" stroke="#1b1d1f" stroke-width="22" opacity=".93"/>' +
+        '<path d="M142 17c-6 37 3 94 26 151" fill="none" stroke="#191b1d" stroke-width="24" opacity=".93"/>' +
+        '<path d="M189 29c-9 34-6 82 11 120" fill="none" stroke="url(#'+id+'-gold)" stroke-width="24" opacity=".96"/>' +
+        '<path class="scale-shimmer" d="M73 58c37-26 94-29 133-4" fill="none" stroke="url(#'+id+'-sheen)" stroke-width="10" stroke-linecap="round"/>' +
+        '<g fill="none" stroke="#6d736f" stroke-opacity=".18" stroke-width=".8"><path d="M99 59q7 5 14 0M111 68q7 5 14 0M95 78q7 5 14 0M124 84q7 5 14 0M103 98q7 5 14 0M136 103q7 5 14 0M113 116q7 5 14 0M149 120q7 5 14 0"/></g>' +
       '</g>' +
-      '<path class="fin" d="M126 74c-18 4-30 15-38 31 19 2 35-5 49-23z" fill="url(#'+id+'-fin)" stroke="#2a1530" stroke-width="2.4"/>' +
-      '<path class="fish-gill" d="M159 48c-7 11-7 29 1 40" fill="none" stroke="#5f294e" stroke-width="2.3" stroke-linecap="round"/>' +
-      '<path d="M187 77c6 2 11 0 15-5" fill="none" stroke="#25152d" stroke-width="2.3" stroke-linecap="round"/>' +
-      '<ellipse cx="171" cy="49" rx="12" ry="13" fill="#fffaf0" stroke="#25152d" stroke-width="3"/>' +
-      '<ellipse class="fish-pupil" cx="174" cy="51" rx="6" ry="7" fill="#160b21"/>' +
-      '<circle cx="176" cy="47" r="2.4" fill="#fff"/>' +
-      '<g class="pearl-dots" fill="'+accent+'"><circle cx="153" cy="33" r="2.1"/><circle cx="143" cy="91" r="1.7"/><circle cx="132" cy="31" r="1.4"/><circle cx="164" cy="96" r="1.5"/></g>' +
+      '<path class="pectoral" d="M159 104c-18 3-34 14-43 30 20 2 38-6 52-23z" fill="url(#'+id+'-fin)" stroke="#37464f" stroke-opacity=".45" stroke-width="1.1"/>' +
+      '<path d="M190 68c-7 13-7 32 1 45" fill="none" stroke="#655f4c" stroke-width="1.2" stroke-linecap="round"/>' +
+      '<ellipse cx="205" cy="66" rx="6.3" ry="6.8" fill="#cbb777" stroke="#252a2b" stroke-width="1.2"/>' +
+      '<ellipse class="fish-pupil" cx="206" cy="66.5" rx="2.7" ry="3.2" fill="#080b0c"/>' +
+      '<circle cx="207" cy="65" r=".9" fill="#fff"/>' +
+      '<path d="M220 91c5 1 9 0 13-3" fill="none" stroke="#353431" stroke-width="1.2" stroke-linecap="round"/>' +
+      '<path d="M80 42c-3 26-2 59 6 88" fill="none" stroke="'+cool+'" stroke-opacity=".16" stroke-width="3"/>' +
     '</svg>';
   }
 
-  function prismSail(id, v){
-    var a = v === 1 ? '#7cf7d4' : v === 2 ? '#ff8bd1' : '#66c7ff';
-    var b = v === 1 ? '#194bc6' : v === 2 ? '#7636ca' : '#122f9d';
-    return '<svg class="fish-art prism-sail" viewBox="0 0 220 140" aria-hidden="true">' +
+  function opalWrasse(id, v){
+    var cyan = v === 1 ? '#63e5d2' : v === 2 ? '#74c9ff' : '#5ce4ff';
+    var violet = v === 1 ? '#745cff' : v === 2 ? '#d86dff' : '#7c66ff';
+    var warm = v === 1 ? '#ffd46d' : v === 2 ? '#ff8c76' : '#ffcc67';
+    return '<svg class="fish-art opal-wrasse" viewBox="0 0 285 130" aria-hidden="true">' +
       '<defs>' +
-        '<radialGradient id="'+id+'-body" cx="72%" cy="38%" r="80%"><stop offset="0" stop-color="#d9ffff"/><stop offset=".14" stop-color="'+a+'"/><stop offset=".48" stop-color="#2c76df"/><stop offset=".78" stop-color="'+b+'"/><stop offset="1" stop-color="#08142e"/></radialGradient>' +
-        '<linearGradient id="'+id+'-sail" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".76"/><stop offset=".3" stop-color="'+a+'" stop-opacity=".72"/><stop offset=".72" stop-color="#7e5cff" stop-opacity=".5"/><stop offset="1" stop-color="#142b72" stop-opacity=".08"/></linearGradient>' +
-        '<linearGradient id="'+id+'-tail" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff7a8"/><stop offset=".45" stop-color="#ffd447"/><stop offset="1" stop-color="#ff7d3f"/></linearGradient>' +
+        '<linearGradient id="'+id+'-body" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#16394a"/><stop offset=".25" stop-color="#1e6c7b"/><stop offset=".48" stop-color="'+cyan+'"/><stop offset=".68" stop-color="'+violet+'"/><stop offset=".88" stop-color="#26356f"/><stop offset="1" stop-color="#132033"/></linearGradient>' +
+        '<linearGradient id="'+id+'-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#efffff" stop-opacity=".55"/><stop offset=".42" stop-color="'+cyan+'" stop-opacity=".42"/><stop offset="1" stop-color="'+violet+'" stop-opacity=".08"/></linearGradient>' +
+        '<linearGradient id="'+id+'-stripe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="'+warm+'" stop-opacity="0"/><stop offset=".28" stop-color="'+warm+'" stop-opacity=".85"/><stop offset=".7" stop-color="#fff4bf" stop-opacity=".72"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
+        '<clipPath id="'+id+'-clip"><path d="M55 65c20-30 69-45 127-36 48 7 81 26 88 43-8 19-43 36-91 39-56 4-102-11-124-46z"/></clipPath>' +
       '</defs>' +
-      '<g class="tail prism-tail"><path d="M48 72L7 25c10 28 9 59 0 94l41-43z" fill="url(#'+id+'-tail)" stroke="#0b1733" stroke-width="3"/><path d="M14 39l29 31M10 71h34M14 107l29-32" fill="none" stroke="#8a6320" stroke-opacity=".55" stroke-width="1.3"/></g>' +
-      '<path class="sail-top" d="M62 46C77 3 129-4 174 28c-35-8-69 3-96 27z" fill="url(#'+id+'-sail)" stroke="#0b1733" stroke-width="3"/>' +
-      '<path class="sail-bottom" d="M74 95c29 10 62 9 91-5-20 35-57 47-84 30z" fill="url(#'+id+'-sail)" stroke="#0b1733" stroke-width="3"/>' +
-      '<path d="M45 72C51 36 94 18 145 26c38 6 64 26 65 48 0 22-25 42-66 48-52 8-93-11-99-50z" fill="url(#'+id+'-body)" stroke="#0b1733" stroke-width="3.5"/>' +
-      '<path class="prism-mask" d="M61 51c31-25 80-30 119-12-22 4-39 17-51 37 13 14 34 20 55 16-27 27-77 30-108 8-22-15-28-32-15-49z" fill="#071632" opacity=".88"/>' +
-      '<path class="iridescent-ribbon" d="M60 39c37-14 83-13 121 3" fill="none" stroke="#bdfbff" stroke-opacity=".55" stroke-width="8" stroke-linecap="round"/>' +
-      '<g class="scale-mosaic" fill="none" stroke="'+a+'" stroke-opacity=".25" stroke-width="1">' +
-        '<path d="M79 50q8 8 16 0M95 58q8 8 16 0M70 67q8 8 16 0M112 44q8 8 16 0M129 55q8 8 16 0M101 78q8 8 16 0M138 80q8 8 16 0M87 92q8 8 16 0"/>' +
+      '<g class="tail"><path d="M58 65L12 29c10 17 12 30 12 37s-3 22-14 38l49-34z" fill="url(#'+id+'-fin)" stroke="#23414c" stroke-opacity=".55" stroke-width="1.2"/><path d="M19 38l35 26M15 66h40M18 95l37-26" fill="none" stroke="#cfefff" stroke-opacity=".28" stroke-width="1"/></g>' +
+      '<path class="dorsal" d="M91 37c34-25 89-27 134-6-43-5-84 0-122 17z" fill="url(#'+id+'-fin)" stroke="#294a58" stroke-opacity=".4" stroke-width="1"/>' +
+      '<path class="ventral" d="M105 96c34 13 76 14 116 3-36 22-77 25-107 11z" fill="url(#'+id+'-fin)" stroke="#294a58" stroke-opacity=".4" stroke-width="1"/>' +
+      '<path d="M55 65c20-30 69-45 127-36 48 7 81 26 88 43-8 19-43 36-91 39-56 4-102-11-124-46z" fill="url(#'+id+'-body)" stroke="#183542" stroke-opacity=".62" stroke-width="1.4"/>' +
+      '<g clip-path="url(#'+id+'-clip)">' +
+        '<path class="scale-shimmer" d="M70 48c50-16 115-13 167 8" fill="none" stroke="#dffcff" stroke-opacity=".24" stroke-width="9" stroke-linecap="round"/>' +
+        '<path d="M75 82c46-5 100 2 145 18" fill="none" stroke="url(#'+id+'-stripe)" stroke-width="6" stroke-linecap="round"/>' +
+        '<path d="M99 35c14 18 27 42 34 70M140 28c12 20 24 46 29 79M183 29c9 21 17 45 21 72" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="2"/>' +
+        '<g fill="none" stroke="#d9ffff" stroke-opacity=".17" stroke-width=".75"><path d="M94 55q7 5 14 0M108 62q7 5 14 0M122 54q7 5 14 0M138 67q7 5 14 0M154 57q7 5 14 0M171 70q7 5 14 0M188 61q7 5 14 0M202 75q7 5 14 0M117 78q7 5 14 0M147 86q7 5 14 0"/></g>' +
       '</g>' +
-      '<path class="fin" d="M129 78c-20 7-33 18-42 34 20 3 40-5 54-22z" fill="url(#'+id+'-tail)" stroke="#0b1733" stroke-width="2.4"/>' +
-      '<path class="fish-gill" d="M175 50c-6 11-6 28 1 39" fill="none" stroke="#0c3b84" stroke-width="2.1"/>' +
-      '<ellipse cx="188" cy="49" rx="11" ry="12" fill="#ebfbff" stroke="#0b1733" stroke-width="3"/>' +
-      '<ellipse class="fish-pupil" cx="190" cy="50" rx="5.3" ry="6.3" fill="#08142d"/>' +
-      '<circle cx="192" cy="46" r="2" fill="#fff"/>' +
-      '<path d="M204 78c5 1 9 0 12-4" fill="none" stroke="#0b1733" stroke-width="2" stroke-linecap="round"/>' +
+      '<path class="pectoral" d="M171 72c-18 5-33 14-44 27 21 1 38-5 51-20z" fill="url(#'+id+'-fin)" stroke="#294a58" stroke-opacity=".42" stroke-width="1"/>' +
+      '<path d="M224 50c-4 9-3 22 2 30" fill="none" stroke="#183a46" stroke-width="1.1"/>' +
+      '<ellipse cx="242" cy="54" rx="5.4" ry="5.8" fill="#7fcbd1" stroke="#122a33" stroke-width="1.1"/>' +
+      '<ellipse class="fish-pupil" cx="243" cy="54.4" rx="2.4" ry="2.8" fill="#071116"/>' +
+      '<circle cx="244" cy="53" r=".8" fill="#fff"/>' +
+      '<path d="M260 72c4 .8 8 0 11-2.6" fill="none" stroke="#17303a" stroke-width="1.1" stroke-linecap="round"/>' +
     '</svg>';
   }
 
@@ -107,30 +106,33 @@
     '</svg>';
   }
 
-  function glassLantern(id, v){
-    var glow = v === 1 ? '#7dffca' : v === 2 ? '#ff6ce5' : '#78e8ff';
-    return '<svg class="fish-art glass-lantern" viewBox="0 0 230 110" aria-hidden="true">' +
+  function ghostLantern(id, v){
+    var glow = v === 1 ? '#83ffcf' : v === 2 ? '#ff72cf' : '#74eaff';
+    var edge = v === 1 ? '#5c8b78' : v === 2 ? '#785370' : '#526f86';
+    return '<svg class="fish-art ghost-lantern" viewBox="0 0 285 120" aria-hidden="true">' +
       '<defs>' +
-        '<linearGradient id="'+id+'-body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#53799b" stop-opacity=".78"/><stop offset=".33" stop-color="#17334d" stop-opacity=".94"/><stop offset=".75" stop-color="#071625"/><stop offset="1" stop-color="#02070d"/></linearGradient>' +
-        '<linearGradient id="'+id+'-glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#dffaff" stop-opacity="0"/><stop offset=".5" stop-color="#dffaff" stop-opacity=".5"/><stop offset="1" stop-color="#dffaff" stop-opacity="0"/></linearGradient>' +
-        '<radialGradient id="'+id+'-orb"><stop offset="0" stop-color="#fff"/><stop offset=".28" stop-color="'+glow+'"/><stop offset="1" stop-color="'+glow+'" stop-opacity="0"/></radialGradient>' +
+        '<linearGradient id="'+id+'-body" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#172a35" stop-opacity=".84"/><stop offset=".42" stop-color="#10202b" stop-opacity=".92"/><stop offset=".74" stop-color="#09121b" stop-opacity=".97"/><stop offset="1" stop-color="#03070b"/></linearGradient>' +
+        '<linearGradient id="'+id+'-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c7f6ff" stop-opacity=".38"/><stop offset=".55" stop-color="'+edge+'" stop-opacity=".22"/><stop offset="1" stop-color="#06101a" stop-opacity=".04"/></linearGradient>' +
+        '<linearGradient id="'+id+'-glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#dffaff" stop-opacity="0"/><stop offset=".48" stop-color="#dffaff" stop-opacity=".34"/><stop offset="1" stop-color="#dffaff" stop-opacity="0"/></linearGradient>' +
+        '<radialGradient id="'+id+'-organ"><stop offset="0" stop-color="#e6ffff" stop-opacity=".75"/><stop offset=".32" stop-color="'+glow+'" stop-opacity=".38"/><stop offset="1" stop-color="'+glow+'" stop-opacity="0"/></radialGradient>' +
       '</defs>' +
-      '<g class="tail glass-tail"><path d="M55 56L8 19c13 19 14 49 0 75l48-34z" fill="#0d2032" fill-opacity=".82" stroke="#7895aa" stroke-width="2"/><path d="M16 31l34 24M12 57h39M16 84l34-24" fill="none" stroke="#a8c2d3" stroke-opacity=".34" stroke-width="1.2"/></g>' +
-      '<path class="crest" d="M85 31L97 5l9 21 17-14 3 17 17-8-6 16" fill="#10283e" stroke="#7895aa" stroke-width="2"/>' +
-      '<path d="M49 57C61 26 119 15 173 28c37 9 55 25 50 42-6 19-40 31-84 30-49-1-80-14-90-43z" fill="url(#'+id+'-body)" stroke="#7895aa" stroke-width="2.4"/>' +
-      '<path class="glass-sheen" d="M67 42c40-14 94-12 132 5" fill="none" stroke="url(#'+id+'-glass)" stroke-width="8" stroke-linecap="round"/>' +
-      '<path class="internal-spine" d="M69 69c37-15 83-14 118-3" fill="none" stroke="'+glow+'" stroke-opacity=".38" stroke-width="2"/>' +
-      '<g class="lights" fill="'+glow+'">' +
-        '<circle cx="72" cy="75" r="2.8"/><circle cx="87" cy="79" r="2.5"/><circle cx="103" cy="82" r="2.8"/><circle cx="120" cy="83" r="2.4"/><circle cx="137" cy="82" r="2.7"/><circle cx="154" cy="79" r="2.4"/><circle cx="171" cy="74" r="2.7"/>' +
-        '<circle cx="96" cy="57" r="1.8"/><circle cx="121" cy="60" r="1.8"/><circle cx="146" cy="57" r="1.8"/>' +
+      '<g class="tail"><path d="M62 60L13 30c10 13 14 23 14 31 0 9-5 20-16 31l51-27z" fill="url(#'+id+'-fin)" stroke="'+edge+'" stroke-opacity=".45" stroke-width="1.1"/><path d="M21 38l36 22M17 61h40M21 84l36-20" fill="none" stroke="#c4e3ec" stroke-opacity=".22" stroke-width=".8"/></g>' +
+      '<path class="dorsal" d="M100 31c31-18 77-19 118-4-39-3-77 2-111 15z" fill="url(#'+id+'-fin)" stroke="'+edge+'" stroke-opacity=".34" stroke-width=".9"/>' +
+      '<path class="ventral" d="M110 88c34 11 77 11 113 1-34 19-75 22-107 12z" fill="url(#'+id+'-fin)" stroke="'+edge+'" stroke-opacity=".34" stroke-width=".9"/>' +
+      '<path d="M58 61c20-26 68-39 123-32 49 6 84 22 95 38-10 18-47 33-95 34-56 1-101-13-123-40z" fill="url(#'+id+'-body)" stroke="'+edge+'" stroke-opacity=".56" stroke-width="1.2"/>' +
+      '<path class="scale-shimmer" d="M78 46c52-14 117-10 166 8" fill="none" stroke="url(#'+id+'-glass)" stroke-width="8" stroke-linecap="round"/>' +
+      '<path d="M82 70c39-9 88-8 130 4" fill="none" stroke="'+glow+'" stroke-opacity=".24" stroke-width="1.4"/>' +
+      '<ellipse cx="151" cy="62" rx="24" ry="11" fill="url(#'+id+'-organ)" opacity=".48"/>' +
+      '<path class="pectoral" d="M175 68c-19 4-36 13-48 25 21 2 40-4 55-17z" fill="url(#'+id+'-fin)" stroke="'+edge+'" stroke-opacity=".4" stroke-width=".9"/>' +
+      '<g fill="'+glow+'" style="color:'+glow+'">' +
+        '<circle class="photophore" cx="86" cy="78" r="1.7"/><circle class="photophore" cx="101" cy="82" r="1.5"/><circle class="photophore" cx="117" cy="85" r="1.7"/><circle class="photophore" cx="134" cy="86" r="1.4"/><circle class="photophore" cx="151" cy="86" r="1.6"/><circle class="photophore" cx="168" cy="84" r="1.5"/><circle class="photophore" cx="185" cy="80" r="1.6"/><circle class="photophore" cx="202" cy="76" r="1.5"/>' +
+        '<circle class="photophore" cx="123" cy="57" r="1.1"/><circle class="photophore" cx="149" cy="59" r="1.1"/><circle class="photophore" cx="175" cy="56" r="1.1"/>' +
       '</g>' +
-      '<g class="organ-glow"><ellipse cx="127" cy="59" rx="17" ry="10" fill="url(#'+id+'-orb)" opacity=".46"/></g>' +
-      '<path class="fin" d="M139 68c-17 12-34 15-49 10 13-13 28-18 49-10z" fill="#153954" fill-opacity=".74" stroke="#7895aa" stroke-width="1.8"/>' +
-      '<path class="fish-gill" d="M187 42c-4 9-4 22 1 31" fill="none" stroke="#88a6ba" stroke-width="1.5"/>' +
-      '<ellipse cx="198" cy="43" rx="9" ry="10" fill="#03101a" stroke="#9eb8ca" stroke-width="1.8"/>' +
-      '<ellipse class="fish-pupil" cx="199" cy="43" rx="4" ry="4.8" fill="'+glow+'"/>' +
-      '<circle cx="201" cy="40" r="1.4" fill="#fff"/>' +
-      '<path d="M216 67c-4 2-8 2-11 0" fill="none" stroke="#7895aa" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<path d="M228 49c-3 7-2 17 2 24" fill="none" stroke="'+edge+'" stroke-opacity=".55" stroke-width="1"/>' +
+      '<ellipse cx="245" cy="51" rx="5.2" ry="5.8" fill="#071119" stroke="#8ca7b5" stroke-opacity=".7" stroke-width="1"/>' +
+      '<ellipse class="fish-pupil" cx="246" cy="51.3" rx="2.2" ry="2.7" fill="'+glow+'" opacity=".8"/>' +
+      '<circle cx="247" cy="50" r=".7" fill="#fff"/>' +
+      '<path d="M264 68c3 .7 7 0 9-2" fill="none" stroke="#738895" stroke-width="1" stroke-linecap="round"/>' +
     '</svg>';
   }
 
@@ -138,43 +140,41 @@
     [].forEach.call(document.querySelectorAll('.critter:not([data-art-upgraded])'), function(el){
       var id = uid('fish');
       var v = variant();
-      if (el.classList.contains('clown')) { el.innerHTML = reefCrown(id, v); el.dataset.artSpecies = 'reef-crown'; }
-      else if (el.classList.contains('tang')) { el.innerHTML = prismSail(id, v); el.dataset.artSpecies = 'prism-sail'; }
+      if (el.classList.contains('clown')) { el.innerHTML = moorishIdol(id, v); el.dataset.artSpecies = 'moorish-idol'; }
+      else if (el.classList.contains('tang')) { el.innerHTML = opalWrasse(id, v); el.dataset.artSpecies = 'opal-wrasse'; }
       else if (el.classList.contains('jelly')) { el.innerHTML = auroraJelly(id, v); el.dataset.artSpecies = 'aurora-jelly'; }
-      else if (el.classList.contains('lantern')) { el.innerHTML = glassLantern(id, v); el.dataset.artSpecies = 'glass-lantern'; }
+      else if (el.classList.contains('lantern')) { el.innerHTML = ghostLantern(id, v); el.dataset.artSpecies = 'ghost-lantern'; }
       else return;
       el.dataset.artVariant = String(v);
-      el.dataset.artUpgraded = '2';
-      el.style.setProperty('--art-delay', (-Math.random() * 7).toFixed(2) + 's');
-      el.style.setProperty('--art-speed', (4.8 + Math.random() * 3.2).toFixed(2) + 's');
-      el.style.setProperty('--art-roll', ((Math.random() - .5) * 3.5).toFixed(2) + 'deg');
+      el.dataset.artUpgraded = '3';
+      el.style.setProperty('--art-delay', (-Math.random() * 8).toFixed(2) + 's');
+      el.style.setProperty('--art-speed', (6.1 + Math.random() * 3.4).toFixed(2) + 's');
+      el.style.setProperty('--art-roll', ((Math.random() - .5) * 1.8).toFixed(2) + 'deg');
     });
   }
 
   function upgradeAngler(){
     var a = document.querySelector('.angler');
-    if (!a || a.dataset.artUpgraded === '2') return;
-    a.dataset.artUpgraded = '2';
+    if (!a || a.dataset.artUpgraded === '3') return;
+    a.dataset.artUpgraded = '3';
     a.innerHTML =
       '<defs>' +
-        '<radialGradient id="angler-v3-body" cx="65%" cy="32%" r="82%"><stop offset="0" stop-color="#536d86"/><stop offset=".3" stop-color="#27394f"/><stop offset=".68" stop-color="#0c1725"/><stop offset="1" stop-color="#02050a"/></radialGradient>' +
-        '<radialGradient id="angler-v3-lure"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff8b3"/><stop offset=".48" stop-color="#7cf7ff" stop-opacity=".7"/><stop offset="1" stop-color="#7cf7ff" stop-opacity="0"/></radialGradient>' +
-        '<linearGradient id="angler-v3-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8aa0b4" stop-opacity=".5"/><stop offset="1" stop-color="#101b29" stop-opacity=".2"/></linearGradient>' +
+        '<radialGradient id="angler-v4-body" cx="62%" cy="36%" r="80%"><stop offset="0" stop-color="#405564"/><stop offset=".38" stop-color="#1c2935"/><stop offset=".78" stop-color="#081018"/><stop offset="1" stop-color="#020407"/></radialGradient>' +
+        '<linearGradient id="angler-v4-fin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#93afbd" stop-opacity=".34"/><stop offset="1" stop-color="#15232e" stop-opacity=".04"/></linearGradient>' +
+        '<radialGradient id="angler-v4-lure"><stop offset="0" stop-color="#fff"/><stop offset=".24" stop-color="#dfffff"/><stop offset=".48" stop-color="#75efff" stop-opacity=".72"/><stop offset="1" stop-color="#75efff" stop-opacity="0"/></radialGradient>' +
       '</defs>' +
-      '<path class="lure-stalk" d="M92 31C105 6 136 0 158 16" fill="none" stroke="#6e879d" stroke-width="2.6" stroke-linecap="round"/>' +
-      '<circle cx="159" cy="16" r="23" fill="url(#angler-v3-lure)" opacity=".8"/>' +
-      '<g class="tail"><path d="M45 67L5 34c10 20 9 45 0 66l40-28z" fill="#08131e" stroke="#62788d" stroke-width="2.2"/><path d="M12 45l28 20M9 68h33M12 90l28-20" fill="none" stroke="#71879a" stroke-opacity=".5" stroke-width="1.1"/></g>' +
-      '<path class="angler-spines" d="M58 35L48 7l18 19 2-25 11 24 11-17 1 22 15-10-6 21" fill="#0d1927" stroke="#62788d" stroke-width="2"/>' +
-      '<path d="M38 69c0-31 24-50 58-50 32 0 54 17 57 41 3 28-17 50-53 50-39 0-62-12-62-41z" fill="url(#angler-v3-body)" stroke="#62788d" stroke-width="2.4"/>' +
-      '<path d="M51 49c13-17 31-25 53-27" fill="none" stroke="#9ab4ca" stroke-opacity=".42" stroke-width="4" stroke-linecap="round"/>' +
-      '<g class="skin-speck" fill="#72869a"><circle cx="57" cy="72" r="1.4"/><circle cx="72" cy="84" r="1.7"/><circle cx="86" cy="70" r="1.2"/><circle cx="53" cy="88" r="1"/><circle cx="98" cy="91" r="1.3"/><circle cx="75" cy="52" r=".9"/><circle cx="109" cy="37" r="1.1"/></g>' +
-      '<path class="angler-jaw" d="M108 59c17-8 38-8 52 0-4 26-18 39-43 34 10-9 9-23-9-34z" fill="#010203" stroke="#62788d" stroke-width="2.2"/>' +
-      '<g class="tooth" fill="#f3f8fb" stroke="#c8d3dc" stroke-width=".7"><path d="M113 60l5 14 5-15 5 16 5-16 5 17 5-17 5 15 4-13z"/><path d="M118 91l5-13 5 14 5-15 5 14 5-13 4 10z"/></g>' +
-      '<path class="fin" d="M84 78c-12 15-23 20-33 16 9-13 20-18 33-16z" fill="url(#angler-v3-fin)" stroke="#62788d" stroke-width="1.8"/>' +
-      '<ellipse cx="116" cy="45" rx="8" ry="8.8" fill="#04101a" stroke="#a5bfd5" stroke-width="1.6"/>' +
-      '<ellipse class="eye-glow" cx="117" cy="45" rx="4" ry="4.8" fill="#aee9ff"/>' +
-      '<circle cx="118.5" cy="42.5" r="1.4" fill="#fff"/>' +
-      '<circle class="lure lure-core" cx="159" cy="16" r="7.2" fill="#fffbd2" stroke="#8df2ff" stroke-width="1.6"/>';
+      '<g class="angler-tail"><path d="M49 70L7 42c9 15 12 26 11 34-1 9-5 19-13 30l46-29z" fill="url(#angler-v4-fin)" stroke="#536674" stroke-opacity=".5" stroke-width="1.2"/></g>' +
+      '<path class="lure-stalk" d="M102 39C114 13 145 6 167 21" fill="none" stroke="#627985" stroke-width="1.7" stroke-linecap="round"/>' +
+      '<circle cx="168" cy="21" r="18" fill="url(#angler-v4-lure)" opacity=".72"/>' +
+      '<path d="M44 73c-1-31 24-54 61-55 39-1 65 22 67 51 2 31-25 54-66 54-38 0-61-17-62-50z" fill="url(#angler-v4-body)" stroke="#536674" stroke-opacity=".58" stroke-width="1.3"/>' +
+      '<path d="M67 30l-5-18 11 12 3-18 8 17 9-13 1 18 12-9-4 18" fill="#101a22" stroke="#536674" stroke-opacity=".48" stroke-width="1.1"/>' +
+      '<path d="M60 51c14-16 33-25 57-27" fill="none" stroke="#9bb2be" stroke-opacity=".25" stroke-width="3" stroke-linecap="round"/>' +
+      '<path d="M116 66c16-8 37-8 51-1-4 24-18 36-41 31 9-8 8-21-10-30z" fill="#010203" stroke="#536674" stroke-opacity=".65" stroke-width="1.2"/>' +
+      '<g fill="#eaf1f4" opacity=".88"><path d="M121 66l4 10 4-11 4 12 4-12 5 12 4-12 4 11 4-9z"/><path d="M126 94l4-9 4 10 4-11 4 10 4-9 3 7z"/></g>' +
+      '<path class="angler-pectoral" d="M88 82c-13 12-25 16-36 12 10-11 22-15 36-12z" fill="url(#angler-v4-fin)" stroke="#536674" stroke-opacity=".45" stroke-width="1"/>' +
+      '<ellipse cx="117" cy="49" rx="5" ry="5.5" fill="#050b10" stroke="#839aa7" stroke-opacity=".7" stroke-width="1"/>' +
+      '<ellipse cx="118" cy="49" rx="2" ry="2.5" fill="#99eaff" opacity=".7"/>' +
+      '<circle class="lure-core" cx="168" cy="21" r="5.2" fill="#eaffff" stroke="#75efff" stroke-width="1.1"/>';
   }
 
   function run(){ upgradeFish(); upgradeAngler(); }
