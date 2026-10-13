@@ -1,0 +1,82 @@
+/* FISH HWB fish art v4 — marine concept-art pass.
+   Jellyfish styling remains compatible with v3; fish use subtler anatomy-first motion. */
+
+.critter[data-art-upgraded="3"]{
+  --art-speed:7.2s;
+  --art-delay:-2s;
+  --art-roll:0deg;
+  overflow:visible;
+  isolation:isolate;
+  filter:none;
+}
+.critter[data-art-upgraded="3"]::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:12%;top:24%;width:72%;height:50%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(99,210,255,.08),rgba(99,210,255,0) 70%);
+  filter:blur(11px);
+  pointer-events:none;
+}
+.critter[data-art-upgraded="3"] .fish-art{
+  display:block;width:100%;height:auto;overflow:visible;
+  transform-origin:50% 52%;
+  animation:fish-v4-drift var(--art-speed) ease-in-out var(--art-delay) infinite alternate;
+  filter:drop-shadow(0 7px 10px rgba(0,0,0,.18));
+}
+.critter[data-art-upgraded="3"] .tail,
+.critter[data-art-upgraded="3"] .fin,
+.critter[data-art-upgraded="3"] .pectoral,
+.critter[data-art-upgraded="3"] .dorsal,
+.critter[data-art-upgraded="3"] .streamer,
+.critter[data-art-upgraded="3"] .ventral{
+  transform-box:fill-box;transform-origin:center;will-change:transform;
+}
+.critter[data-art-upgraded="3"] .tail{animation:fish-v4-tail 1.8s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="3"] .pectoral,.critter[data-art-upgraded="3"] .fin{animation:fish-v4-fin 2.4s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="3"] .dorsal,.critter[data-art-upgraded="3"] .streamer{animation:fish-v4-sail 3.1s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="3"] .ventral{animation:fish-v4-ventral 2.8s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="3"] .fish-pupil{animation:fish-v4-eye 8.4s ease-in-out var(--art-delay) infinite}
+.critter[data-art-upgraded="3"] .scale-shimmer{animation:fish-v4-shimmer 5.5s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="3"] .photophore{animation:fish-v4-pulse 3.6s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="3"] .photophore:nth-child(2n){animation-delay:-1.3s}
+.critter[data-art-upgraded="3"] .photophore:nth-child(3n){animation-delay:-2.1s}
+
+.critter[data-art-species="moorish-idol"]{width:calc(var(--size) * 1.48)}
+.critter[data-art-species="opal-wrasse"]{width:calc(var(--size) * 1.58)}
+.critter[data-art-species="ghost-lantern"]{width:calc(var(--size) * 1.45)}
+.critter[data-art-species="moorish-idol"] .fish-art{filter:drop-shadow(0 9px 12px rgba(0,0,0,.17))}
+.critter[data-art-species="opal-wrasse"] .fish-art{filter:drop-shadow(0 6px 10px rgba(0,0,0,.16)) drop-shadow(0 0 8px rgba(83,229,255,.08))}
+.critter[data-art-species="ghost-lantern"] .fish-art{filter:drop-shadow(0 0 8px rgba(101,238,255,.22)) drop-shadow(0 8px 10px rgba(0,0,0,.28))}
+
+/* Preserve the jellyfish animation quality from v3. */
+.critter[data-art-upgraded="3"][data-art-species="aurora-jelly"] .fish-art{animation:jelly-v4-float 6.6s ease-in-out var(--art-delay) infinite alternate;filter:drop-shadow(0 0 10px rgba(255,120,220,.2))}
+.critter[data-art-upgraded="3"][data-art-species="aurora-jelly"] .bell{transform-box:fill-box;transform-origin:50% 85%;animation:jelly-v4-bell 2.7s ease-in-out var(--art-delay) infinite}
+.critter[data-art-upgraded="3"][data-art-species="aurora-jelly"] .ribbon{transform-box:fill-box;transform-origin:50% 0%;animation:jelly-v4-ribbon 3.6s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="3"][data-art-species="aurora-jelly"] .r2,.critter[data-art-upgraded="3"][data-art-species="aurora-jelly"] .r4,.critter[data-art-upgraded="3"][data-art-species="aurora-jelly"] .r6{animation-direction:alternate-reverse}
+.critter[data-art-upgraded="3"][data-art-species="aurora-jelly"] .jelly-core{animation:jelly-v4-core 2.9s ease-in-out var(--art-delay) infinite alternate}
+
+.angler[data-art-upgraded="3"] .angler-tail{transform-box:fill-box;transform-origin:right center;animation:fish-v4-tail 1.7s ease-in-out infinite alternate}
+.angler[data-art-upgraded="3"] .angler-pectoral{transform-box:fill-box;transform-origin:left center;animation:fish-v4-fin 2.5s ease-in-out infinite alternate}
+.angler[data-art-upgraded="3"] .lure-stalk{transform-box:fill-box;transform-origin:0 100%;animation:angler-v4-lure 2.9s ease-in-out infinite alternate}
+.angler[data-art-upgraded="3"] .lure-core{animation:angler-v4-glow 2.2s ease-in-out infinite alternate}
+
+@keyframes fish-v4-drift{from{transform:rotate(var(--art-roll)) translateY(-1px) scaleY(.995)}to{transform:rotate(calc(var(--art-roll) * -1)) translateY(2px) scaleY(1.005)}}
+@keyframes fish-v4-tail{from{transform:rotate(-4deg) skewY(-1deg)}to{transform:rotate(5deg) skewY(1deg)}}
+@keyframes fish-v4-fin{from{transform:rotate(-3deg) scaleY(.96)}to{transform:rotate(4deg) scaleY(1.05)}}
+@keyframes fish-v4-sail{from{transform:rotate(-1.4deg) skewX(-1deg)}to{transform:rotate(2deg) skewX(1deg)}}
+@keyframes fish-v4-ventral{from{transform:rotate(1deg)}to{transform:rotate(-3deg)}}
+@keyframes fish-v4-eye{0%,35%{transform:translate(0,0)}46%{transform:translate(-.7px,.2px)}57%{transform:translate(.5px,-.3px)}70%,100%{transform:translate(0,0)}}
+@keyframes fish-v4-shimmer{from{opacity:.34}to{opacity:.82}}
+@keyframes fish-v4-pulse{from{opacity:.38;filter:drop-shadow(0 0 1px currentColor)}to{opacity:1;filter:drop-shadow(0 0 5px currentColor)}}
+@keyframes jelly-v4-float{from{transform:translateY(-2px) rotate(-.7deg)}to{transform:translateY(3px) rotate(.7deg)}}
+@keyframes jelly-v4-bell{0%,100%{transform:scaleX(1) scaleY(1)}50%{transform:scaleX(1.035) scaleY(.94)}}
+@keyframes jelly-v4-ribbon{from{transform:rotate(-2deg) translateX(-1px)}to{transform:rotate(2deg) translateX(1px)}}
+@keyframes jelly-v4-core{from{opacity:.55}to{opacity:.95}}
+@keyframes angler-v4-lure{from{transform:rotate(-2deg)}to{transform:rotate(4deg)}}
+@keyframes angler-v4-glow{from{opacity:.62;filter:drop-shadow(0 0 3px #8ff)}to{opacity:1;filter:drop-shadow(0 0 11px #8ff)}}
+
+@media(prefers-reduced-motion:reduce){
+  .critter[data-art-upgraded="3"] .fish-art,.critter[data-art-upgraded="3"] .tail,.critter[data-art-upgraded="3"] .fin,.critter[data-art-upgraded="3"] .pectoral,.critter[data-art-upgraded="3"] .dorsal,.critter[data-art-upgraded="3"] .streamer,.critter[data-art-upgraded="3"] .ventral,.critter[data-art-upgraded="3"] .fish-pupil,.critter[data-art-upgraded="3"] .scale-shimmer,.critter[data-art-upgraded="3"] .photophore,.critter[data-art-upgraded="3"] .bell,.critter[data-art-upgraded="3"] .ribbon,.critter[data-art-upgraded="3"] .jelly-core,.angler[data-art-upgraded="3"] *{animation:none!important}
+}
