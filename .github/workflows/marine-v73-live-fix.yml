@@ -2,8 +2,10 @@ name: Marine v7.3 live rendering fix
 
 on:
   push:
-    branches: [marine-v73-actual-size-fix]
-    paths: [.github/workflows/marine-v73-live-fix.yml]
+    branches:
+      - marine-v73-actual-size-fix
+    paths:
+      - .github/workflows/marine-v73-live-fix.yml
 
 permissions:
   contents: write
@@ -18,93 +20,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Fix actual on-site fish scale and abyss anchoring
+      - name: Append v7.3 visual overrides
         run: |
-          python <<'PY'
+          if ! grep -q 'v7.3: actual on-site scale/contrast fix' assets/fish-approved-v7.css; then
+            echo 'Ci8qIHY3LjM6IGFjdHVhbCBvbi1zaXRlIHNjYWxlL2NvbnRyYXN0IGZpeCAqLwouY3JpdHRlcltkYXRhLWFwcHJvdmVkLWFydD0iNyJdewogIHdpZHRoOmNsYW1wKDE1MHB4LGNhbGModmFyKC0tc2l6ZSkgKiAzLjA1KSwyNDBweCk7CiAgb3ZlcmZsb3c6dmlzaWJsZTsKfQouY3JpdHRlcltkYXRhLWFwcHJvdmVkLWFydD0iNyJdOjphZnRlcnsKICBsZWZ0Oi0xMCU7dG9wOi04JTt3aWR0aDoxMjAlO2hlaWdodDoxMTYlOwogIGJhY2tncm91bmQ6cmFkaWFsLWdyYWRpZW50KGVsbGlwc2UscmdiYSgyMzksMjU1LDI1NSwuMjUpLHJnYmEoOTEsMjIzLDI1NSwuMTMpIDM1JSxyZ2JhKDI1NSwxNDEsMjA2LC4wNzUpIDU4JSx0cmFuc3BhcmVudCA3NiUpOwogIGZpbHRlcjpibHVyKDI0cHgpOwp9Ci5jcml0dGVyW2RhdGEtYXBwcm92ZWQtYXJ0PSI3Il0gLmFwcHJvdmVkLXN1cmZhY2UtZmlzaHsKICBmaWx0ZXI6c2F0dXJhdGUoMS4zNSkgY29udHJhc3QoMS4xKSBkcm9wLXNoYWRvdygwIDAgOXB4IHJnYmEoMjE3LDI1MywyNTUsLjM2KSkgZHJvcC1zaGFkb3coMCAwIDIycHggcmdiYSg4OSwyMTUsMjU1LC4xOCkpIGRyb3Atc2hhZG93KDAgMTJweCAyMHB4IHJnYmEoMCwwLDAsLjE2KSk7Cn0KLmNyaXR0ZXJbZGF0YS1hcHByb3ZlZC1hcnQ9IjciXSAuYXBwcm92ZWQtYm9keXttaXgtYmxlbmQtbW9kZTpub3JtYWw7b3BhY2l0eTouOTh9Ci5jcml0dGVyW2RhdGEtYXBwcm92ZWQtYXJ0PSI3Il0gLmFwcHJvdmVkLXNjYWxle3N0cm9rZS1vcGFjaXR5Oi41Mn0KLmNyaXR0ZXJbZGF0YS1hcHByb3ZlZC1hcnQ9IjciXSAuYXBwcm92ZWQtdmVpbntzdHJva2Utb3BhY2l0eTouNjg7ZmlsdGVyOmRyb3Atc2hhZG93KDAgMCAycHggY3VycmVudENvbG9yKX0KLmNyaXR0ZXJbZGF0YS1hcHByb3ZlZC1hcnQ9IjciXSAuYXBwcm92ZWQtZG9yc2FsLAouY3JpdHRlcltkYXRhLWFwcHJvdmVkLWFydD0iNyJdIC5hcHByb3ZlZC1zdHJlYW1lciwKLmNyaXR0ZXJbZGF0YS1hcHByb3ZlZC1hcnQ9IjciXSAuYXBwcm92ZWQtdmVudHJhbCwKLmNyaXR0ZXJbZGF0YS1hcHByb3ZlZC1hcnQ9IjciXSAuYXBwcm92ZWQtcGVjdG9yYWwsCi5jcml0dGVyW2RhdGEtYXBwcm92ZWQtYXJ0PSI3Il0gLmFwcHJvdmVkLXRhaWx7ZmlsdGVyOmRyb3Atc2hhZG93KDAgMCA0cHggcmdiYSgxOTEsMjQ2LDI1NSwuMTgpKX0KCi5hbmdsZXJbZGF0YS1hcHByb3ZlZC1hcnQ9IjciXXsKICB3aWR0aDpjbGFtcCgzMDBweCwzNHZ3LDQwMHB4KTsKICBoZWlnaHQ6YXV0bzsKICBhc3BlY3QtcmF0aW86Mjg1IC8gMTk1OwogIG1heC13aWR0aDpub25lOwogIGZpbHRlcjpzYXR1cmF0ZSgxLjIyKSBjb250cmFzdCgxLjEyKSBkcm9wLXNoYWRvdygwIDAgMTRweCByZ2JhKDE0NiwxODMsMjU1LC4yNSkpIGRyb3Atc2hhZG93KDAgMCAzNHB4IHJnYmEoMjU1LDE1MCwyMTYsLjE0KSkgZHJvcC1zaGFkb3coMCAxOHB4IDMycHggcmdiYSgwLDAsMCwuMzgpKTsKfQouYW5nbGVyW2RhdGEtYXBwcm92ZWQtYXJ0PSI3Il0gLmFwcHJvdmVkLWx1cmUtY29yZXtmaWx0ZXI6ZHJvcC1zaGFkb3coMCAwIDlweCAjZmZkOWVmKSBkcm9wLXNoYWRvdygwIDAgMjVweCAjZmZiY2UyKSBkcm9wLXNoYWRvdygwIDAgNDRweCAjOTI3Y2ZmKX0KLmFuZ2xlcltkYXRhLWFwcHJvdmVkLWFydD0iNyJdIC5hcHByb3ZlZC1vcmdhbntmaWx0ZXI6ZHJvcC1zaGFkb3coMCAwIDhweCByZ2JhKDI1NSwxNjEsMjA4LC4zMikpfQouYW5nbGVyW2RhdGEtYXBwcm92ZWQtYXJ0PSI3Il0gLmFwcHJvdmVkLXRlZXRoe2ZpbHRlcjpEUk9QLXNoYWRvdygwIDAgMnB4IHJnYmEoMjI1LDI0OSwyNTUsLjM1KSl9Ci5hYnlzcyAuZGFya3sKICAtd2Via2l0LW1hc2s6cmFkaWFsLWdyYWRpZW50KGNpcmNsZSAyNTBweCBhdCB2YXIoLS1seCw1MCUpIHZhcigtLWx5LDUwJSksdHJhbnNwYXJlbnQgMjclLCMwMDAgMTAwJSk7CiAgbWFzazpyYWRpYWwtZ3JhZGllbnQoY2lyY2xlIDI1MHB4IGF0IHZhcigtLWx4LDUwJSkgdmFyKC0tbHksNTAlKSx0cmFuc3BhcmVudCAyNyUsIzAwMCAxMDAlKTsKfQoKQGtleWZyYW1lcyBhcHByb3ZlZC1zY2FsZXtmcm9te29wYWNpdHk6LjN9dG97b3BhY2l0eTouNzh9fQpAa2V5ZnJhbWVzIGFwcHJvdmVkLXZlaW57ZnJvbXtvcGFjaXR5Oi4zMn10b3tvcGFjaXR5Oi44OH19CkBrZXlmcmFtZXMgYXBwcm92ZWQtY29yZXtmcm9te29wYWNpdHk6LjU7dHJhbnNmb3JtOnNjYWxlKC45NCl9dG97b3BhY2l0eTouOTQ7dHJhbnNmb3JtOnNjYWxlKDEuMDcpfX0KCkBtZWRpYShtYXgtd2lkdGg6NzAwcHgpewogIC5jcml0dGVyW2RhdGEtYXBwcm92ZWQtYXJ0PSI3Il17d2lkdGg6Y2xhbXAoMTI1cHgsY2FsYyh2YXIoLS1zaXplKSAqIDIuNTUpLDE4NXB4KX0KICAuYW5nbGVyW2RhdGEtYXBwcm92ZWQtYXJ0PSI3Il17d2lkdGg6Y2xhbXAoMjUwcHgsNjh2dywzMjBweCl9CiAgLmFieXNzIC5kYXJrey13ZWJraXQtbWFzazpyYWRpYWwtZ3JhZGllbnQoY2lyY2xlIDIwNXB4IGF0IHZhcigtLWx4LDUwJSkgdmFyKC0tbHksNTAlKSx0cmFuc3BhcmVudCAyNyUsIzAwMCAxMDAlKTttYXNrOnJhZGlhbC1ncmFkaWVudChjaXJjbGUgMjA1cHggYXQgdmFyKC0tbHgsNTAlKSB2YXIoLS1seSw1MCUpLHRyYW5zcGFyZW50IDI3JSwjMDAwIDEwMCUpfQp9Cg==' | base64 -d >> assets/fish-approved-v7.css
+          fi
+      - name: Patch renderer and angler tracking
+        run: |
+          python - <<'PY'
           from pathlib import Path
-
-          css_path = Path('assets/fish-approved-v7.css')
-          css = css_path.read_text()
-          marker = '/* v7.3: actual on-site scale/contrast fix */'
-          if marker not in css:
-              css += r'''
-
-/* v7.3: actual on-site scale/contrast fix */
-.critter[data-approved-art="7"]{
-  width:clamp(150px,calc(var(--size) * 3.05),240px);
-  overflow:visible;
-}
-.critter[data-approved-art="7"]::after{
-  left:-10%;top:-8%;width:120%;height:116%;
-  background:radial-gradient(ellipse,rgba(239,255,255,.25),rgba(91,223,255,.13) 35%,rgba(255,141,206,.075) 58%,transparent 76%);
-  filter:blur(24px);
-}
-.critter[data-approved-art="7"] .approved-surface-fish{
-  filter:saturate(1.35) contrast(1.1) drop-shadow(0 0 9px rgba(217,253,255,.36)) drop-shadow(0 0 22px rgba(89,215,255,.18)) drop-shadow(0 12px 20px rgba(0,0,0,.16));
-}
-.critter[data-approved-art="7"] .approved-body{mix-blend-mode:normal;opacity:.98}
-.critter[data-approved-art="7"] .approved-scale{stroke-opacity:.52}
-.critter[data-approved-art="7"] .approved-vein{stroke-opacity:.68;filter:drop-shadow(0 0 2px currentColor)}
-.critter[data-approved-art="7"] .approved-dorsal,
-.critter[data-approved-art="7"] .approved-streamer,
-.critter[data-approved-art="7"] .approved-ventral,
-.critter[data-approved-art="7"] .approved-pectoral,
-.critter[data-approved-art="7"] .approved-tail{filter:drop-shadow(0 0 4px rgba(191,246,255,.18))}
-
-.angler[data-approved-art="7"]{
-  width:clamp(300px,34vw,400px);
-  height:auto;
-  aspect-ratio:285 / 195;
-  max-width:none;
-  filter:saturate(1.22) contrast(1.12) drop-shadow(0 0 14px rgba(146,183,255,.25)) drop-shadow(0 0 34px rgba(255,150,216,.14)) drop-shadow(0 18px 32px rgba(0,0,0,.38));
-}
-.angler[data-approved-art="7"] .approved-lure-core{filter:drop-shadow(0 0 9px #ffd9ef) drop-shadow(0 0 25px #ffbce2) drop-shadow(0 0 44px #927cff)}
-.angler[data-approved-art="7"] .approved-organ{filter:drop-shadow(0 0 8px rgba(255,161,208,.32))}
-.angler[data-approved-art="7"] .approved-teeth{filter:drop-shadow(0 0 2px rgba(225,249,255,.35))}
-.abyss .dark{
-  -webkit-mask:radial-gradient(circle 250px at var(--lx,50%) var(--ly,50%),transparent 27%,#000 100%);
-  mask:radial-gradient(circle 250px at var(--lx,50%) var(--ly,50%),transparent 27%,#000 100%);
-}
-
-@keyframes approved-scale{from{opacity:.3}to{opacity:.78}}
-@keyframes approved-vein{from{opacity:.32}to{opacity:.88}}
-@keyframes approved-core{from{opacity:.5;transform:scale(.94)}to{opacity:.94;transform:scale(1.07)}}
-
-@media(max-width:700px){
-  .critter[data-approved-art="7"]{width:clamp(125px,calc(var(--size) * 2.55),185px)}
-  .angler[data-approved-art="7"]{width:clamp(250px,68vw,320px)}
-  .abyss .dark{-webkit-mask:radial-gradient(circle 205px at var(--lx,50%) var(--ly,50%),transparent 27%,#000 100%);mask:radial-gradient(circle 205px at var(--lx,50%) var(--ly,50%),transparent 27%,#000 100%)}
-}
-'''
-          css_path.write_text(css)
-
-          refresh_path = Path('assets/fish-refresh.js')
-          refresh = refresh_path.read_text()
-          refresh = refresh.replace("assets/fish-approved-v7.css?v=7.2", "assets/fish-approved-v7.css?v=7.3")
-          old = "a.setAttribute('viewBox','0 0 285 195');\n      a.innerHTML=anglerArt();"
-          new = "a.setAttribute('viewBox','0 0 285 195');\n      a.setAttribute('width','285');\n      a.setAttribute('height','195');\n      a.innerHTML=anglerArt();"
-          if old not in refresh and "a.setAttribute('width','285');" not in refresh:
-              raise SystemExit('angler sizing insertion point missing')
-          refresh = refresh.replace(old, new)
-          refresh_path.write_text(refresh)
-
-          sea_path = Path('assets/sea.js')
-          sea = sea_path.read_text()
-          old_constants = "var LURE_X = 150, LURE_Y = 14;"
-          new_constants = "var LURE_X_RATIO = 242 / 285, LURE_Y_RATIO = 85 / 195;"
-          if old_constants not in sea and 'LURE_X_RATIO' not in sea:
-              raise SystemExit('old lure constants missing')
-          sea = sea.replace(old_constants, new_constants)
-          old_transform = "angler.style.transform = 'translate(' + (lx - LURE_X * flip) + 'px,' + (ly - LURE_Y) + 'px) scaleX(' + flip + ')';"
-          new_transform = "var lureX = angler.clientWidth * LURE_X_RATIO, lureY = angler.clientHeight * LURE_Y_RATIO;\n      angler.style.transform = 'translate(' + (lx - lureX * flip) + 'px,' + (ly - lureY) + 'px) scaleX(' + flip + ')';"
-          if old_transform not in sea and 'var lureX = angler.clientWidth' not in sea:
-              raise SystemExit('angler transform insertion point missing')
-          sea = sea.replace(old_transform, new_transform)
-          sea_path.write_text(sea)
-
-          index_path = Path('index.html')
-          html = index_path.read_text().replace('assets/fish-refresh.js?v=7.2', 'assets/fish-refresh.js?v=7.3')
-          index_path.write_text(html)
+          p=Path('assets/fish-refresh.js'); s=p.read_text(); s=s.replace('assets/fish-approved-v7.css?v=7.2','assets/fish-approved-v7.css?v=7.3')
+          old="a.setAttribute('viewBox','0 0 285 195');\n      a.innerHTML=anglerArt();"; new="a.setAttribute('viewBox','0 0 285 195');\n      a.setAttribute('width','285');\n      a.setAttribute('height','195');\n      a.innerHTML=anglerArt();"; s=s.replace(old,new); p.write_text(s)
+          p=Path('assets/sea.js'); s=p.read_text(); s=s.replace('var LURE_X = 150, LURE_Y = 14;','var LURE_X_RATIO = 242 / 285, LURE_Y_RATIO = 85 / 195;'); s=s.replace("angler.style.transform = 'translate(' + (lx - LURE_X * flip) + 'px,' + (ly - LURE_Y) + 'px) scaleX(' + flip + ')';", "var lureX = angler.clientWidth * LURE_X_RATIO, lureY = angler.clientHeight * LURE_Y_RATIO;\n      angler.style.transform = 'translate(' + (lx - lureX * flip) + 'px,' + (ly - lureY) + 'px) scaleX(' + flip + ')';"); p.write_text(s)
+          p=Path('index.html'); p.write_text(p.read_text().replace('assets/fish-refresh.js?v=7.2','assets/fish-refresh.js?v=7.3'))
           PY
           node --check assets/fish-refresh.js
           node --check assets/sea.js
