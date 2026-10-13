@@ -1,1 +1,77 @@
 /* FISH HWB sea-life art v6 — richer Aurora biology pass. */
+
+.critter[data-art-upgraded="6"]{
+  --art-speed:8s;
+  --art-delay:-2s;
+  --art-roll:0deg;
+  overflow:visible;
+  isolation:isolate;
+}
+.critter[data-art-upgraded="6"]::after{
+  content:"";position:absolute;z-index:-1;left:4%;top:10%;width:90%;height:78%;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(124,247,255,.16),rgba(189,112,255,.07) 42%,transparent 73%);
+  filter:blur(16px);opacity:.9;pointer-events:none;
+}
+.critter[data-art-upgraded="6"] .fish-art{
+  display:block;width:100%;height:auto;overflow:visible;transform-origin:50% 52%;
+  animation:aurora-v6-drift var(--art-speed) ease-in-out var(--art-delay) infinite alternate;
+  filter:drop-shadow(0 0 9px rgba(124,247,255,.19)) drop-shadow(0 10px 16px rgba(0,0,0,.17));
+}
+.critter[data-art-upgraded="6"] .aurora-body{mix-blend-mode:screen}
+.critter[data-art-upgraded="6"] .tail,.critter[data-art-upgraded="6"] .pectoral,.critter[data-art-upgraded="6"] .dorsal,.critter[data-art-upgraded="6"] .ventral,.critter[data-art-upgraded="6"] .streamer,.critter[data-art-upgraded="6"] .fin-membrane{
+  transform-box:fill-box;transform-origin:center;will-change:transform;
+}
+.critter[data-art-upgraded="6"] .tail{animation:aurora-v6-tail 2.25s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .pectoral{animation:aurora-v6-fin 3s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .dorsal,.critter[data-art-upgraded="6"] .streamer{animation:aurora-v6-sail 3.8s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .ventral{animation:aurora-v6-ventral 3.3s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .inner-core{animation:aurora-v6-core 3.4s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .inner-vein,.critter[data-art-upgraded="6"] .branch-vein{animation:aurora-v6-vein 4.8s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .aurora-band,.critter[data-art-upgraded="6"] .rim-light{animation:aurora-v6-band 5.8s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .scale-cell{animation:aurora-v6-scale 4.6s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .scale-cell:nth-child(3n){animation-delay:-1.4s}.critter[data-art-upgraded="6"] .scale-cell:nth-child(4n){animation-delay:-2.6s}
+.critter[data-art-upgraded="6"] .photophore{animation:aurora-v6-photo 3.7s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .photophore:nth-child(2n){animation-delay:-1.1s}.critter[data-art-upgraded="6"] .photophore:nth-child(3n){animation-delay:-2.2s}
+.critter[data-art-upgraded="6"] .fish-pupil{animation:aurora-v6-eye 9.2s ease-in-out var(--art-delay) infinite}
+.critter[data-art-upgraded="6"] .organ{animation:aurora-v6-organ 5s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"] .fin-ray{opacity:.34}
+
+.critter[data-art-species="aurora-reef-v6"]{width:calc(var(--size) * 1.62)}
+.critter[data-art-species="aurora-glider-v6"]{width:calc(var(--size) * 1.74)}
+.critter[data-art-species="aurora-lantern-v6"]{width:calc(var(--size) * 1.62)}
+
+.critter[data-art-upgraded="6"][data-art-species="aurora-jelly"] .fish-art{animation:jelly-v6-float 6.6s ease-in-out var(--art-delay) infinite alternate;filter:drop-shadow(0 0 10px rgba(255,120,220,.2))}
+.critter[data-art-upgraded="6"][data-art-species="aurora-jelly"] .bell{transform-box:fill-box;transform-origin:50% 85%;animation:jelly-v6-bell 2.7s ease-in-out var(--art-delay) infinite}
+.critter[data-art-upgraded="6"][data-art-species="aurora-jelly"] .ribbon{transform-box:fill-box;transform-origin:50% 0%;animation:jelly-v6-ribbon 3.6s ease-in-out var(--art-delay) infinite alternate}
+.critter[data-art-upgraded="6"][data-art-species="aurora-jelly"] .r2,.critter[data-art-upgraded="6"][data-art-species="aurora-jelly"] .r4,.critter[data-art-upgraded="6"][data-art-species="aurora-jelly"] .r6{animation-direction:alternate-reverse}
+.critter[data-art-upgraded="6"][data-art-species="aurora-jelly"] .jelly-core{animation:jelly-v6-core 2.9s ease-in-out var(--art-delay) infinite alternate}
+
+.angler[data-art-upgraded="6"]{filter:drop-shadow(0 0 14px rgba(124,247,255,.2))}
+.angler[data-art-upgraded="6"] .angler-tail{transform-box:fill-box;transform-origin:right center;animation:aurora-v6-tail 2.3s ease-in-out infinite alternate}
+.angler[data-art-upgraded="6"] .angler-pectoral{transform-box:fill-box;transform-origin:left center;animation:aurora-v6-fin 3.1s ease-in-out infinite alternate}
+.angler[data-art-upgraded="6"] .lure-stalk{transform-box:fill-box;transform-origin:0 100%;animation:angler-v6-lure 3.3s ease-in-out infinite alternate}
+.angler[data-art-upgraded="6"] .lure-core{animation:angler-v6-glow 2.25s ease-in-out infinite alternate}
+.angler[data-art-upgraded="6"] .inner-core,.angler[data-art-upgraded="6"] .organ{animation:aurora-v6-core 3.7s ease-in-out infinite alternate}
+
+@keyframes aurora-v6-drift{from{transform:rotate(var(--art-roll)) translateY(-2px) scaleY(.994)}to{transform:rotate(calc(var(--art-roll) * -1)) translateY(4px) scaleY(1.006)}}
+@keyframes aurora-v6-tail{from{transform:rotate(-4deg) skewY(-1deg)}to{transform:rotate(5deg) skewY(1deg)}}
+@keyframes aurora-v6-fin{from{transform:rotate(-2.5deg) scaleY(.96)}to{transform:rotate(3.5deg) scaleY(1.05)}}
+@keyframes aurora-v6-sail{from{transform:rotate(-1.4deg) skewX(-1deg)}to{transform:rotate(2.2deg) skewX(1deg)}}
+@keyframes aurora-v6-ventral{from{transform:rotate(1deg)}to{transform:rotate(-3deg)}}
+@keyframes aurora-v6-core{from{opacity:.3;transform:scale(.92)}to{opacity:.78;transform:scale(1.08)}}
+@keyframes aurora-v6-vein{from{opacity:.16}to{opacity:.58}}
+@keyframes aurora-v6-band{from{opacity:.22}to{opacity:.72}}
+@keyframes aurora-v6-scale{from{opacity:.14}to{opacity:.55}}
+@keyframes aurora-v6-photo{from{opacity:.28;filter:drop-shadow(0 0 1px currentColor)}to{opacity:1;filter:drop-shadow(0 0 6px currentColor)}}
+@keyframes aurora-v6-eye{0%,40%{transform:translate(0,0)}49%{transform:translate(-.45px,.15px)}58%{transform:translate(.4px,-.2px)}70%,100%{transform:translate(0,0)}}
+@keyframes aurora-v6-organ{from{opacity:.2}to{opacity:.56}}
+@keyframes jelly-v6-float{from{transform:translateY(-2px) rotate(-.7deg)}to{transform:translateY(3px) rotate(.7deg)}}
+@keyframes jelly-v6-bell{0%,100%{transform:scaleX(1) scaleY(1)}50%{transform:scaleX(1.035) scaleY(.94)}}
+@keyframes jelly-v6-ribbon{from{transform:rotate(-2deg) translateX(-1px)}to{transform:rotate(2deg) translateX(1px)}}
+@keyframes jelly-v6-core{from{opacity:.55}to{opacity:.95}}
+@keyframes angler-v6-lure{from{transform:rotate(-2deg)}to{transform:rotate(4.5deg)}}
+@keyframes angler-v6-glow{from{opacity:.58;filter:drop-shadow(0 0 4px #7cf7ff)}to{opacity:1;filter:drop-shadow(0 0 15px #7cf7ff)}}
+
+@media(prefers-reduced-motion:reduce){
+  .critter[data-art-upgraded="6"] .fish-art,.critter[data-art-upgraded="6"] .tail,.critter[data-art-upgraded="6"] .pectoral,.critter[data-art-upgraded="6"] .dorsal,.critter[data-art-upgraded="6"] .ventral,.critter[data-art-upgraded="6"] .streamer,.critter[data-art-upgraded="6"] .inner-core,.critter[data-art-upgraded="6"] .inner-vein,.critter[data-art-upgraded="6"] .branch-vein,.critter[data-art-upgraded="6"] .aurora-band,.critter[data-art-upgraded="6"] .rim-light,.critter[data-art-upgraded="6"] .scale-cell,.critter[data-art-upgraded="6"] .photophore,.critter[data-art-upgraded="6"] .fish-pupil,.critter[data-art-upgraded="6"] .organ,.critter[data-art-upgraded="6"] .bell,.critter[data-art-upgraded="6"] .ribbon,.critter[data-art-upgraded="6"] .jelly-core,.angler[data-art-upgraded="6"] *{animation:none!important}
+}
