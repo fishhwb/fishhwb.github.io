@@ -1,157 +1,79 @@
-/* FISH HWB approved marine art v8.
-   Matches the site's stylised glowy sea-life language instead of going naturalistic. */
+/* FISH HWB marine art v8 — surface fish + abyss angler.
+   This deliberately sits on top of the v6/v7 markup so jellyfish and lanternfish stay untouched. */
 
-.critter[data-approved-art="8"]{
-  width:clamp(132px, calc(var(--size) * 2.35), 205px);
+.critter[data-approved-art="7"]{
+  width:clamp(132px,calc(var(--size) * 2.35),205px);
   overflow:visible;
   isolation:isolate;
 }
-.critter[data-approved-art="8"]::after{
+.critter[data-approved-art="7"] .approved-surface-fish{
+  opacity:0!important;
+  visibility:hidden!important;
+}
+.critter[data-approved-art="7"]::before{
   content:"";
   position:absolute;
   z-index:-1;
-  left:-4%;
-  top:4%;
-  width:108%;
-  height:96%;
-  background:radial-gradient(ellipse, rgba(235,255,255,.16), rgba(112,228,255,.08) 38%, rgba(255,167,214,.045) 60%, transparent 78%);
-  filter:blur(18px);
+  left:-5%;top:5%;width:110%;height:92%;
   border-radius:50%;
+  background:radial-gradient(ellipse,rgba(235,255,255,.17),rgba(112,228,255,.08) 38%,rgba(255,167,214,.04) 60%,transparent 78%);
+  filter:blur(18px);
   pointer-events:none;
 }
-.critter[data-approved-art="8"] .approved8-surface-fish{
-  display:block;
-  width:100%;
-  height:auto;
-  overflow:visible;
+.critter[data-approved-art="7"]::after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:-10% -12%;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:contain;
+  filter:drop-shadow(0 0 7px rgba(200,251,255,.18)) drop-shadow(0 10px 16px rgba(0,0,0,.16));
+  pointer-events:none;
   transform-origin:52% 52%;
-  animation:approved8-drift 7.5s ease-in-out var(--art-delay,-2s) infinite alternate;
-  filter:drop-shadow(0 0 7px rgba(200,251,255,.16)) drop-shadow(0 10px 16px rgba(0,0,0,.16));
+  animation:fish-v8-drift 7.5s ease-in-out var(--art-delay,-2s) infinite alternate;
 }
-.critter[data-approved-art="8"] .approved8-body{mix-blend-mode:screen}
-.critter[data-approved-art="8"] .approved8-tail,
-.critter[data-approved-art="8"] .approved8-dorsal,
-.critter[data-approved-art="8"] .approved8-ventral,
-.critter[data-approved-art="8"] .approved8-pectoral,
-.critter[data-approved-art="8"] .approved8-streamer{
-  transform-box:fill-box;
-  transform-origin:center;
-  will-change:transform;
-}
-.critter[data-approved-art="8"] .approved8-tail{animation:approved8-tail 2.15s ease-in-out var(--art-delay,-2s) infinite alternate}
-.critter[data-approved-art="8"] .approved8-dorsal,
-.critter[data-approved-art="8"] .approved8-streamer{animation:approved8-sail 4.1s ease-in-out var(--art-delay,-2s) infinite alternate}
-.critter[data-approved-art="8"] .approved8-ventral{animation:approved8-ventral 3.5s ease-in-out var(--art-delay,-2s) infinite alternate}
-.critter[data-approved-art="8"] .approved8-pectoral{animation:approved8-pectoral 3s ease-in-out var(--art-delay,-2s) infinite alternate}
-.critter[data-approved-art="8"] .approved8-core,
-.critter[data-approved-art="8"] .approved8-organ{animation:approved8-core 3.7s ease-in-out var(--art-delay,-2s) infinite alternate}
-.critter[data-approved-art="8"] .approved8-vein{animation:approved8-vein 5s ease-in-out var(--art-delay,-2s) infinite alternate}
-.critter[data-approved-art="8"] .approved8-scale{animation:approved8-scale 5.2s ease-in-out var(--art-delay,-2s) infinite alternate}
-.critter[data-approved-art="8"] .approved8-scale:nth-child(3n){animation-delay:-1.5s}
-.critter[data-approved-art="8"] .approved8-scale:nth-child(4n){animation-delay:-2.8s}
-.critter[data-approved-art="8"] .approved8-node{animation:approved8-node 3.6s ease-in-out var(--art-delay,-2s) infinite alternate}
-.critter[data-approved-art="8"] .approved8-node:nth-child(2n){animation-delay:-1.2s}
-.critter[data-approved-art="8"] .approved8-node:nth-child(3n){animation-delay:-2.1s}
-.critter[data-approved-art="8"] .approved8-eye-pupil{animation:approved8-eye 9.5s ease-in-out var(--art-delay,-2s) infinite}
-.critter[data-approved-art="8"] .approved8-highlight{opacity:.86}
+.critter.clown[data-approved-art="7"]::after{background-image:url("fish/surface-coral-v8.svg")}
+.critter.tang[data-approved-art="7"]::after{background-image:url("fish/surface-azure-v8.svg")}
 
-.angler[data-approved-art="8"]{
-  width:clamp(290px, 33vw, 385px);
+.angler[data-approved-art="7"]{
+  width:clamp(290px,33vw,385px);
   height:auto;
   max-width:none;
   aspect-ratio:285 / 195;
   overflow:visible;
+  background-image:url("fish/angler-stylised-v8.svg");
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:contain;
   filter:drop-shadow(0 0 10px rgba(118,215,255,.16)) drop-shadow(0 16px 26px rgba(0,0,0,.36));
+  animation:angler-v8-light 2.4s ease-in-out infinite alternate;
 }
-.angler[data-approved-art="8"] .approved8-angler-tail,
-.angler[data-approved-art="8"] .approved8-angler-dorsal,
-.angler[data-approved-art="8"] .approved8-angler-pectoral,
-.angler[data-approved-art="8"] .approved8-spines{
-  transform-box:fill-box;
-  transform-origin:center;
-  will-change:transform;
-}
-.angler[data-approved-art="8"] .approved8-angler-tail{animation:approved8-tail 2.4s ease-in-out infinite alternate}
-.angler[data-approved-art="8"] .approved8-angler-dorsal,
-.angler[data-approved-art="8"] .approved8-spines{animation:approved8-sail 4.5s ease-in-out infinite alternate}
-.angler[data-approved-art="8"] .approved8-angler-pectoral{animation:approved8-pectoral 3.2s ease-in-out infinite alternate}
-.angler[data-approved-art="8"] .approved8-lure-stalk{transform-box:fill-box;transform-origin:0 100%;animation:approved8-lure 3.4s ease-in-out infinite alternate}
-.angler[data-approved-art="8"] .approved8-lure-core{animation:approved8-lure-glow 2.1s ease-in-out infinite alternate}
-.angler[data-approved-art="8"] .approved8-angler-core,
-.angler[data-approved-art="8"] .approved8-organ{animation:approved8-core 4s ease-in-out infinite alternate}
-.angler[data-approved-art="8"] .approved8-rib,
-.angler[data-approved-art="8"] .approved8-vein{animation:approved8-vein 5.4s ease-in-out infinite alternate}
-.angler[data-approved-art="8"] .approved8-photophore{animation:approved8-node 3.8s ease-in-out infinite alternate}
-.angler[data-approved-art="8"] .approved8-photophore:nth-child(2n){animation-delay:-1.3s}
-.angler[data-approved-art="8"] .approved8-photophore:nth-child(3n){animation-delay:-2.5s}
-.angler[data-approved-art="8"] .approved8-eye-pupil{animation:approved8-eye 10s ease-in-out infinite}
-.angler[data-approved-art="8"] .approved8-teeth{filter:drop-shadow(0 0 2px rgba(230,248,255,.22))}
+.angler[data-approved-art="7"] > *{opacity:0!important;visibility:hidden!important}
 
 .abyss .dark{
-  -webkit-mask:radial-gradient(circle 235px at var(--lx,50%) var(--ly,50%), transparent 27%, #000 100%);
-  mask:radial-gradient(circle 235px at var(--lx,50%) var(--ly,50%), transparent 27%, #000 100%);
+  -webkit-mask:radial-gradient(circle 235px at var(--lx,50%) var(--ly,50%),transparent 27%,#000 100%);
+  mask:radial-gradient(circle 235px at var(--lx,50%) var(--ly,50%),transparent 27%,#000 100%);
 }
 
-@keyframes approved8-drift{
+@keyframes fish-v8-drift{
   from{transform:translateY(-2px) rotate(-.45deg) scaleY(.995)}
   to{transform:translateY(3px) rotate(.45deg) scaleY(1.005)}
 }
-@keyframes approved8-tail{
-  from{transform:rotate(-4deg) skewY(-1deg)}
-  to{transform:rotate(5deg) skewY(1deg)}
-}
-@keyframes approved8-sail{
-  from{transform:rotate(-1.6deg) skewX(-1deg) scaleY(.985)}
-  to{transform:rotate(2deg) skewX(1deg) scaleY(1.02)}
-}
-@keyframes approved8-ventral{
-  from{transform:rotate(1.2deg)}
-  to{transform:rotate(-2.6deg)}
-}
-@keyframes approved8-pectoral{
-  from{transform:rotate(-2.8deg) scaleY(.97)}
-  to{transform:rotate(3.8deg) scaleY(1.05)}
-}
-@keyframes approved8-core{
-  from{opacity:.34;transform:scale(.95)}
-  to{opacity:.82;transform:scale(1.06)}
-}
-@keyframes approved8-vein{
-  from{opacity:.16}
-  to{opacity:.58}
-}
-@keyframes approved8-scale{
-  from{opacity:.12}
-  to{opacity:.48}
-}
-@keyframes approved8-node{
-  from{opacity:.28;filter:drop-shadow(0 0 1px currentColor)}
-  to{opacity:1;filter:drop-shadow(0 0 6px currentColor)}
-}
-@keyframes approved8-eye{
-  0%,40%{transform:translate(0,0)}
-  50%{transform:translate(-.4px,.15px)}
-  58%{transform:translate(.35px,-.2px)}
-  72%,100%{transform:translate(0,0)}
-}
-@keyframes approved8-lure{
-  from{transform:rotate(-2.2deg)}
-  to{transform:rotate(4.2deg)}
-}
-@keyframes approved8-lure-glow{
-  from{opacity:.62;filter:drop-shadow(0 0 5px #9cf2ff)}
-  to{opacity:1;filter:drop-shadow(0 0 16px #9cf2ff) drop-shadow(0 0 28px #a08fff)}
+@keyframes angler-v8-light{
+  from{filter:drop-shadow(0 0 7px rgba(118,215,255,.12)) drop-shadow(0 16px 26px rgba(0,0,0,.36))}
+  to{filter:drop-shadow(0 0 17px rgba(118,215,255,.28)) drop-shadow(0 16px 26px rgba(0,0,0,.36))}
 }
 
 @media(max-width:700px){
-  .critter[data-approved-art="8"]{width:clamp(116px, calc(var(--size) * 1.95), 170px)}
-  .angler[data-approved-art="8"]{width:clamp(245px, 68vw, 315px)}
+  .critter[data-approved-art="7"]{width:clamp(116px,calc(var(--size) * 1.95),170px)}
+  .angler[data-approved-art="7"]{width:clamp(245px,68vw,315px)}
   .abyss .dark{
-    -webkit-mask:radial-gradient(circle 195px at var(--lx,50%) var(--ly,50%), transparent 27%, #000 100%);
-    mask:radial-gradient(circle 195px at var(--lx,50%) var(--ly,50%), transparent 27%, #000 100%);
+    -webkit-mask:radial-gradient(circle 195px at var(--lx,50%) var(--ly,50%),transparent 27%,#000 100%);
+    mask:radial-gradient(circle 195px at var(--lx,50%) var(--ly,50%),transparent 27%,#000 100%);
   }
 }
 @media(prefers-reduced-motion:reduce){
-  .critter[data-approved-art="8"] *,
-  .angler[data-approved-art="8"] *{animation:none!important}
+  .critter[data-approved-art="7"]::after,
+  .angler[data-approved-art="7"]{animation:none!important}
 }
