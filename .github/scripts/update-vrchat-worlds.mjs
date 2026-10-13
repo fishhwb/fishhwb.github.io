@@ -4,47 +4,23 @@ const path = 'assets/vrchat-worlds.json';
 const current = JSON.parse(await readFile(path, 'utf8'));
 const old = new Map((current.worlds || []).map(w => [w.id, w]));
 const validWorldId = value => /^wrld_[0-9a-f-]{36}$/i.test(String(value || ''));
-
-const ownerId = process.env.VRCHAT_OWNER_USER_ID
-  || current.ownerUserId
+const ownerId = current.ownerUserId
   || (current.worlds || []).find(w => /^usr_[0-9a-f-]{36}$/i.test(String(w?.authorId || '')))?.authorId
   || 'usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2';
 
-const baseHeaders = {
+const headers = {
   Accept: 'application/json',
-  'User-Agent': 'FISHHWB-Website/2.1 (+https://github.com/fishhwb/fishhwb.github.io)'
+  'User-Agent': 'FISHHWB-Website/2.2 (+https://github.com/fishhwb/fishhwb.github.io)'
 };
 
-function normaliseCookie(name, value) {
-  const clean = String(value || '').trim();
-  if (!clean) return '';
-  return clean.includes(`${name}=`) ? clean : `${name}=${clean}`;
-}
-
-const cookies = [
-  normaliseCookie('auth', process.env.VRCHAT_AUTH_COOKIE),
-  normaliseCookie('twoFactorAuth', process.env.VRCHAT_TWO_FACTOR_AUTH_COOKIE)
-].filter(Boolean);
-const authHeaders = cookies.length ? { ...baseHeaders, Cookie: cookies.join('; ') } : baseHeaders;
-
-async function fetchJson(url, headers = baseHeaders) {
+async function fetchJson(url) {
   const r = await fetch(url, { headers });
-  if (!r.ok) {
-    const error = new Error(`VRChat returned ${r.status}`);
-    error.status = r.status;
-    throw error;
-  }
+  if (!r.ok) throw new Error(`${new URL(url).hostname} returned ${r.status}`);
   return r.json();
 }
 
 async function getWorld(id) {
-  const url = `https://api.vrchat.cloud/api/1/worlds/${encodeURIComponent(id)}`;
-  try {
-    return await fetchJson(url, baseHeaders);
-  } catch (publicError) {
-    if (!cookies.length) throw publicError;
-    return fetchJson(url, authHeaders);
-  }
+  return fetchJson(`https://api.vrchat.cloud/api/1/worlds/${encodeURIComponent(id)}`);
 }
 
 function platformsFrom(w, fallback = {}) {
@@ -88,7 +64,6 @@ const ids = new Set([
   ...(Array.isArray(current.worldIds) ? current.worldIds : []),
   ...(current.worlds || []).map(w => w.id)
 ].filter(validWorldId));
-const firstPass = new Map();
 
 function collectWorldIds(value) {
   if (typeof value === 'string') {
@@ -100,58 +75,43 @@ function collectWorldIds(value) {
     return;
   }
   if (!value || typeof value !== 'object') return;
-  if (validWorldId(value.id)) {
-    ids.add(value.id);
-    firstPass.set(value.id, value);
-  }
+  if (validWorldId(value.id)) ids.add(value.id);
   for (const child of Object.values(value)) collectWorldIds(child);
 }
 
-let profileDiscoverySucceeded = false;
-if (cookies.length) {
-  try {
-    const url = new URL(`https://api.vrchat.cloud/api/1/profile/${encodeURIComponent(ownerId)}`);
-    url.searchParams.set('withGroupsAndWorlds', 'true');
-    const profile = await fetchJson(url, authHeaders);
-    const publicWorlds = Array.isArray(profile.publicWorlds) ? profile.publicWorlds : [];
-    for (const world of publicWorlds) collectWorldIds(world);
-    profileDiscoverySucceeded = true;
-
-    const advertised = Number(profile.totalPublicWorldsCount || 0);
-    if (advertised && publicWorlds.length < advertised) {
-      console.warn(`VRChat profile reports ${advertised} public worlds but returned ${publicWorlds.length}; known worlds will still be preserved and validated.`);
-    } else {
-      console.log(`VRChat profile discovery returned ${publicWorlds.length} public world${publicWorlds.length === 1 ? '' : 's'}.`);
-    }
-  } catch (err) {
-    console.warn(`Public-profile world discovery failed: ${err.message}. Existing worlds will be preserved.`);
-  }
-} else {
-  console.warn('No VRCHAT_AUTH_COOKIE is configured; public-profile world discovery cannot run.');
+let discoverySucceeded = false;
+try {
+  const indexUrl = `https://vrcavatarsearch.nekosunevr.co.uk/api/v1/worlds/by-author/${encodeURIComponent(ownerId)}`;
+  const indexed = await fetchJson(indexUrl);
+  const before = ids.size;
+  collectWorldIds(indexed?.data ?? indexed);
+  discoverySucceeded = true;
+  const added = ids.size - before;
+  console.log(`Public world index added ${added} candidate world${added === 1 ? '' : 's'}.`);
+} catch (err) {
+  console.warn(`Public world discovery failed: ${err.message}; keeping known worlds.`);
 }
 
-// Preserve any world IDs embedded in the profile response, then independently verify
-// ownership and public release status before putting them on the website.
 const worlds = [];
 for (const id of ids) {
-  const fallback = old.get(id) || normalise(firstPass.get(id) || { id });
+  const fallback = old.get(id) || { id };
   try {
     const w = await getWorld(id);
     if (w.authorId !== ownerId) {
-      console.warn(`${id}: skipped because it belongs to ${w.authorId || 'an unknown author'}`);
+      console.warn(`${id}: ignored because it belongs to another author.`);
       continue;
     }
     if (w.releaseStatus !== 'public') {
-      console.log(`${id}: skipped because releaseStatus is ${w.releaseStatus || 'unknown'}`);
+      console.log(`${id}: ignored because it is ${w.releaseStatus || 'not public'}.`);
       continue;
     }
     worlds.push(normalise(w, fallback));
   } catch (err) {
     if (fallback?.authorId === ownerId && fallback?.releaseStatus === 'public') {
-      console.warn(`${id}: ${err.message}; keeping last known public metadata`);
+      console.warn(`${id}: ${err.message}; keeping last known public metadata.`);
       worlds.push(fallback);
     } else {
-      console.warn(`${id}: ${err.message}; skipped because it could not be safely verified`);
+      console.warn(`${id}: ${err.message}; skipped because it could not be verified.`);
     }
   }
 }
@@ -169,8 +129,8 @@ const previousCore = {
   worlds: current.worlds || []
 };
 
-if (!profileDiscoverySucceeded && worlds.length === 0 && old.size) {
-  console.warn('Discovery/validation produced no safe worlds; leaving the existing file untouched.');
+if (!discoverySucceeded && worlds.length === 0 && old.size) {
+  console.warn('Discovery and validation produced no safe worlds; leaving the existing file untouched.');
   process.exit(0);
 }
 
