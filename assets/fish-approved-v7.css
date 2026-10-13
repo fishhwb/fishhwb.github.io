@@ -1,0 +1,47 @@
+/* Approved marine concept pass: surface fish + abyss angler only. */
+.critter[data-approved-art="7"]{overflow:visible;isolation:isolate;width:calc(var(--size) * 1.86)}
+.critter[data-approved-art="7"]::after{content:"";position:absolute;z-index:-1;left:-4%;top:3%;width:108%;height:92%;border-radius:50%;background:radial-gradient(ellipse,rgba(231,255,255,.17),rgba(120,229,255,.08) 38%,rgba(255,141,206,.045) 58%,transparent 74%);filter:blur(18px);pointer-events:none}
+.critter[data-approved-art="7"] .approved-surface-fish{display:block;width:100%;height:auto;overflow:visible;transform-origin:52% 52%;animation:approved-fish-breathe 7.8s ease-in-out var(--art-delay,-2s) infinite alternate;filter:drop-shadow(0 0 8px rgba(201,251,255,.22)) drop-shadow(0 0 18px rgba(121,226,255,.09)) drop-shadow(0 10px 17px rgba(0,0,0,.13))}
+.critter[data-approved-art="7"] .approved-body{mix-blend-mode:screen}
+.critter[data-approved-art="7"] .approved-tail,.critter[data-approved-art="7"] .approved-dorsal,.critter[data-approved-art="7"] .approved-ventral,.critter[data-approved-art="7"] .approved-pectoral,.critter[data-approved-art="7"] .approved-streamer{transform-box:fill-box;transform-origin:center;will-change:transform}
+.critter[data-approved-art="7"] .approved-tail{animation:approved-tail 2.35s ease-in-out var(--art-delay,-2s) infinite alternate}
+.critter[data-approved-art="7"] .approved-dorsal,.critter[data-approved-art="7"] .approved-streamer{animation:approved-sail 4.2s ease-in-out var(--art-delay,-2s) infinite alternate}
+.critter[data-approved-art="7"] .approved-ventral{animation:approved-ventral 3.6s ease-in-out var(--art-delay,-2s) infinite alternate}
+.critter[data-approved-art="7"] .approved-pectoral{animation:approved-pectoral 3.1s ease-in-out var(--art-delay,-2s) infinite alternate}
+.critter[data-approved-art="7"] .approved-core{animation:approved-core 3.9s ease-in-out var(--art-delay,-2s) infinite alternate}
+.critter[data-approved-art="7"] .approved-vein{animation:approved-vein 5.2s ease-in-out var(--art-delay,-2s) infinite alternate}
+.critter[data-approved-art="7"] .approved-scale{animation:approved-scale 5.6s ease-in-out var(--art-delay,-2s) infinite alternate}
+.critter[data-approved-art="7"] .approved-scale:nth-child(3n){animation-delay:-1.7s}.critter[data-approved-art="7"] .approved-scale:nth-child(4n){animation-delay:-3.1s}
+.critter[data-approved-art="7"] .approved-node{animation:approved-node 3.7s ease-in-out var(--art-delay,-2s) infinite alternate}
+.critter[data-approved-art="7"] .approved-node:nth-child(2n){animation-delay:-1.2s}.critter[data-approved-art="7"] .approved-node:nth-child(3n){animation-delay:-2.4s}
+.critter[data-approved-art="7"] .approved-eye-pupil{animation:approved-eye 10s ease-in-out var(--art-delay,-2s) infinite}
+
+.angler[data-approved-art="7"]{overflow:visible;filter:drop-shadow(0 0 12px rgba(146,183,255,.15)) drop-shadow(0 0 24px rgba(255,150,216,.08))}
+.angler[data-approved-art="7"] .approved-angler-tail,.angler[data-approved-art="7"] .approved-angler-dorsal,.angler[data-approved-art="7"] .approved-angler-pectoral{transform-box:fill-box;transform-origin:center;will-change:transform}
+.angler[data-approved-art="7"] .approved-angler-tail{animation:approved-tail 2.5s ease-in-out infinite alternate}
+.angler[data-approved-art="7"] .approved-angler-dorsal{animation:approved-sail 4.4s ease-in-out infinite alternate}
+.angler[data-approved-art="7"] .approved-angler-pectoral{animation:approved-pectoral 3.3s ease-in-out infinite alternate}
+.angler[data-approved-art="7"] .approved-lure-stalk{transform-box:fill-box;transform-origin:0 100%;animation:approved-lure 3.6s ease-in-out infinite alternate}
+.angler[data-approved-art="7"] .approved-lure-core{animation:approved-lure-glow 2.15s ease-in-out infinite alternate}
+.angler[data-approved-art="7"] .approved-organ{animation:approved-organ 4.4s ease-in-out infinite alternate}
+.angler[data-approved-art="7"] .approved-rib{animation:approved-rib 5.4s ease-in-out infinite alternate}
+.angler[data-approved-art="7"] .approved-photophore{animation:approved-node 3.9s ease-in-out infinite alternate}
+.angler[data-approved-art="7"] .approved-photophore:nth-child(2n){animation-delay:-1.5s}.angler[data-approved-art="7"] .approved-photophore:nth-child(3n){animation-delay:-2.7s}
+
+@keyframes approved-fish-breathe{from{transform:translateY(-2px) rotate(-.45deg) scaleY(.995)}to{transform:translateY(4px) rotate(.45deg) scaleY(1.006)}}
+@keyframes approved-tail{from{transform:rotate(-4.5deg) skewY(-1deg)}to{transform:rotate(5.5deg) skewY(1deg)}}
+@keyframes approved-sail{from{transform:rotate(-1.5deg) skewX(-1deg) scaleY(.985)}to{transform:rotate(2deg) skewX(1deg) scaleY(1.02)}}
+@keyframes approved-ventral{from{transform:rotate(1.5deg)}to{transform:rotate(-3deg)}}
+@keyframes approved-pectoral{from{transform:rotate(-3deg) scaleY(.96)}to{transform:rotate(4deg) scaleY(1.06)}}
+@keyframes approved-core{from{opacity:.38;transform:scale(.94)}to{opacity:.86;transform:scale(1.07)}}
+@keyframes approved-vein{from{opacity:.18}to{opacity:.68}}
+@keyframes approved-scale{from{opacity:.15}to{opacity:.56}}
+@keyframes approved-node{from{opacity:.3;filter:drop-shadow(0 0 1px currentColor)}to{opacity:1;filter:drop-shadow(0 0 7px currentColor)}}
+@keyframes approved-eye{0%,42%{transform:translate(0,0)}50%{transform:translate(-.45px,.15px)}58%{transform:translate(.35px,-.2px)}72%,100%{transform:translate(0,0)}}
+@keyframes approved-lure{from{transform:rotate(-2.4deg)}to{transform:rotate(4.5deg)}}
+@keyframes approved-lure-glow{from{opacity:.58;filter:drop-shadow(0 0 5px #ffd9ef)}to{opacity:1;filter:drop-shadow(0 0 18px #ffd0ec) drop-shadow(0 0 32px #927cff)}}
+@keyframes approved-organ{from{opacity:.28;transform:scale(.94)}to{opacity:.8;transform:scale(1.05)}}
+@keyframes approved-rib{from{opacity:.14}to{opacity:.48}}
+
+@media(max-width:700px){.critter[data-approved-art="7"]{width:calc(var(--size) * 1.65)}}
+@media(prefers-reduced-motion:reduce){.critter[data-approved-art="7"] *,.angler[data-approved-art="7"] *{animation:none!important}}
