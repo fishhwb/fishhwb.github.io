@@ -7,20 +7,29 @@ const validWorldId = value => /^wrld_[0-9a-f-]{36}$/i.test(String(value || ''));
 const ownerId = current.ownerUserId
   || (current.worlds || []).find(w => /^usr_[0-9a-f-]{36}$/i.test(String(w?.authorId || '')))?.authorId
   || 'usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2';
+const authCookie = String(process.env.VRCHAT_AUTH_COOKIE || '').trim();
 
 const headers = {
   Accept: 'application/json',
-  'User-Agent': 'FISHHWB-Website/2.2 (+https://github.com/fishhwb/fishhwb.github.io)'
+  'User-Agent': 'FISHHWB-Website/2.3 (+https://fishhwb.github.io/)'
 };
 
-async function fetchJson(url) {
-  const r = await fetch(url, { headers });
+function officialHeaders() {
+  if (!authCookie) return headers;
+  return {
+    ...headers,
+    Cookie: authCookie.includes('auth=') ? authCookie : `auth=${authCookie}`
+  };
+}
+
+async function fetchJson(url, requestHeaders = headers) {
+  const r = await fetch(url, { headers: requestHeaders });
   if (!r.ok) throw new Error(`${new URL(url).hostname} returned ${r.status}`);
   return r.json();
 }
 
 async function getWorld(id) {
-  return fetchJson(`https://api.vrchat.cloud/api/1/worlds/${encodeURIComponent(id)}`);
+  return fetchJson(`https://api.vrchat.cloud/api/1/worlds/${encodeURIComponent(id)}`, officialHeaders());
 }
 
 function platformsFrom(w, fallback = {}) {
@@ -79,7 +88,36 @@ function collectWorldIds(value) {
   for (const child of Object.values(value)) collectWorldIds(child);
 }
 
+async function discoverFromVrchat() {
+  let offset = 0;
+  let addedTotal = 0;
+  for (let page = 0; page < 20; page++) {
+    const url = new URL('https://api.vrchat.cloud/api/1/worlds');
+    url.searchParams.set('userId', ownerId);
+    url.searchParams.set('releaseStatus', 'public');
+    url.searchParams.set('sort', 'updated');
+    url.searchParams.set('order', 'descending');
+    url.searchParams.set('n', '100');
+    url.searchParams.set('offset', String(offset));
+    const batch = await fetchJson(url.toString(), officialHeaders());
+    if (!Array.isArray(batch)) throw new Error('VRChat returned an unexpected world-search response');
+    const before = ids.size;
+    collectWorldIds(batch);
+    addedTotal += ids.size - before;
+    if (batch.length < 100) break;
+    offset += 100;
+  }
+  console.log(`VRChat author search added ${addedTotal} candidate world${addedTotal === 1 ? '' : 's'}.`);
+}
+
 let discoverySucceeded = false;
+try {
+  await discoverFromVrchat();
+  discoverySucceeded = true;
+} catch (err) {
+  console.warn(`VRChat author search unavailable: ${err.message}.`);
+}
+
 try {
   const indexUrl = `https://vrcavatarsearch.nekosunevr.co.uk/api/v1/worlds/by-author/${encodeURIComponent(ownerId)}`;
   const indexed = await fetchJson(indexUrl);
