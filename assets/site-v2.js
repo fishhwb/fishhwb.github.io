@@ -228,7 +228,12 @@
   function useOptimizedMascot(){var probe=new Image();probe.onload=function(){[].forEach.call(document.querySelectorAll('img[src$="fishhwb-mascot.png"]'),function(img){img.src='assets/fishhwb-mascot.webp';});};probe.src='assets/fishhwb-mascot.webp';}
 
   document.addEventListener('DOMContentLoaded',function(){
-    lazyMedia();renderWorlds();renderGallery();setupRelics();addPlankton();useOptimizedMascot();
-    projectDataPromise.then(function(data){renderProjects(data);upgradeBuddy(data);});
+    lazyMedia();renderGallery();setupRelics();addPlankton();useOptimizedMascot();
+    projectDataPromise.then(function(data){
+      upgradeBuddy(data);
+      // extras.js starts its local JSON requests after this script. Give it a moment to
+      // finish, then make the richer project/world render the final DOM state.
+      setTimeout(function(){renderProjects(data);renderWorlds();}, 900);
+    });
   });
 })();
