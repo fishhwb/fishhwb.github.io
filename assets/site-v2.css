@@ -105,3 +105,20 @@ iframe[data-src]{background:rgba(0,0,0,.18)}
 
 @media(max-width:680px){.projects-v2,.world-grid,.gallery-v2{grid-template-columns:1fr}.buddy-menu{width:200px}.project-v2 h3{font-size:1.5rem}}
 @media(prefers-reduced-motion:reduce){.critter .fish-pupil,.critter .lights circle,.buddy-bubbles i,.v2-plankton i{animation:none!important}}
+
+
+/* ---------- seamless abyss transition ---------- */
+.abyss{
+  background:
+    radial-gradient(ellipse at 50% 18%,rgba(29,95,124,.18) 0%,rgba(29,95,124,0) 52%),
+    linear-gradient(180deg,#071a31 0%,#06172b 24%,#04111f 58%,#030914 82%,#040d1c 100%);
+}
+.abyss .dark{
+  background:radial-gradient(circle 240px at var(--lx,50%) var(--ly,50%),rgba(1,2,8,0) 0 38%,rgba(1,2,8,.18) 62%,rgba(1,2,8,.44) 100%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 16%,#000 84%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 16%,#000 84%,transparent 100%);
+}
+.abyss .glow{
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%);
+}
