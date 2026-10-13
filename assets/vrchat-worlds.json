@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-13T00:47:19.426Z",
+  "updatedAt": "2026-10-13T12:48:08.647Z",
   "worldIds": [
     "wrld_2e9d399f-749f-43a5-958c-a524ad3bec56",
     "wrld_873faac1-2a30-4574-be0b-d1a5856f5402"
@@ -15,7 +15,7 @@
       "recommendedCapacity": 16,
       "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
       "authorName": "DedZedOffishal",
-      "visits": 44924,
+      "visits": 44925,
       "favorites": 1970,
       "popularity": 6,
       "heat": 3,
@@ -45,10 +45,10 @@
       "recommendedCapacity": 16,
       "authorId": "usr_97d57b9e-27fa-4fce-a1ce-218edb215ad2",
       "authorName": "DedZedOffishal",
-      "visits": 832,
+      "visits": 836,
       "favorites": 43,
       "popularity": 4,
-      "heat": 1,
+      "heat": 2,
       "releaseStatus": "public",
       "publicationDate": "2025-08-19T07:47:48.972Z",
       "labsPublicationDate": "2025-02-18T05:30:59.652Z",
