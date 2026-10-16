@@ -1,6 +1,11 @@
 // FISH HWB v3 — lightweight developer UI enhancements.
 (function(){
   'use strict';
+  // v3 owns the merged project hub. Remove the old #code compatibility anchor
+  // before extras.js runs so the legacy project migration cannot rewrite it.
+  var legacyCodeAnchor=document.getElementById('code');
+  if(legacyCodeAnchor) legacyCodeAnchor.removeAttribute('id');
+
   function el(tag, cls, text){var n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;}
 
   function decorateProjects(){
