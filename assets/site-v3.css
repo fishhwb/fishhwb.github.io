@@ -1,0 +1,105 @@
+/* FISH HWB v3 — developer-ocean portfolio layer */
+:root{
+  --terminal:#07111f;
+  --terminal-2:#0b1d31;
+  --line:rgba(164,225,255,.34);
+  --glow:#69e7ff;
+  --ok:#7ff0ba;
+}
+
+/* developer chrome */
+body:before{content:"";position:fixed;inset:0;z-index:40;pointer-events:none;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);background-size:100% 4px;mix-blend-mode:soft-light;opacity:.32}
+.site-head{backdrop-filter:saturate(1.15) blur(14px)}
+.site-head.deep{background:rgba(5,17,34,.9)!important;border-color:rgba(181,231,255,.25)!important}
+.site-head.deep .links a,.site-head.deep .brand,.site-head.deep .sound{color:#eef9ff}
+.links a{position:relative}
+.links a:before{content:"./";opacity:.45}
+
+/* keep the original funny intro, give it a dev-shell */
+.intro{position:relative}
+.intro:before{content:"portfolio.init()";position:absolute;left:0;top:34px;font:500 .72rem/1 var(--mono);letter-spacing:.08em;color:var(--pink)}
+.intro>div:first-child{position:relative}
+.intro>div:first-child:after{content:"// VR developer · programmer · musician · content creator";display:block;margin-top:24px;padding:12px 14px;border:1px solid rgba(22,20,19,.2);background:rgba(255,255,255,.45);font:500 .76rem/1.4 var(--mono);color:var(--ink-2)}
+
+/* four identity cards */
+.disciplines{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:22px 0 12px}
+.discipline{position:relative;overflow:hidden;min-height:190px;padding:22px;border:2px solid var(--ink);background:rgba(255,255,255,.68);text-decoration:none;box-shadow:5px 5px 0 rgba(22,20,19,.12);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.discipline:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--pink);background:#fff}
+.discipline:before{content:attr(data-path);display:block;margin-bottom:40px;font:500 .7rem/1 var(--mono);color:var(--pink)}
+.discipline b{display:block;font:900 1.55rem/1 var(--head);font-variation-settings:"wdth" 75;text-transform:uppercase;margin-bottom:8px}
+.discipline span{display:block;font-size:.9rem;color:var(--ink-2)}
+.discipline code{position:absolute;right:14px;bottom:12px;font:500 .66rem/1 var(--mono);color:var(--ink-3)}
+
+/* section console heading */
+.dev-head{margin-bottom:30px;border:1px solid var(--line);background:rgba(3,13,25,.48);box-shadow:0 14px 60px rgba(0,0,0,.12);backdrop-filter:blur(8px)}
+.dev-headbar{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid var(--line);font:500 .68rem/1 var(--mono);color:#b8d9ea}
+.dev-headbar i{width:8px;height:8px;border-radius:50%;background:#7c91a0}.dev-headbar i:nth-child(1){background:#ff6b82}.dev-headbar i:nth-child(2){background:#ffd166}.dev-headbar i:nth-child(3){background:#74e7b0}
+.dev-console{padding:18px 20px 20px;font:500 .78rem/1.65 var(--mono);color:#bcd5e2}
+.dev-console strong{color:#fff}.dev-console .prompt{color:var(--ok)}.dev-console .cyan{color:var(--glow)}
+
+/* unified projects */
+#projects{background:linear-gradient(#0b3151,#071b31 42%,#061426 100%);color:#eef8fc;padding-top:105px}
+#projects .sec-head{margin-bottom:18px}
+#projects .sec-head h2{color:#fff}
+.project-filter{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 28px}
+.project-filter button{appearance:none;border:1px solid #6da5bf;background:rgba(5,23,40,.65);color:#dff6ff;padding:9px 12px;font:600 .72rem/1 var(--mono);cursor:pointer}
+.project-filter button:hover,.project-filter button.active{background:#eaf9ff;color:#07192e;border-color:#eaf9ff}
+.project-v2{position:relative;border:1px solid #6ca4bd!important;background:linear-gradient(180deg,rgba(8,31,52,.95),rgba(5,19,34,.98))!important;box-shadow:9px 9px 0 rgba(0,0,0,.24)!important}
+.project-v2:before{content:"PROJECT::" attr(data-index);position:absolute;z-index:2;left:10px;top:10px;padding:5px 7px;background:rgba(2,10,18,.78);border:1px solid rgba(144,218,255,.34);font:500 .62rem/1 var(--mono);color:#bcecff}
+.project-v2-media{border-bottom:1px solid rgba(174,227,255,.25)}
+.project-v2 .meta span{border-radius:999px}
+.project-v2 .release:before{content:"> ";color:var(--ok)}
+.project-v2 .actions a{transition:transform .15s ease,box-shadow .15s ease}
+.project-v2 .actions a:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 #12b3d6}
+.project-v2.is-hidden{display:none}
+
+/* subsections inside merged project hub */
+.project-subsection{margin-top:70px;padding-top:30px;border-top:1px dashed rgba(179,226,247,.3)}
+.project-subhead{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.project-subhead h3{margin:0;font:900 clamp(1.8rem,4vw,3rem)/.95 var(--head);font-variation-settings:"wdth" 75;text-transform:uppercase;color:#fff}
+.project-subhead p{margin:0;max-width:34rem;text-align:right;color:#a9c7d7;font:400 .78rem/1.5 var(--mono)}
+.project-subhead h3:before{content:"// ";color:var(--cyan)}
+
+/* world cards as VR portals */
+.world-card-v2{position:relative;transition:transform .2s ease,box-shadow .2s ease}
+.world-card-v2:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(0,0,0,.32)}
+.world-card-v2 img{filter:saturate(.9) contrast(1.04);transition:transform .35s ease,filter .35s ease}
+.world-card-v2:hover img{transform:scale(1.035);filter:saturate(1.12) contrast(1.06)}
+.world-card-v2:before{content:"VR_PORTAL";position:absolute;z-index:2;top:10px;left:10px;padding:5px 7px;background:rgba(2,10,18,.76);border:1px solid rgba(160,226,255,.4);font:500 .62rem/1 var(--mono);color:#bdefff}
+
+/* gallery */
+.gallery-item{border:1px solid #6ca4bd!important;background:#07192e!important;box-shadow:7px 7px 0 rgba(0,0,0,.22)!important}
+.gallery-item-body b:before{content:"asset::";font-family:var(--mono);font-weight:500;color:#67dff7;font-size:.72rem}
+
+/* content blocks */
+#stream .frame,#videos .frame,#music .frame,#discord .frame{border-width:1px;box-shadow:10px 10px 0 rgba(0,0,0,.18)}
+#stream .frame:before,#videos .frame:before{content:"LIVE_MEDIA_PIPE";display:block;padding:7px 10px;background:#07192e;color:#bdeaff;font:500 .62rem/1 var(--mono);border-bottom:1px solid rgba(188,234,255,.28)}
+#music .artist{padding:18px;border:1px solid rgba(194,231,248,.28);background:rgba(5,20,35,.24)}
+
+/* depth HUD refinement */
+.gauge{right:18px!important}
+.gauge .read{padding:9px 11px;background:rgba(243,239,230,.8);border:1px solid rgba(22,20,19,.18);backdrop-filter:blur(10px)}
+.gauge.deep .read{background:rgba(5,17,34,.78);border-color:rgba(175,226,249,.24)}
+.gauge .read b:before{content:"depth=";font-weight:500;opacity:.55}
+.gauge .read span:before{content:"zone::";opacity:.55}
+
+/* terminal ticker */
+.dev-ticker{position:fixed;left:18px;bottom:18px;z-index:18;max-width:min(430px,calc(100vw - 110px));padding:10px 12px;border:1px solid rgba(150,220,250,.3);background:rgba(4,15,28,.83);box-shadow:0 12px 35px rgba(0,0,0,.22);backdrop-filter:blur(10px);font:500 .7rem/1.35 var(--mono);color:#b9d8e7;pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+.dev-ticker b{color:var(--ok)}.dev-ticker span{color:#fff}
+.dev-ticker.surface-mode{background:rgba(243,239,230,.88);border-color:rgba(22,20,19,.16);color:#4a4540}.dev-ticker.surface-mode span{color:#161413}.dev-ticker.surface-mode b{color:#087b69}
+
+/* devlog */
+#devlog .patreon,.posts li{border-color:rgba(193,230,247,.3)!important}
+#devlog .patreon:before{content:"devlog.feed";display:block;margin-bottom:16px;font:500 .7rem/1 var(--mono);color:var(--cyan)}
+
+@media(max-width:900px){
+  .disciplines{grid-template-columns:1fr 1fr}
+  .project-subhead{display:block}.project-subhead p{text-align:left;margin-top:8px}
+}
+@media(max-width:680px){
+  .disciplines{grid-template-columns:1fr}
+  .discipline{min-height:150px}.discipline:before{margin-bottom:24px}
+  .intro:before{top:18px}.intro>div:first-child:after{font-size:.68rem}
+  .dev-ticker{left:10px;bottom:10px;max-width:calc(100vw - 75px);font-size:.62rem}
+}
+@media(prefers-reduced-motion:reduce){.discipline,.project-v2 .actions a,.world-card-v2,.world-card-v2 img{transition:none!important}}
