@@ -1,0 +1,37 @@
+name: Validate Meshy browser installer
+
+on:
+  push:
+    paths:
+      - 'install/meshy/**'
+      - 'tests/meshy-installer.test.cjs'
+      - '.github/scripts/build-site-content.mjs'
+      - 'assets/site-v2.js'
+      - 'assets/project-overrides.json'
+      - 'assets/projects.json'
+      - '.github/workflows/meshy-installer-validate.yml'
+  pull_request:
+    paths:
+      - 'install/meshy/**'
+      - 'tests/meshy-installer.test.cjs'
+      - '.github/scripts/build-site-content.mjs'
+      - 'assets/site-v2.js'
+      - 'assets/project-overrides.json'
+      - 'assets/projects.json'
+      - '.github/workflows/meshy-installer-validate.yml'
+
+jobs:
+  installer:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check generator and browser code syntax
+        run: |
+          node --check .github/scripts/build-site-content.mjs
+          node --check assets/site-v2.js
+          node --check install/meshy/installer.js
+      - name: Test browser detection and site links
+        run: node --test tests/meshy-installer.test.cjs
