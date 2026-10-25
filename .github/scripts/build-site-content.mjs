@@ -96,6 +96,7 @@ async function collectProjects() {
       open_issues_count: repo.open_issues_count || 0,
       status: ageStatus(repo, override),
       page: `projects/${pageSlug}/`,
+       install_url: override.install_url || '',
       socialImage: override.socialImage || `https://opengraph.githubassets.com/1/${repo.full_name}`,
       release: latest ? {
         tag_name: latest.tag_name || latest.name || '',
@@ -161,6 +162,7 @@ function projectHtml(repo) {
   const desc = repo.summary;
   const canonical = `${siteBase}/${repo.page}`;
   const release = repo.release?.tag_name ? `<p class="project-release"><b>Latest release:</b> ${escapeHtml(repo.release.tag_name)}${repo.release.published_at ? ` · ${escapeHtml(new Date(repo.release.published_at).toLocaleDateString('en-GB'))}` : ''}</p>` : '';
+  const browserInstall = repo.install_url ? `<a class="button" href="${escapeHtml(repo.install_url)}">Install browser extension ↗</a>` : '';
   const download = repo.release?.download_url ? `<a class="button" href="${escapeHtml(repo.release.download_url)}" rel="noopener">Download latest ↗</a>` : '';
   const topics = (repo.topics||[]).slice(0,8).map(t=>`<span>${escapeHtml(t)}</span>`).join('');
   const schema = {
@@ -183,7 +185,7 @@ function projectHtml(repo) {
 <link rel="icon" href="../../assets/favicon.ico"><link rel="stylesheet" href="../../assets/style.css"><link rel="stylesheet" href="../../assets/site-v2.css"><script type="application/ld+json">${JSON.stringify(schema).replace(/<\//g,'<\\/')}</script>
 <style>.project-page{padding:72px 0 100px;min-height:80vh}.project-page .hero{max-width:850px}.project-page h1{font:900 clamp(2.8rem,8vw,6rem)/.88 var(--head);font-variation-settings:"wdth" 72;text-transform:uppercase;margin:12px 0 22px;overflow-wrap:anywhere}.project-page .lead{font-size:1.2rem;max-width:690px;color:var(--ink-2)}.project-page .chips{display:flex;gap:7px;flex-wrap:wrap;margin:24px 0}.project-page .chips span{border:1.5px solid var(--ink);padding:5px 8px;font:500 .72rem/1 var(--mono)}.project-page .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.project-release{font:500 .85rem/1.5 var(--mono);margin-top:24px}</style></head>
 <body><header class="site-head"><div class="wrap nav"><a class="brand" href="../../"><img src="../../assets/fishhwb-mascot.webp" alt="" width="36" height="36">FISH HWB</a></div></header>
-<main class="project-page"><div class="wrap hero"><div class="eyebrow">Project · ${escapeHtml(repo.status)}</div><h1>${escapeHtml(repo.name)}</h1><p class="lead">${escapeHtml(desc)}</p><div class="chips"><span>${escapeHtml(repo.status)}</span>${repo.language?`<span>${escapeHtml(repo.language)}</span>`:''}${repo.license?.spdx_id?`<span>${escapeHtml(repo.license.spdx_id)}</span>`:''}${topics}</div>${release}<div class="actions">${download}<a class="button alt" href="${escapeHtml(repo.html_url)}" rel="noopener">GitHub ↗</a>${repo.homepage?`<a class="button alt" href="${escapeHtml(repo.homepage)}" rel="noopener">Website ↗</a>`:''}</div></div></main>
+<main class="project-page"><div class="wrap hero"><div class="eyebrow">Project · ${escapeHtml(repo.status)}</div><h1>${escapeHtml(repo.name)}</h1><p class="lead">${escapeHtml(desc)}</p><div class="chips"><span>${escapeHtml(repo.status)}</span>${repo.language?`<span>${escapeHtml(repo.language)}</span>`:''}${repo.license?.spdx_id?`<span>${escapeHtml(repo.license.spdx_id)}</span>`:''}${topics}</div>${release}<div class="actions">${browserInstall}${download}<a class="button alt" href="${escapeHtml(repo.html_url)}" rel="noopener">GitHub ↗</a>${repo.homepage?`<a class="button alt" href="${escapeHtml(repo.homepage)}" rel="noopener">Website ↗</a>`:''}</div></div></main>
 <footer><div class="wrap foot"><div>FISH HWB</div><div><a href="../../#projects">All projects</a> · <a href="../../privacy-policy/">Privacy</a></div></div></footer></body></html>\n`;
 }
 
@@ -201,6 +203,7 @@ async function buildSitemap(repos) {
     `${siteBase}/`,
     `${siteBase}/privacy-policy/`,
     `${siteBase}/terms-of-service/`,
+    `${siteBase}/install/meshy/`,
     ...repos.map(r => `${siteBase}/${r.page}`)
   ];
   const body = urls.map(u=>`  <url><loc>${escapeHtml(u)}</loc></url>`).join('\n');

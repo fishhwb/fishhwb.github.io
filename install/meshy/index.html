@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Install Meshy Asset Capture | FISH HWB</title>
+<meta name="description" content="Browser-aware installer for Meshy Importer v1.5.2. Choose the correct Chrome or Edge download.">
+<meta name="theme-color" content="#f3efe6">
+<meta property="og:title" content="Install Meshy Asset Capture | FISH HWB">
+<meta property="og:description" content="Choose the right Meshy Importer browser extension for your platform.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://fishhwb.github.io/install/meshy/">
+<meta property="og:image" content="https://fishhwb.github.io/assets/og.png">
+<link rel="canonical" href="https://fishhwb.github.io/install/meshy/">
+<link rel="icon" href="../../assets/favicon.ico">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="stylesheet" href="../../assets/site-v2.css">
+<style>
+.install-main{padding:70px 0 110px;min-height:78vh}
+.install-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.85fr);gap:24px}
+.install-side{display:grid;gap:24px;align-content:start}
+.install-panel{padding:clamp(22px,3vw,34px);border:2px solid var(--ink);background:#fffdf8;box-shadow:7px 7px 0 var(--cyan);min-width:0}
+.install-panel h1{font:900 clamp(2.7rem,7vw,5rem)/.94 var(--head);font-variation-settings:"wdth" 72;text-transform:uppercase;overflow-wrap:anywhere;margin:17px 0}
+.install-panel h2{font:900 1.6rem/1.2 var(--head);text-transform:uppercase;margin:0 0 16px}
+.install-eyebrow{display:inline-block;background:var(--yellow);border:1.5px solid var(--ink);padding:7px 11px;font:700 .78rem/1.4 var(--mono)}
+.install-lead{font-size:1.15rem;color:var(--ink-2)}
+.install-detected{padding:14px;border:1.5px solid var(--ink);background:var(--paper-2);margin:24px 0}
+.install-detected strong,.install-detected small{display:block}
+.install-detected strong{font-size:1.4rem;font-weight:900}
+.install-detected small,.install-note{font:500 .78rem/1.55 var(--mono);color:var(--ink-2)}
+.install-action{display:inline-block;padding:14px 20px;border:2px solid var(--ink);background:var(--pink);color:white;text-decoration:none;font:800 .92rem/1.3 var(--mono);box-shadow:4px 4px 0 var(--ink)}
+.install-action:hover,.install-action:focus-visible{background:#cf126d;color:white}
+.install-choices{display:flex;gap:8px;flex-wrap:wrap}
+.install-choices button{border:1.5px solid var(--ink);padding:9px 13px;background:var(--paper);font:700 .83rem var(--mono);cursor:pointer}
+.install-choices button[aria-pressed="true"]{background:var(--yellow);box-shadow:3px 3px 0 var(--ink)}
+.install-steps{padding-left:24px}.install-steps li{padding-left:5px;margin-bottom:12px}
+.install-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px;font:.85rem var(--mono)}
+.install-back{display:inline-block;margin-bottom:19px;font:700 .85rem var(--mono)}
+@media(max-width:760px){.install-main{padding:35px 0 70px}.install-layout{grid-template-columns:1fr}.install-action{display:block;text-align:center}}
+</style>
+<script src="installer.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="wrap nav">
+<a class="brand" href="../../"><img src="../../assets/fishhwb-mascot.webp" alt="" width="36" height="36">Fish HWB</a>
+<nav class="links" aria-label="Main"><a href="../../#projects">projects</a><a href="../../#discord">discord</a></nav>
+</div></header>
+<main id="main" class="install-main"><div class="wrap">
+<a class="install-back" href="../../projects/dedzedofficial-meshy-importer-for-blender-unity/">← Back to Meshy Importer</a>
+<div class="install-layout">
+<section class="install-panel">
+<span class="install-eyebrow">BROWSER EXTENSION | v1.5.2</span>
+<h1>Meshy Asset Capture</h1>
+<p class="install-lead">Find the right installation method for your browser. Detection happens entirely on your device.</p>
+<div class="install-detected" role="status" aria-live="polite"><small>Detected browser</small><strong id="name">Checking...</strong><small id="platform">Desktop</small></div>
+<p id="message">Checking the correct download.</p>
+<a class="install-action" id="action" href="https://github.com/dedzedofficial/Meshy-Importer-for-Blender-Unity/releases/download/v1.5.2/Meshy-Importer-Browser.zip" rel="noopener noreferrer">Download extension</a>
+<p class="install-note" style="margin-top:20px">Chrome and Edge require Developer mode and Load unpacked until an official store listing is available. The website cannot silently install extensions.</p>
+<div class="install-links"><a href="https://github.com/dedzedofficial/Meshy-Importer-for-Blender-Unity/releases/download/v1.5.2/Meshy-Importer-Browser.zip">Direct ZIP download</a><a href="https://github.com/dedzedofficial/Meshy-Importer-for-Blender-Unity">GitHub source</a></div>
+</section>
+<div class="install-side">
+<section class="install-panel"><h2>Install steps</h2><ol class="install-steps" id="steps">
+<li>Download the v1.5.2 ZIP.</li><li>Extract it.</li><li>Open your browser Extensions page and choose Load unpacked.</li></ol>
+<p class="install-note">Model capture and processing remain on the device. Meshy's own website still uses Meshy's servers.</p></section>
+<section class="install-panel"><h2>Other browsers</h2><div class="install-choices" role="group" aria-label="Choose browser">
+<button type="button" data-browser="edge">Edge</button><button type="button" data-browser="chrome">Chrome</button>
+<button type="button" data-browser="firefox">Firefox</button><button type="button" data-browser="opera">Opera</button>
+<button type="button" data-browser="safari">Safari</button>
+</div><p class="install-note" style="margin-top:18px">Choose a browser manually if detection is incorrect. Unsupported browsers do not receive an unverified download.</p></section>
+</div></div></div></main>
+<footer><div class="wrap foot"><div>FISH HWB</div><div><a href="../../#projects">All projects</a> · <a href="../../privacy-policy/">Privacy</a></div></div></footer>
+</body></html>

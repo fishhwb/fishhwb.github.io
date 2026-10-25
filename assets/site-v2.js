@@ -86,6 +86,7 @@
       if(r.release && r.release.tag_name){ release.textContent='Latest: '+r.release.tag_name+(r.release.published_at?' · '+safeDate(r.release.published_at):''); }
       else release.textContent=r.pushed_at?'Updated '+safeDate(r.pushed_at):'Open source project';
       var actions=el('div','actions');
+      if(r.install_url){var installer=el('a','','Browser installer');installer.href=r.install_url;actions.appendChild(installer);}
       if(r.page){var page=el('a','','Project page');page.href=r.page;actions.appendChild(page);}
       var gh=el('a','alt','GitHub ↗');gh.href=r.html_url;gh.target='_blank';gh.rel='noopener';actions.appendChild(gh);
       if(r.release && r.release.download_url){var dl=el('a','','Download');dl.href=r.release.download_url;dl.target='_blank';dl.rel='noopener';actions.appendChild(dl);}

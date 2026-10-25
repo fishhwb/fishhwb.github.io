@@ -4,7 +4,8 @@
     "summary": "Build and edit meshes in VR with a controller-first OpenXR workflow inside Blender. Project source and releases remain on the Blender-XR repository."
   },
   "dedzedofficial/Meshy-Importer-for-Blender-Unity": {
-    "summary": "Import and locally decode Meshy .meshy models for Unity, Blender, Godot and Unreal Engine."
+    "summary": "Import and locally decode Meshy .meshy models for Unity, Blender, Godot and Unreal Engine.",
+    "install_url": "https://fishhwb.github.io/install/meshy/"
   },
   "dedzedofficial/Optimize-Your-Project": {
     "summary": "A free Unity and Blender optimisation toolkit that turns repetitive cleanup and performance work into guarded, clear actions."
