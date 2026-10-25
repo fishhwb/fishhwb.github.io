@@ -1,0 +1,36 @@
+name: Check published Meshy installer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'install/meshy/**'
+      - '.github/workflows/check-meshy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  website:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Verify live smart installer and script
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://fishhwb.github.io/install/meshy/"
+          for i in $(seq 1 18); do
+            code="$(curl -sSL --max-time 15 -o /tmp/meshy-page.html -w '%{http_code}' "$base" || true)"
+            script="$(curl -sSL --max-time 15 -o /tmp/meshy-installer.js -w '%{http_code}' "${base}installer.js" || true)"
+            if [ "$code" = "200" ] && [ "$script" = "200" ] && grep -q 'Meshy Asset Capture' /tmp/meshy-page.html && grep -q 'v1.5.2' /tmp/meshy-installer.js; then
+              echo "Live installer and script are both available at $base"
+              echo "## Published Meshy installer" >> "$GITHUB_STEP_SUMMARY"
+              echo "$base is online and serving the expected 1.5.2 browser routing." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            echo "Attempt $i: page=$code script=$script"
+            sleep 10
+          done
+          echo "The published installer was not available. Check the GitHub Pages deployment." >&2
+          exit 1
