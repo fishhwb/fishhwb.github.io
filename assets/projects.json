@@ -43,7 +43,8 @@
         "download_url": "https://github.com/dedzedofficial/Meshy-Importer-for-Blender-Unity/releases/download/v1.5.2/Meshy-Importer-Blender.zip",
         "asset_name": "Meshy-Importer-Blender.zip",
         "download_count": 0
-      }
+      },
+      "install_url": "https://fishhwb.github.io/install/meshy/"
     },
     {
       "id": 1410991249,
