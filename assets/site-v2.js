@@ -167,7 +167,7 @@
       var loader=new Loader();
       var encrypted=await nativeFetch(host.dataset.model).then(function(r){if(!r.ok)throw Error('Model unavailable');return r.arrayBuffer();});
       var keyText=await nativeFetch(host.dataset.key,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Key unavailable');return r.text();});
-      var rawKey=keyText.trim().split(/\\s+/).pop();
+      var rawKey=keyText.trim().slice(-44);
       var decrypt=(await import('./hwb.js')).decryptHWB;
       var glb=await decrypt(encrypted,rawKey);
       loader.parse(glb,'',function(result){
