@@ -1,0 +1,36 @@
+name: Encrypt CubeZ head (one-time migration)
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/hwb-encrypted-models]
+    paths:
+      - 'scripts/encrypt-cubez-head.cjs'
+      - '.github/workflows/encrypt-cubez-head.yml'
+      - 'assets/buddy.js'
+permissions:
+  contents: write
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/hwb-encrypted-models
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Encrypt original asset
+        run: |
+          if [ -f assets/cubez-head.glb ]; then
+            node scripts/encrypt-cubez-head.cjs
+          else
+            echo 'Already migrated.'
+          fi
+      - name: Commit encrypted model and remove GLB
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/cubez-head.glb assets/cubez-head.hwb assets/cubez-head.hwb-key.txt
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Replace public CubeZ GLB with encrypted HWB"
+          git push origin HEAD:feature/hwb-encrypted-models

@@ -57,6 +57,15 @@
     code: [LANTERN, LANTERN, LANTERN, LANTERN]
   };
 
+  // A little more life without additional animation loops or heavy canvases.
+  // Keep the original jellyfish and lanternfish artwork unchanged.
+  var motionReduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!motionReduced){
+    who.videos.push(JELLY);
+    who.music.push(JELLY);
+    who.models.push(LANTERN);
+  }
+
   Object.keys(who).forEach(function(id){
     var sec = document.getElementById(id);
     if(!sec) return;

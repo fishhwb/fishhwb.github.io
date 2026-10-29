@@ -128,8 +128,8 @@ async function walk(dir, out = []) {
 async function buildGallery() {
   const files = await walk('assets/3d');
   const imageExt = new Set(['png','jpg','jpeg','webp','avif']);
-  const modelExt = new Set(['glb','gltf','obj','stl','fbx']);
-  const sourceExt = new Set(['blend']);
+  const modelExt = new Set(['hwb']);
+  const sourceExt = new Set();
   const eligible = files.filter(f => !/\/README\.md$/i.test(f));
   const byStem = new Map();
   for (const f of eligible) {
@@ -146,7 +146,7 @@ async function buildGallery() {
     const siblings = byStem.get(stem) || [];
     const preview = siblings.find(x => x.ext === 'webp') || siblings.find(x => imageExt.has(x.ext));
     if (modelExt.has(ext)) {
-      items.push({ type:'model', path:f, ext, title:titleFromFile(f), preview:preview?.path || '', label:`Interactive ${ext.toUpperCase()} model` });
+      items.push({ type:'model', path:f, key:f+'-key.txt', ext, title:titleFromFile(f), preview:preview?.path || '', label:`Interactive ${ext.toUpperCase()} model` });
     } else if (imageExt.has(ext) && !modelStems.has(stem)) {
       items.push({ type:'image', path:f, ext, title:titleFromFile(f), preview:f, label:'3D render' });
     } else if (sourceExt.has(ext)) {
