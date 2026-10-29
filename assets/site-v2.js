@@ -127,13 +127,13 @@
     var grid=document.querySelector('#models .gallery'); if(!grid)return;
     nativeFetch('assets/gallery.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(data){
       var items=(data.items||[]); grid.className='gallery gallery-v2'; grid.textContent='';
-      if(!items.length){grid.appendChild(el('div','gallery-v2-empty','Drop renders or 3D files into assets/3d/. Images appear automatically; GLB, GLTF, OBJ, STL and FBX files get interactive viewers.'));return;}
-      items.forEach(function(item){
+      if(!items.length){grid.appendChild(el('div','gallery-v2-empty','Drop renders or 3D files into assets/3d/. Images appear automatically; HWB files get interactive viewers.'));return;}
+      items.filter(function(item){return item.type==='image'||(item.type==='model'&&item.ext==='hwb');}).forEach(function(item){
         var card=el('article','gallery-item'),preview=el('div','preview'),body=el('div','gallery-item-body');
         if(item.type==='image'){
           var img=el('img');img.src=item.preview||item.path;img.alt=item.title||'3D render';img.loading='lazy';preview.appendChild(img);
         } else if(item.type==='model'){
-          preview.dataset.model=item.path;preview.dataset.ext=item.ext||'';preview.dataset.title=item.title||'3D model';
+          preview.dataset.model=item.path;preview.dataset.key=item.key||'';preview.dataset.ext=item.ext||'';preview.dataset.title=item.title||'3D model';
           if(item.preview){var thumb=el('img','model-thumb');thumb.src=item.preview;thumb.alt='';thumb.loading='lazy';preview.appendChild(thumb);}
           preview.appendChild(el('span','model-loading','3D preview loads when visible'));
           preview.appendChild(el('span','model-hint','drag to orbit · wheel to zoom'));
@@ -160,24 +160,24 @@
     var loading=host.querySelector('.model-loading'); if(loading)loading.textContent='loading model…';
     try{
       var THREE=await import('three'), controlsMod=await import('three/addons/controls/OrbitControls.js'), ext=(host.dataset.ext||'').toLowerCase(), Loader;
-      if(ext==='glb'||ext==='gltf')Loader=(await import('three/addons/loaders/GLTFLoader.js')).GLTFLoader;
-      else if(ext==='obj')Loader=(await import('three/addons/loaders/OBJLoader.js')).OBJLoader;
-      else if(ext==='stl')Loader=(await import('three/addons/loaders/STLLoader.js')).STLLoader;
-      else if(ext==='fbx')Loader=(await import('three/addons/loaders/FBXLoader.js')).FBXLoader;
-      else throw new Error('Unsupported model format');
+      if(ext!=='hwb'||!host.dataset.key)throw new Error('HWB only');
+      Loader=(await import('three/addons/loaders/GLTFLoader.js')).GLTFLoader;
       var canvas=el('canvas'),renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
       var scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,1,.01,1000);scene.add(new THREE.HemisphereLight(0xe8f8ff,0x08203a,2.2));var key=new THREE.DirectionalLight(0xffffff,2);key.position.set(2,3,4);scene.add(key);
-      var loader=new Loader();loader.load(host.dataset.model,function(result){
-        var object;
-        if(ext==='glb'||ext==='gltf')object=result.scene;
-        else if(ext==='stl'){var mat=new THREE.MeshStandardMaterial({color:0xb9d9e8,roughness:.58,metalness:.08});object=new THREE.Mesh(result,mat);}
-        else object=result;
+      var loader=new Loader();
+      var encrypted=await nativeFetch(host.dataset.model).then(function(r){if(!r.ok)throw Error('Model unavailable');return r.arrayBuffer();});
+      var keyText=await nativeFetch(host.dataset.key,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Key unavailable');return r.text();});
+      var rawKey=keyText.trim().split(/\\s+/).pop();
+      var decrypt=(await import('./hwb.js')).decryptHWB;
+      var glb=await decrypt(encrypted,rawKey);
+      loader.parse(glb,'',function(result){
+        var object=result.scene;
         scene.add(object);var box=new THREE.Box3().setFromObject(object),size=box.getSize(new THREE.Vector3()),centre=box.getCenter(new THREE.Vector3()),span=Math.max(size.x,size.y,size.z)||1;object.position.sub(centre);camera.position.set(span*1.5,span*.8,span*2.1);camera.near=Math.max(span/1000,.001);camera.far=span*100;camera.updateProjectionMatrix();
         var controls=new controlsMod.OrbitControls(camera,canvas);controls.enableDamping=true;controls.target.set(0,0,0);controls.minDistance=span*.35;controls.maxDistance=span*8;
         var resize=function(){var w=host.clientWidth||300,h=host.clientHeight||300;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};resize();new ResizeObserver(resize).observe(host);
         var thumb=host.querySelector('.model-thumb');if(thumb)thumb.remove();if(loading)loading.remove();host.insertBefore(canvas,host.firstChild);
         (function loop(){if(!document.contains(host))return;requestAnimationFrame(loop);controls.update();renderer.render(scene,camera);})();
-      },undefined,function(){if(loading)loading.textContent='Could not render this model. You can still open the source file.';});
+      },undefined,function(){if(loading)loading.textContent='Could not render this model. Preview unavailable.';});
     }catch(e){if(loading)loading.textContent='3D preview unavailable in this browser.';}
   }
 
