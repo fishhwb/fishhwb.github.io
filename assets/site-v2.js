@@ -135,7 +135,9 @@
         } else if(item.type==='model'){
           preview.dataset.model=item.path;preview.dataset.key=item.key||'';preview.dataset.ext=item.ext||'';preview.dataset.title=item.title||'3D model';
           if(item.preview){var thumb=el('img','model-thumb');thumb.src=item.preview;thumb.alt='';thumb.loading='lazy';preview.appendChild(thumb);}
+          var spinner=el('span','hwb-loader');var headImg=el('img');headImg.src='assets/fishhwb-mascot.webp';headImg.alt='';headImg.loading='lazy';spinner.appendChild(headImg);preview.appendChild(spinner);
           preview.appendChild(el('span','model-loading','3D preview loads when visible'));
+          var full=el('button','hwb-fullscreen','Fullscreen');full.type='button';full.setAttribute('aria-label','Toggle fullscreen model view');full.addEventListener('click',function(){if(document.fullscreenElement===preview){document.exitFullscreen();}else if(preview.requestFullscreen){preview.requestFullscreen();}});preview.appendChild(full);
           preview.appendChild(el('span','model-hint','drag to orbit · wheel to zoom'));
           observeModel(preview);
         } else {
@@ -175,10 +177,11 @@
         scene.add(object);var box=new THREE.Box3().setFromObject(object),size=box.getSize(new THREE.Vector3()),centre=box.getCenter(new THREE.Vector3()),span=Math.max(size.x,size.y,size.z)||1;object.position.sub(centre);camera.position.set(span*1.5,span*.8,span*2.1);camera.near=Math.max(span/1000,.001);camera.far=span*100;camera.updateProjectionMatrix();
         var controls=new controlsMod.OrbitControls(camera,canvas);controls.enableDamping=true;controls.target.set(0,0,0);controls.minDistance=span*.35;controls.maxDistance=span*8;
         var resize=function(){var w=host.clientWidth||300,h=host.clientHeight||300;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};resize();new ResizeObserver(resize).observe(host);
-        var thumb=host.querySelector('.model-thumb');if(thumb)thumb.remove();if(loading)loading.remove();host.insertBefore(canvas,host.firstChild);
-        (function loop(){if(!document.contains(host))return;requestAnimationFrame(loop);controls.update();renderer.render(scene,camera);})();
-      },undefined,function(){if(loading)loading.textContent='Could not render this model. Preview unavailable.';});
-    }catch(e){if(loading)loading.textContent='3D preview unavailable in this browser.';}
+        var thumb=host.querySelector('.model-thumb');if(thumb)thumb.remove();if(loading)loading.remove();var spinner=host.querySelector('.hwb-loader');if(spinner)spinner.remove();host.insertBefore(canvas,host.firstChild);
+        if(result.animations&&result.animations.length){var mixer=new THREE.AnimationMixer(object),clips=result.animations;var button=el('button','hwb-animation','Pause animation');button.type='button';button.setAttribute('aria-pressed','true');clips.forEach(function(clip){mixer.clipAction(clip).play();});var playing=true;button.addEventListener('click',function(){playing=!playing;button.textContent=playing?'Pause animation':'Play animation';button.setAttribute('aria-pressed',String(playing));});host.appendChild(button);var clock=new THREE.Clock();host.dataset.hasAnimation='1';host._hwbTick=function(){var dt=Math.min(clock.getDelta(),.1);if(playing)mixer.update(dt);};}
+        (function loop(){if(!document.contains(host))return;requestAnimationFrame(loop);if(document.hidden||!host.getClientRects().length)return requestAnimationFrame(loop);if(host._hwbTick)host._hwbTick();controls.update();renderer.render(scene,camera);})();
+      },undefined,function(){if(loading)loading.textContent='Could not render this model. Preview unavailable.';var spinner=host.querySelector('.hwb-loader');if(spinner)spinner.remove();});
+    }catch(e){if(loading)loading.textContent='3D preview unavailable in this browser.';var spinner=host.querySelector('.hwb-loader');if(spinner)spinner.remove();}
   }
 
   /* ---------- Cube'z companion v2 ---------- */
