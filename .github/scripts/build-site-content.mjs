@@ -129,7 +129,7 @@ async function buildGallery() {
   const files = await walk('assets/3d');
   const imageExt = new Set(['png','jpg','jpeg','webp','avif']);
   const modelExt = new Set(['hwb']);
-  const sourceExt = new Set(['blend']);
+  const sourceExt = new Set();
   const eligible = files.filter(f => !/\/README\.md$/i.test(f));
   const byStem = new Map();
   for (const f of eligible) {
