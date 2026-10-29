@@ -3,6 +3,7 @@
 // there's a new video or the stream goes live.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { decryptHWB } from './hwb.js';
 
 const CHANNEL = 'dedzedoffishal';
 const YT_ID = 'UCtcFAWZJeiEp_DOKy8U_YYg';
@@ -51,7 +52,15 @@ try {
   size();
   addEventListener('resize', size);
 
-  new GLTFLoader().load(new URL('cubez-head.glb', import.meta.url).href, (gltf) => {
+  (async()=>{
+    const modelURL=new URL('cubez-head.hwb',import.meta.url);
+    const [modelResponse,keyResponse]=await Promise.all([fetch(modelURL),fetch(new URL('cubez-head.hwb-key.txt',import.meta.url))]);
+    if(!modelResponse.ok||!keyResponse.ok)throw Error('Encrypted CubeZ asset unavailable');
+    const keyText=(await keyResponse.text()).trim().slice(-44);
+    const decrypted=await decryptHWB(await modelResponse.arrayBuffer(),keyText);
+    const gltf=await new Promise((resolve,reject)=>new GLTFLoader().parse(decrypted,'',resolve,reject));
+    return gltf;
+  })().then((gltf) => {
     const model = gltf.scene;
     model.traverse((o) => { if (o.morphTargetDictionary && !mesh) mesh = o; });
     // size from the resting shape: the "Head" shape key drops it 1.6 units
@@ -73,7 +82,7 @@ try {
     }
     root.classList.add('ready');
     loop();
-  }, undefined, fail);
+  }).catch(fail);
 
   // morph targets ease toward these values every frame
   const target = {};
