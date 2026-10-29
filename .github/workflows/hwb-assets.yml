@@ -13,4 +13,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node tests/hwb-assets.test.cjs
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/site-v2.js
+          node --check assets/sea.js
+          node --check assets/hwb.js
+          node --check assets/hwb-provenance.js
+          node --check hwb-tools/tool.js
+          node --check assets/hwb-inspection-notice.js
+      - name: Check encrypted gallery publication
+        run: node tests/hwb-assets.test.cjs
