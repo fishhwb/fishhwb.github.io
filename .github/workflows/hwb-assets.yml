@@ -1,8 +1,29 @@
 name: HWB asset safety
 on:
   pull_request:
+    paths:
+      - 'assets/3d/**'
+      - 'assets/gallery.json'
+      - 'assets/site-v2.js'
+      - 'assets/sea.js'
+      - 'assets/hwb*.js'
+      - 'hwb-tools/**'
+      - 'tests/hwb-assets.test.cjs'
+      - '.github/workflows/hwb-assets.yml'
   push:
     branches: [main]
+    paths:
+      - 'assets/3d/**'
+      - 'assets/gallery.json'
+      - 'assets/site-v2.js'
+      - 'assets/sea.js'
+      - 'assets/hwb*.js'
+      - 'hwb-tools/**'
+      - 'tests/hwb-assets.test.cjs'
+      - '.github/workflows/hwb-assets.yml'
+concurrency:
+  group: hwb-asset-safety-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
