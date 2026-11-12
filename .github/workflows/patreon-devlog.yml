@@ -5,7 +5,8 @@ name: Sync dev log from Patreon
 
 on:
   schedule:
-    - cron: '17 * * * *'
+    # Six scheduled checks/day instead of hourly; manual refresh remains available.
+    - cron: '17 */4 * * *'
   workflow_dispatch:
 
 permissions:
