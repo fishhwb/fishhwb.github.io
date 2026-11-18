@@ -1,12 +1,6 @@
 name: Encrypt CubeZ head (one-time migration)
 on:
   workflow_dispatch:
-  push:
-    branches: [feature/hwb-encrypted-models]
-    paths:
-      - 'scripts/encrypt-cubez-head.cjs'
-      - '.github/workflows/encrypt-cubez-head.yml'
-      - 'assets/buddy.js'
 permissions:
   contents: write
 jobs:

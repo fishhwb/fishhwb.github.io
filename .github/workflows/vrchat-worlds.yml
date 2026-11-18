@@ -2,12 +2,13 @@ name: Refresh VRChat worlds
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - '.github/scripts/update-vrchat-worlds.mjs'
       - '.github/scripts/discover-vrcdb-worlds.py'
       - '.github/workflows/vrchat-worlds.yml'
   schedule:
-    - cron: '23 5 * * *'
+    - cron: '23 5 * * 1,3,5'
 permissions:
   contents: write
 jobs:

@@ -1,15 +1,7 @@
 name: Validate Meshy browser installer
 
 on:
-  push:
-    paths:
-      - 'install/meshy/**'
-      - 'tests/meshy-installer.test.cjs'
-      - '.github/scripts/build-site-content.mjs'
-      - 'assets/site-v2.js'
-      - 'assets/project-overrides.json'
-      - 'assets/projects.json'
-      - '.github/workflows/meshy-installer-validate.yml'
+  workflow_dispatch:
   pull_request:
     paths:
       - 'install/meshy/**'

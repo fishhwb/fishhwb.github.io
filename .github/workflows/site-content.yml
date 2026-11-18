@@ -3,7 +3,7 @@ name: Build site content
 on:
   workflow_dispatch:
   schedule:
-    - cron: '41 */6 * * *'
+    - cron: '41 */12 * * *'
   push:
     branches: [main]
     paths:
